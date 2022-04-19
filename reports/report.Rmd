@@ -1,0 +1,9 @@
+---
+title: "Project in Data Analytics for Decision Making"
+author: "Manon Verjus and Yooby Gigandet"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: html_document
+---
+
+```{r child = c('intro.Rmd', 'data.Rmd', 'eda.Rmd', 'concl.Rmd')}
+```
