@@ -9,4 +9,10 @@ output: html_document
 source(here::here("script/setup.R"))
 ```
 
+```{r, eval=FALSE, include=FALSE}
+setwd(here::here("data/"))
+GermanCredit <- read_csv("GermanCreditClean.csv")
+```
+
 ## Exploratory Data Analysis
+
