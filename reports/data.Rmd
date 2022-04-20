@@ -24,10 +24,16 @@ The initial dataset about German credit data contains `r ncol(GermanCreditRaw)` 
 </div>
 
 ```{r}
-# Removing the first column, aka "OBS#
+# Removing the first column, aka "OBS#, not useful.
 
 GermanCredit <- GermanCreditRaw %>% 
   select(-c("OBS#"))
+
+# Coding as factors the following variables: CHK_ACCT, HISTORY, NEW_CAR, USED_CAR, FURNITURE, RADIO/TV, EDUCATION, RETRAINING, SAV_ACCT, EMPLOYMENT, MALE_DIV, MAL_SINGLE, MALE_MAR_WID, CO-APPLICANT, GUARANTOR, PRESENT_RESIDENT, REAL_ESTATE, PROP_UNKN_NONE, OTHER_INSTALL, RENT, OWN_RES, JOB, TELEPHONE, FOREIGN and RESPONSE.
+
+factor_column <- c("CHK_ACCT", "HISTORY", "NEW_CAR", "USED_CAR", "FURNITURE", "RADIO/TV", "EDUCATION", "RETRAINING", "SAV_ACCT", "EMPLOYMENT", "MALE_DIV", "MALE_SINGLE", "MALE_MAR_or_WID", "CO-APPLICANT", "GUARANTOR", "PRESENT_RESIDENT", "REAL_ESTATE", "PROP_UNKN_NONE", "OTHER_INSTALL", "RENT", "OWN_RES", "JOB", "TELEPHONE", "FOREIGN", "RESPONSE")
+
+GermanCredit[,factor_column] <- lapply(GermanCredit[,factor_column], factor)
 ```
 
 ```{r}
