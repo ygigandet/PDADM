@@ -10,3 +10,29 @@ source(here::here("script/setup.R"))
 ```
 
 ## Data
+
+```{r}
+# Upload the data
+setwd(here::here("data/"))
+GermanCreditRaw <- read_csv2("GermanCredit.csv")
+```
+
+<div>
+
+The initial dataset about German credit data contains `r ncol(GermanCreditRaw)` variables and `r nrow(GermanCreditRaw)` observations.
+
+</div>
+
+```{r}
+# Removing the first column, aka "OBS#
+
+GermanCredit <- GermanCreditRaw %>% 
+  select(-c("OBS#"))
+```
+
+```{r}
+# Write csv file
+setwd(here::here("data/"))
+write_csv(GermanCredit, "GermanCreditClean.csv")
+```
+
