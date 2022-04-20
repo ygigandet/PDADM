@@ -16,3 +16,76 @@ GermanCredit <- read_csv("GermanCreditClean.csv")
 
 ## Exploratory Data Analysis
 
+```{r, eval=FALSE}
+# Distribution of the numerical columns, i.e. duration, amount, install_rate, age, num_credits, num_dependence
+
+p.duration <- GermanCredit %>% 
+  ggplot(aes(x = DURATION)) +
+  geom_histogram(binwidth = 1)
+
+p.duration
+
+# Not a lot to say about the duration of the credits. It varies a lot.
+
+p.amount <- GermanCredit %>% 
+  ggplot(aes(x = AMOUNT)) +
+  geom_histogram(binwidth = 1000)
+
+p.amount
+
+# Relatively small amount, less than 5'000
+
+p.install_rate <- GermanCredit %>% 
+  ggplot(aes(x = INSTALL_RATE)) +
+  geom_histogram(binwidth = 1)
+
+p.install_rate
+
+# Installment rate (in other words, repayment rate) is more around 4%
+
+p.age <- GermanCredit %>% 
+  ggplot(aes(x = AGE)) +
+  geom_histogram(binwidth = 1)
+
+p.age
+
+# It is skewed, the younger, the better 
+
+p.num_credits <- GermanCredit %>% 
+  ggplot(aes(x = NUM_CREDITS)) +
+  geom_histogram(binwidth = 1)
+
+p.num_credits
+
+# The less the better, 1 to 3
+
+p.num_dependents <- GermanCredit %>% 
+  ggplot(aes(x = NUM_DEPENDENTS)) +
+  geom_histogram(binwidth = 1)
+
+p.num_dependents
+
+# Mostly one dependent
+```
+
+```{r}
+# Link between the amount for the credit and the credit history of the applicant
+# 0 means no credits taken, 1: all credits at this bank paid back duly, 
+# 2: existing credits paid back duly till now, 3: delay in paying off in the past
+# 4: critical account
+
+p.amount_history <- GermanCredit %>% 
+  ggplot(aes(x = AMOUNT, fill = HISTORY)) +
+  geom_histogram(binwidth = 1000)
+
+p.amount_history
+
+# It's not surprising, when credits are paid, the more they give.
+
+p.amount_chk_account <- GermanCredit %>% 
+  ggplot(aes(x = AMOUNT, fill = CHK_ACCT)) +
+  geom_histogram(binwidth = 1000)
+
+p.amount_chk_account
+```
+
