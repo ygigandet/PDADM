@@ -102,27 +102,35 @@ mean_no
 
 ```{r}
 # what about the amount of savings
-
+ggplot(YES_GC, aes(x=dose, y=len)) + 
+  geom_boxplot(notch=TRUE)
 boxplot(YES_GC$SAV_ACCT)
 
 ```
 
 ```{r}
 # box plot on no response x existing credits
+boxplot(NO_GC$NUM_CREDITS,
+main = "Number of existing credits for people refused in the bank",
+xlab = "Number of existing credits",
+ylab = "German credits refused",
+col = "orange",
+border = "brown",
+horizontal = TRUE,
+notch = TRUE
+)
 
-boxplot(NO_GC$NUM_CREDITS)
+#boxplot(NO_GC$NUM_CREDITS)
+
 ```
 
 ```{r}
 # correlation matrix
 
-head(YES_GC)
-yescor <- cor(YES_GC)
-yescor
+#head(YES_GC)
+corgc <- cor(GermanCredit)
+corgc
 
-head(NO_GC)
-nocor <- cor(NO_GC)
-nocor
 ```
 
 
