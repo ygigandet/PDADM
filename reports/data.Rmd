@@ -42,3 +42,17 @@ setwd(here::here("data/"))
 write_csv(GermanCredit, "GermanCreditClean.csv")
 ```
 
+
+```{r}
+# GermanCredit accepted
+YES_GC <- filter(GermanCredit,RESPONSE=="1")
+
+YES_GC
+```
+
+```{r}
+# GermanCredit refused
+NO_GC <- filter(GermanCredit,RESPONSE=="0")
+
+NO_GC
+```
