@@ -89,3 +89,40 @@ p.amount_chk_account <- GermanCredit %>%
 p.amount_chk_account
 ```
 
+```{r}
+# let's check if old people have basically more credit than young people
+mean_yes<-mean(YES_GC$AGE)
+mean_yes
+
+mean_no<-mean(NO_GC$AGE)
+mean_no
+
+# age does not seem to be a key criterion 
+```
+
+```{r}
+# what about the amount of savings
+
+boxplot(YES_GC$SAV_ACCT)
+
+```
+
+```{r}
+# box plot on no response x existing credits
+
+boxplot(NO_GC$NUM_CREDITS)
+```
+
+```{r}
+# correlation matrix
+
+head(YES_GC)
+yescor <- cor(YES_GC)
+yescor
+
+head(NO_GC)
+nocor <- cor(NO_GC)
+nocor
+```
+
+
