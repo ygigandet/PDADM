@@ -109,18 +109,17 @@ boxplot(YES_GC$SAV_ACCT)
 ```
 
 ```{r}
-# box plot on no response x existing credits
-boxplot(NO_GC$NUM_CREDITS,
-main = "Number of existing credits for people refused in the bank",
-xlab = "Number of existing credits",
-ylab = "German credits refused",
-col = "orange",
-border = "brown",
-horizontal = TRUE,
-notch = TRUE
-)
+# comparison of the credit amount  asked 
 
-#boxplot(NO_GC$NUM_CREDITS)
+comp_credits <- boxplot(NO_GC$AMOUNT, YES_GC$AMOUNT,
+        horizontal=TRUE,
+        names=c("Refused", "Accepted"),
+        col=c("light grey","dark grey"),
+        xlab="Credit amount",
+        main="Comparison of the credit amount asked by the person")
+
+comp_credits # refused person asked for a bigger amount (a bit abvi)
+
 
 ```
 
