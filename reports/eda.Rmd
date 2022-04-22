@@ -102,9 +102,9 @@ mean_no
 
 ```{r}
 # what about the amount of savings
-ggplot(YES_GC, aes(x=dose, y=len)) + 
-  geom_boxplot(notch=TRUE)
-boxplot(YES_GC$SAV_ACCT)
+# ggplot(YES_GC, aes(x=dose, y=len)) + 
+#   geom_boxplot(notch=TRUE)
+# boxplot(YES_GC$SAV_ACCT)
 
 ```
 
