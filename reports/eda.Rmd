@@ -127,8 +127,8 @@ comp_credits # refused person asked for a bigger amount (a bit abvi)
 # correlation matrix
 
 #head(YES_GC)
-corgc <- cor(GermanCredit)
-corgc
+# corgc <- cor(GermanCredit)
+# corgc
 
 ```
 
