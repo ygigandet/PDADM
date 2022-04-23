@@ -16,12 +16,28 @@ GermanCredit <- read_csv("GermanCreditClean.csv")
 
 ## Exploratory Data Analysis
 
+```{r}
+# First, let's look at the distribution of the responses of credits
+GermanCredit %>% 
+  ggplot(aes(x = RESPONSE)) +
+  geom_bar() +
+  labs(title = "Number of 'good' vs 'bad' credits",
+       y = "Number of credit applications",
+       x = "Rate of the credits: 0 = bad, 1 = good") +
+  theme_light()
+
+# Interesting to see that our data is biased. We have more than 2/3 good credit applications and 1/3 of bad credit applications.
+```
+
 ```{r, eval=FALSE}
 # Distribution of the numerical columns, i.e. duration, amount, install_rate, age, num_credits, num_dependence
 
 p.duration <- GermanCredit %>% 
   ggplot(aes(x = DURATION)) +
-  geom_histogram(binwidth = 1)
+  geom_histogram(binwidth = 1) +
+  labs(title = "Duration of the credit applications",
+       y = "Number of credit applications",
+       x = "Duration in months")
 
 p.duration
 
@@ -29,7 +45,10 @@ p.duration
 
 p.amount <- GermanCredit %>% 
   ggplot(aes(x = AMOUNT)) +
-  geom_histogram(binwidth = 1000)
+  geom_histogram(binwidth = 100) +
+  labs(title = "Amount of the credit applications",
+       y = "Number of credit applications",
+       x = "Amount in DM")
 
 p.amount
 
@@ -37,7 +56,10 @@ p.amount
 
 p.install_rate <- GermanCredit %>% 
   ggplot(aes(x = INSTALL_RATE)) +
-  geom_histogram(binwidth = 1)
+  geom_histogram(binwidth = 1) +
+  labs(title = "Installment rate as % of disposable income",
+       y = "Number of credit applications",
+       x = "%")
 
 p.install_rate
 
@@ -45,7 +67,10 @@ p.install_rate
 
 p.age <- GermanCredit %>% 
   ggplot(aes(x = AGE)) +
-  geom_histogram(binwidth = 1)
+  geom_histogram(binwidth = 1) +
+  labs(title = "Age of the credit applicants",
+       y = "Number of credit applications",
+       x = "Age in years")
 
 p.age
 
@@ -53,7 +78,10 @@ p.age
 
 p.num_credits <- GermanCredit %>% 
   ggplot(aes(x = NUM_CREDITS)) +
-  geom_histogram(binwidth = 1)
+  geom_histogram(binwidth = 1) +
+  labs(title = "Number of existing credits at this bank",
+       y = "Number of credit applications",
+       x = "Number")
 
 p.num_credits
 
@@ -61,7 +89,10 @@ p.num_credits
 
 p.num_dependents <- GermanCredit %>% 
   ggplot(aes(x = NUM_DEPENDENTS)) +
-  geom_histogram(binwidth = 1)
+  geom_histogram(binwidth = 1) +
+  labs(title = "Number of people for whom liable to provide maintenance",
+       y = "Number of credit applications",
+       x = "People")
 
 p.num_dependents
 
@@ -91,10 +122,10 @@ p.amount_chk_account
 
 ```{r}
 # let's check if old people have basically more credit than young people
-mean_yes<-mean(YES_GC$AGE)
+mean_yes <- mean(YES_GC$AGE)
 mean_yes
 
-mean_no<-mean(NO_GC$AGE)
+mean_no <- mean(NO_GC$AGE)
 mean_no
 
 # age does not seem to be a key criterion 
@@ -109,7 +140,7 @@ mean_no
 ```
 
 ```{r}
-# comparison of the credit amount  asked 
+# comparison of the credit amount asked 
 
 comp_credits <- boxplot(NO_GC$AMOUNT, YES_GC$AMOUNT,
         horizontal=TRUE,
@@ -118,7 +149,7 @@ comp_credits <- boxplot(NO_GC$AMOUNT, YES_GC$AMOUNT,
         xlab="Credit amount",
         main="Comparison of the credit amount asked by the person")
 
-comp_credits # refused person asked for a bigger amount (a bit abvi)
+comp_credits # refused person asked for a bigger amount (a bit obvious).
 
 
 ```
