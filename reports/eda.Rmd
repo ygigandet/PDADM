@@ -16,28 +16,12 @@ GermanCredit <- read_csv("GermanCreditClean.csv")
 
 ## Exploratory Data Analysis
 
-```{r}
-# First, let's look at the distribution of the responses of credits
-GermanCredit %>% 
-  ggplot(aes(x = RESPONSE)) +
-  geom_bar() +
-  labs(title = "Number of 'good' vs 'bad' credits",
-       y = "Number of credit applications",
-       x = "Rate of the credits: 0 = bad, 1 = good") +
-  theme_light()
-
-# Interesting to see that our data is biased. We have more than 2/3 good credit applications and 1/3 of bad credit applications.
-```
-
 ```{r, eval=FALSE}
 # Distribution of the numerical columns, i.e. duration, amount, install_rate, age, num_credits, num_dependence
 
 p.duration <- GermanCredit %>% 
   ggplot(aes(x = DURATION)) +
-  geom_histogram(binwidth = 1) +
-  labs(title = "Duration of the credit applications",
-       y = "Number of credit applications",
-       x = "Duration in months")
+  geom_histogram(binwidth = 1)
 
 p.duration
 
@@ -45,10 +29,7 @@ p.duration
 
 p.amount <- GermanCredit %>% 
   ggplot(aes(x = AMOUNT)) +
-  geom_histogram(binwidth = 100) +
-  labs(title = "Amount of the credit applications",
-       y = "Number of credit applications",
-       x = "Amount in DM")
+  geom_histogram(binwidth = 1000)
 
 p.amount
 
@@ -56,10 +37,7 @@ p.amount
 
 p.install_rate <- GermanCredit %>% 
   ggplot(aes(x = INSTALL_RATE)) +
-  geom_histogram(binwidth = 1) +
-  labs(title = "Installment rate as % of disposable income",
-       y = "Number of credit applications",
-       x = "%")
+  geom_histogram(binwidth = 1)
 
 p.install_rate
 
@@ -67,10 +45,7 @@ p.install_rate
 
 p.age <- GermanCredit %>% 
   ggplot(aes(x = AGE)) +
-  geom_histogram(binwidth = 1) +
-  labs(title = "Age of the credit applicants",
-       y = "Number of credit applications",
-       x = "Age in years")
+  geom_histogram(binwidth = 1)
 
 p.age
 
@@ -78,10 +53,7 @@ p.age
 
 p.num_credits <- GermanCredit %>% 
   ggplot(aes(x = NUM_CREDITS)) +
-  geom_histogram(binwidth = 1) +
-  labs(title = "Number of existing credits at this bank",
-       y = "Number of credit applications",
-       x = "Number")
+  geom_histogram(binwidth = 1)
 
 p.num_credits
 
@@ -89,10 +61,7 @@ p.num_credits
 
 p.num_dependents <- GermanCredit %>% 
   ggplot(aes(x = NUM_DEPENDENTS)) +
-  geom_histogram(binwidth = 1) +
-  labs(title = "Number of people for whom liable to provide maintenance",
-       y = "Number of credit applications",
-       x = "People")
+  geom_histogram(binwidth = 1)
 
 p.num_dependents
 
@@ -122,25 +91,18 @@ p.amount_chk_account
 
 ```{r}
 # let's check if old people have basically more credit than young people
-mean_yes <- mean(YES_GC$AGE)
+mean_yes<-mean(YES_GC$AGE)
 mean_yes
 
-mean_no <- mean(NO_GC$AGE)
+mean_no<-mean(NO_GC$AGE)
 mean_no
 
 # age does not seem to be a key criterion 
 ```
 
-```{r}
-# what about the amount of savings
-# ggplot(YES_GC, aes(x=dose, y=len)) + 
-#   geom_boxplot(notch=TRUE)
-# boxplot(YES_GC$SAV_ACCT)
-
-```
 
 ```{r}
-# comparison of the credit amount asked 
+# comparison of the credit amount  asked 
 
 comp_credits <- boxplot(NO_GC$AMOUNT, YES_GC$AMOUNT,
         horizontal=TRUE,
@@ -149,8 +111,7 @@ comp_credits <- boxplot(NO_GC$AMOUNT, YES_GC$AMOUNT,
         xlab="Credit amount",
         main="Comparison of the credit amount asked by the person")
 
-comp_credits # refused person asked for a bigger amount (a bit obvious).
-
+comp_credits # refused person asked for a bigger amount (a bit abvi)
 
 ```
 
@@ -158,9 +119,68 @@ comp_credits # refused person asked for a bigger amount (a bit obvious).
 # correlation matrix
 
 #head(YES_GC)
-# corgc <- cor(GermanCredit)
-# corgc
+#corgc <- cor(GermanCredit)
+#corgc
+
+library(GGally)
+
+#creation of a new dataset
+cordata_fin <- GermanCredit[, c("CHK_ACCT", "HISTORY", "AMOUNT", "SAV_ACCT", "NUM_CREDITS", "RESPONSE") ] 
+ggpairs(cordata_fin, title="Correlogram on financial data")
+
+cordata_own <- GermanCredit[, c("NEW_CAR", "USED_CAR", "FURNITURE", "RADIO/TV", "RESPONSE") ]
+ggpairs(cordata_own, title="Correlogram on owned products data")
+
+cordata_pro <- GermanCredit[, c("JOB", "EDUCATION", "RETRAINING", "EMPLOYMENT", "RESPONSE") ] 
+ggpairs(cordata_pro, title="Correlogram on professional data")
+
+cordata_immo <- GermanCredit[, c("INSTALL_RATE", "REAL_ESTATE", "PRESENT_RESIDENT", "PROP_UNKN_NONE", "RENT", "OWN_RES", "RESPONSE") ]
+ggpairs(cordata_immo, title="Correlogram on real estate data")
+
+cordata_demo <- GermanCredit[, c("MALE_DIV", "MALE_SINGLE", "MALE_MAR_WID", "AGE", "FOREIGN", "RESPONSE") ] 
+ggpairs(cordata_demo, title="Correlogram on demographic data")
+
+#cor<-ggpairs(GermanCredit, title="correlogram with ggpairs()") 
+
 
 ```
 
+```{r}
+# create an average profile of yes person
+
+# remove OBS column
+Yes_profil<- select(YES_GC, CHK_ACCT, DURATION, HISTORY, NEW_CAR, USED_CAR, FURNITURE, RADIO.TV, EDUCATION, RETRAINING, AMOUNT, SAV_ACCT, EMPLOYMENT, INSTALL_RATE, MALE_DIV, MALE_SINGLE, MALE_MAR_or_WID, CO.APPLICANT, GUARANTOR, PRESENT_RESIDENT, REAL_ESTATE, PROP_UNKN_NONE, AGE, OTHER_INSTALL, RENT, OWN_RES, NUM_CREDITS, JOB, NUM_DEPENDENTS, TELEPHONE, FOREIGN)
+
+# take the mean of each column
+Yes_profil <- summarize_all(Yes_profil, mean)
+
+# transform table in matrix
+#Yes_profil <- data.frame(Yes_profil)
+#Yes_profil <- apply(as.matrix.noquote(Yes_profil),2,as.numeric)
+
+# show matrix through lolipop plot 
+Yes_profil <- data.frame(
+  x=c('CHK_ACCT', 'DURATION', 'HISTORY', 'NEW_CAR', 'USED_CAR', 'FURNITURE', 'RADIO.TV', 'EDUCATION', 'RETRAINING', 'AMOUNT', 'SAV_ACCT', 'EMPLOYMENT', 'INSTALL_RATE', 'MALE_DIV', 'MALE_SINGLE', 'MALE_MAR_or_WID', 'CO.APPLICANT', 'GUARANTOR', 'PRESENT_RESIDENT', 'REAL_ESTATE', 'PROP_UNKN_NONE', 'AGE', 'OTHER_INSTALL', 'RENT', 'OWN_RES', 'NUM_CREDITS', 'JOB', 'NUM_DEPENDENTS', 'TELEPHONE', 'FOREIGN'),
+  y=abs(rnorm(30))
+)
+
+graph_yes_profil <- ggplot(Yes_profil, aes(x=x, y=y)) +
+  geom_segment( aes(x=x, xend=x, y=0, yend=y), color="skyblue") +
+  geom_point( color="blue", size=4, alpha=0.6) +
+  labs(
+  title = "Mean of a YES profils",
+  y = "Variables name", x = "Value"
+)+
+  theme_light() +
+  coord_flip() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.border = element_blank(),
+    axis.ticks.y = element_blank() 
+)
+
+graph_yes_profil
+
+#barplot(prop.table(Yes_profil) * 100, horiz=TRUE, main = "Relative frequency (%)", col = rainbow(3))
+```
 
