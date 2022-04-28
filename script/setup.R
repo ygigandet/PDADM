@@ -8,10 +8,9 @@ packages <- c(
   "here", # for the project's organization
   "tidyverse", "kableExtra","bookdown", "rmarkdown", "DT",
   "usethis", # git
-  "ggplot2", "dplyr","readr","plotly","viridis", "summarytools", "caret", "lattice", "hrbrthemes","extrafontdb", "Rttf2pt1","extrafont","gdtools","GGally",
-  "patchwork", "dygraphs", "gganimate", "lattice","maps", "cluster", "factoextra", "gganimate", "xtable", "shiny", "datasets")
-#for plotting
-
+  "ggplot2", "readr", "plotly", "viridis", "caret", "lattice", "hrbrthemes", "extrafontdb", "Rttf2pt1", "extrafont", "gdtools", "GGally",
+  "patchwork", "dygraphs", "gganimate", "lattice", "maps", "cluster", "factoextra", "gganimate", "xtable", "shiny", "datasets"
+)
 
 purrr::walk(packages, library, character.only = TRUE)
 

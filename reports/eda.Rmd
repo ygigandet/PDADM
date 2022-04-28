@@ -1,22 +1,26 @@
----
-title: "eda"
-author: "Yooby"
-date: "4/19/2022"
-output: html_document
----
 
 ```{r setup, include=FALSE}
 source(here::here("script/setup.R"))
 ```
 
-```{r, eval=FALSE, include=FALSE}
+```{r}
 setwd(here::here("data/"))
 GermanCredit <- read_csv("GermanCreditClean.csv")
 ```
 
 ## Exploratory Data Analysis
 
-```{r, eval=FALSE}
+```{r}
+# GermanCredit accepted
+YES_GC <- filter(GermanCredit,RESPONSE=="1")
+```
+
+```{r}
+# GermanCredit refused
+NO_GC <- filter(GermanCredit,RESPONSE=="0")
+```
+
+```{r}
 # Distribution of the numerical columns, i.e. duration, amount, install_rate, age, num_credits, num_dependence
 
 p.duration <- GermanCredit %>% 
@@ -89,7 +93,7 @@ p.amount_chk_account <- GermanCredit %>%
 p.amount_chk_account
 ```
 
-```{r}
+```{r, include=FALSE}
 # let's check if old people have basically more credit than young people
 mean_yes<-mean(YES_GC$AGE)
 mean_yes
@@ -101,7 +105,7 @@ mean_no
 ```
 
 
-```{r}
+```{r, include=FALSE}
 # comparison of the credit amount  asked 
 
 comp_credits <- boxplot(NO_GC$AMOUNT, YES_GC$AMOUNT,
@@ -110,9 +114,10 @@ comp_credits <- boxplot(NO_GC$AMOUNT, YES_GC$AMOUNT,
         col=c("light grey","dark grey"),
         xlab="Credit amount",
         main="Comparison of the credit amount asked by the person")
+```
 
+```{r, include=FALSE}
 comp_credits # refused person asked for a bigger amount (a bit abvi)
-
 ```
 
 ```{r}
@@ -121,8 +126,6 @@ comp_credits # refused person asked for a bigger amount (a bit abvi)
 #head(YES_GC)
 #corgc <- cor(GermanCredit)
 #corgc
-
-library(GGally)
 
 #creation of a new dataset
 cordata_fin <- GermanCredit[, c("CHK_ACCT", "HISTORY", "AMOUNT", "SAV_ACCT", "NUM_CREDITS", "RESPONSE") ] 
@@ -137,19 +140,18 @@ ggpairs(cordata_pro, title="Correlogram on professional data")
 cordata_immo <- GermanCredit[, c("INSTALL_RATE", "REAL_ESTATE", "PRESENT_RESIDENT", "PROP_UNKN_NONE", "RENT", "OWN_RES", "RESPONSE") ]
 ggpairs(cordata_immo, title="Correlogram on real estate data")
 
-cordata_demo <- GermanCredit[, c("MALE_DIV", "MALE_SINGLE", "MALE_MAR_WID", "AGE", "FOREIGN", "RESPONSE") ] 
+cordata_demo <- GermanCredit[, c("MALE_DIV", "MALE_SINGLE", "MALE_MAR_or_WID", "AGE", "FOREIGN", "RESPONSE") ] 
 ggpairs(cordata_demo, title="Correlogram on demographic data")
 
 #cor<-ggpairs(GermanCredit, title="correlogram with ggpairs()") 
-
-
 ```
 
 ```{r}
 # create an average profile of yes person
 
 # remove OBS column
-Yes_profil<- select(YES_GC, CHK_ACCT, DURATION, HISTORY, NEW_CAR, USED_CAR, FURNITURE, RADIO.TV, EDUCATION, RETRAINING, AMOUNT, SAV_ACCT, EMPLOYMENT, INSTALL_RATE, MALE_DIV, MALE_SINGLE, MALE_MAR_or_WID, CO.APPLICANT, GUARANTOR, PRESENT_RESIDENT, REAL_ESTATE, PROP_UNKN_NONE, AGE, OTHER_INSTALL, RENT, OWN_RES, NUM_CREDITS, JOB, NUM_DEPENDENTS, TELEPHONE, FOREIGN)
+Yes_profil<- YES_GC %>% 
+  select("CHK_ACCT", "DURATION", "HISTORY", "NEW_CAR", "USED_CAR", "FURNITURE", "RADIO/TV", "EDUCATION", "RETRAINING", "AMOUNT", "SAV_ACCT", "EMPLOYMENT", "INSTALL_RATE", "MALE_DIV", "MALE_SINGLE", "MALE_MAR_or_WID", "CO-APPLICANT", "GUARANTOR", "PRESENT_RESIDENT", "REAL_ESTATE", "PROP_UNKN_NONE", "AGE", "OTHER_INSTALL", "RENT", "OWN_RES", "NUM_CREDITS", "JOB", "NUM_DEPENDENTS", "TELEPHONE", "FOREIGN")
 
 # take the mean of each column
 Yes_profil <- summarize_all(Yes_profil, mean)
@@ -163,7 +165,9 @@ Yes_profil <- data.frame(
   x=c('CHK_ACCT', 'DURATION', 'HISTORY', 'NEW_CAR', 'USED_CAR', 'FURNITURE', 'RADIO.TV', 'EDUCATION', 'RETRAINING', 'AMOUNT', 'SAV_ACCT', 'EMPLOYMENT', 'INSTALL_RATE', 'MALE_DIV', 'MALE_SINGLE', 'MALE_MAR_or_WID', 'CO.APPLICANT', 'GUARANTOR', 'PRESENT_RESIDENT', 'REAL_ESTATE', 'PROP_UNKN_NONE', 'AGE', 'OTHER_INSTALL', 'RENT', 'OWN_RES', 'NUM_CREDITS', 'JOB', 'NUM_DEPENDENTS', 'TELEPHONE', 'FOREIGN'),
   y=abs(rnorm(30))
 )
+```
 
+```{r}
 graph_yes_profil <- ggplot(Yes_profil, aes(x=x, y=y)) +
   geom_segment( aes(x=x, xend=x, y=0, yend=y), color="skyblue") +
   geom_point( color="blue", size=4, alpha=0.6) +
@@ -183,4 +187,6 @@ graph_yes_profil
 
 #barplot(prop.table(Yes_profil) * 100, horiz=TRUE, main = "Relative frequency (%)", col = rainbow(3))
 ```
+```
+
 

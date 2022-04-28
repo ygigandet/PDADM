@@ -41,13 +41,3 @@ GermanCredit[,factor_column] <- lapply(GermanCredit[,factor_column], factor)
 setwd(here::here("data/"))
 write_csv(GermanCredit, "GermanCreditClean.csv")
 ```
-
-```{r}
-# GermanCredit accepted
-YES_GC <- filter(GermanCredit,RESPONSE=="1")
-```
-
-```{r}
-# GermanCredit refused
-NO_GC <- filter(GermanCredit,RESPONSE=="0")
-```
