@@ -20,78 +20,60 @@ YES_GC <- filter(GermanCredit,RESPONSE=="1")
 NO_GC <- filter(GermanCredit,RESPONSE=="0")
 ```
 
+The dataset is related to the German Credit. Each applicant is described by 30 variables and the credit application is graded by good or bad.
+
+Let's have a look at the distribution of the applications graded as good and bad
+
+```{r, message=FALSE}
+# Distribution of the grade of the applications
+GermanCredit %>% 
+  ggplot(aes(x = RESPONSE)) +
+  geom_bar() +
+  scale_x_discrete(labels=c("0"="bad","1"="good")) +
+  labs(title = "Number of credit applications per grade",
+       y = "Number of applications",
+       x = "Grade of applications")
+```
+
 ```{r}
-# Distribution of the numerical columns, i.e. duration, amount, install_rate, age, num_credits, num_dependence
+# Distribution of the numerical columns, i.e. duration, amount age
 
 p.duration <- GermanCredit %>% 
-  ggplot(aes(x = DURATION)) +
-  geom_histogram(binwidth = 1)
-
-p.duration
+  ggplot(aes(x = DURATION, y = as.factor(RESPONSE))) +
+  geom_boxplot() +
+  labs(title = "Duration of the credit applications",
+       x = "Months",
+       y = "Grade")
 
 # Not a lot to say about the duration of the credits. It varies a lot.
 
 p.amount <- GermanCredit %>% 
-  ggplot(aes(x = AMOUNT)) +
-  geom_histogram(binwidth = 1000)
+  ggplot(aes(x = AMOUNT, y = as.factor(RESPONSE))) +
+  geom_boxplot() +
+  labs(title = "Amount of the credit applications",
+       x = "DM",
+       y = "Grade")
 
-p.amount
+# Small amount better chance
 
-# Relatively small amount, less than 5'000
-
-p.install_rate <- GermanCredit %>% 
-  ggplot(aes(x = INSTALL_RATE)) +
-  geom_histogram(binwidth = 1)
-
-p.install_rate
-
-# Installment rate (in other words, repayment rate) is more around 4%
+# Age
 
 p.age <- GermanCredit %>% 
-  ggplot(aes(x = AGE)) +
-  geom_histogram(binwidth = 1)
+  ggplot(aes(x = AGE, y = as.factor(RESPONSE))) +
+  geom_boxplot() +
+  labs(title = "Age of the credit applicants",
+       x = "Years",
+       y = "Grade")
 
-p.age
+
 
 # It is skewed, the younger, the better 
 
-p.num_credits <- GermanCredit %>% 
-  ggplot(aes(x = NUM_CREDITS)) +
-  geom_histogram(binwidth = 1)
-
-p.num_credits
-
-# The less the better, 1 to 3
-
-p.num_dependents <- GermanCredit %>% 
-  ggplot(aes(x = NUM_DEPENDENTS)) +
-  geom_histogram(binwidth = 1)
-
-p.num_dependents
-
-# Mostly one dependent
+p.amount
+p.duration
+p.age
 ```
 
-```{r}
-# Link between the amount for the credit and the credit history of the applicant
-# 0 means no credits taken, 1: all credits at this bank paid back duly, 
-# 2: existing credits paid back duly till now, 3: delay in paying off in the past
-# 4: critical account
-
-p.amount_history <- GermanCredit %>% 
-  ggplot(aes(x = AMOUNT, fill = HISTORY)) +
-  geom_histogram(binwidth = 1000)
-
-p.amount_history
-
-# It's not surprising, when credits are paid, the more they give.
-
-p.amount_chk_account <- GermanCredit %>% 
-  ggplot(aes(x = AMOUNT, fill = CHK_ACCT)) +
-  geom_histogram(binwidth = 1000)
-
-p.amount_chk_account
-```
 
 ```{r, include=FALSE}
 # let's check if old people have basically more credit than young people
@@ -104,21 +86,6 @@ mean_no
 # age does not seem to be a key criterion 
 ```
 
-
-```{r, include=FALSE}
-# comparison of the credit amount  asked 
-
-comp_credits <- boxplot(NO_GC$AMOUNT, YES_GC$AMOUNT,
-        horizontal=TRUE,
-        names=c("Refused", "Accepted"),
-        col=c("light grey","dark grey"),
-        xlab="Credit amount",
-        main="Comparison of the credit amount asked by the person")
-```
-
-```{r, include=FALSE}
-comp_credits # refused person asked for a bigger amount (a bit abvi)
-```
 
 ```{r}
 # correlation matrix
