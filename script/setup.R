@@ -9,7 +9,7 @@ packages <- c(
   "tidyverse", "kableExtra","bookdown", "rmarkdown", "DT",
   "usethis", # git
   "ggplot2", "readr", "plotly", "viridis", "caret", "lattice", "hrbrthemes", "extrafontdb", "Rttf2pt1", "extrafont", "gdtools", "GGally",
-  "patchwork", "dygraphs", "gganimate", "lattice", "maps", "cluster", "factoextra", "gganimate", "xtable", "shiny", "datasets"
+  "patchwork", "dygraphs", "gganimate", "lattice", "maps", "cluster", "factoextra", "gganimate", "xtable", "shiny", "datasets", "caret", "mlbench"
 )
 
 purrr::walk(packages, library, character.only = TRUE)

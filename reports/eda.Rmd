@@ -33,7 +33,7 @@ GermanCredit %>%
        y = "Number",
        x = "Grade") +
   theme(legend.position="none") +
-  scale_x_discrete(label=c("0"="bad", "1"="good")) +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 ```
 
@@ -47,7 +47,7 @@ p.duration <- GermanCredit %>%
   labs(title = "Duration of the credit applications per grade",
        x = "Months",
        y = "Grade") +
-  scale_y_discrete(label=c("0"="bad", "1"="good")) +
+  scale_y_discrete(label=c("0"="No", "1"="Yes")) +
   theme(legend.position="none") +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
@@ -65,7 +65,7 @@ p.amount <- GermanCredit %>%
   labs(title = "Amount of the credit applications per grade",
        x = "DM",
        y = "Grade") +
-  scale_y_discrete(label=c("0"="bad", "1"="good")) +
+  scale_y_discrete(label=c("0"="No", "1"="Yes")) +
   theme(legend.position="none") +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
@@ -83,7 +83,7 @@ p.age <- GermanCredit %>%
   labs(title = "Age of the credit applicants",
        x = "Years",
        y = "Grade") +
-  scale_y_discrete(label=c("0"="bad", "1"="good")) +
+  scale_y_discrete(label=c("0"="No", "1"="Yes")) +
   theme(legend.position="none") +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
@@ -277,7 +277,7 @@ p_fur
 ```{r}
 # RADIO/TV
 p_radtv <- GermanCredit %>% 
-  ggplot(aes(x = as.factor(`RADIO/TV`), fill = as.factor(RESPONSE))) +
+  ggplot(aes(x = as.factor(`RADIO.TV`), fill = as.factor(RESPONSE))) +
   geom_bar(position = "dodge") +
   labs(title = "Credit grade if for a radio/tv",
        x = "",
@@ -302,6 +302,8 @@ p_edu <- GermanCredit %>%
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
 p_edu
+
+# comment: pourquoi dans celui-ci il a -1 alors que le code est exactement identique? ligne 37 de la colonne EDUCATION du data GermanCredit il y a un -1. Pas normal. 
 ```
 
 There is a -1, which seems to be wrong.
@@ -369,7 +371,7 @@ p_malmarwid
 ```{r}
 #CO APLLICANT
 p_coapp <- GermanCredit %>% 
-  ggplot(aes(x = as.factor(`CO-APPLICANT`), fill = as.factor(RESPONSE))) +
+  ggplot(aes(x = as.factor(`CO.APPLICANT`), fill = as.factor(RESPONSE))) +
   geom_bar(position = "dodge") +
   labs(title = "Credit grade if co-applicant",
        x = "",
@@ -535,7 +537,7 @@ mean_no
 cordata_fin <- GermanCredit[, c("CHK_ACCT", "HISTORY", "AMOUNT", "SAV_ACCT", "NUM_CREDITS", "RESPONSE") ] 
 ggpairs(cordata_fin, title="Correlogram on financial data")
 
-cordata_own <- GermanCredit[, c("NEW_CAR", "USED_CAR", "FURNITURE", "RADIO/TV", "RESPONSE") ]
+cordata_own <- GermanCredit[, c("NEW_CAR", "USED_CAR", "FURNITURE", "RADIO.TV", "RESPONSE") ]
 ggpairs(cordata_own, title="Correlogram on owned products data")
 
 cordata_pro <- GermanCredit[, c("JOB", "EDUCATION", "RETRAINING", "EMPLOYMENT", "RESPONSE") ] 
@@ -557,12 +559,11 @@ ggpairs(cordata_demo, title="Correlogram on demographic data")
 Yes_profil<- YES_GC %>% 
   select("CHK_ACCT", "DURATION", "HISTORY", "NEW_CAR", "USED_CAR", "FURNITURE", "RADIO/TV", "EDUCATION", "RETRAINING", "AMOUNT", "SAV_ACCT", "EMPLOYMENT", "INSTALL_RATE", "MALE_DIV", "MALE_SINGLE", "MALE_MAR_or_WID", "CO-APPLICANT", "GUARANTOR", "PRESENT_RESIDENT", "REAL_ESTATE", "PROP_UNKN_NONE", "AGE", "OTHER_INSTALL", "RENT", "OWN_RES", "NUM_CREDITS", "JOB", "NUM_DEPENDENTS", "TELEPHONE", "FOREIGN")
 
-# take the mean of each column
-Yes_profil <- summarize_all(Yes_profil, mean)
-
-# transform table in matrix
 #Yes_profil <- data.frame(Yes_profil)
 #Yes_profil <- apply(as.matrix.noquote(Yes_profil),2,as.numeric)
+
+# take the mean of each column
+Yes_profil <- summarize_all(Yes_profil, mean) # not yet find a way to use median instead of mean
 
 # show matrix through lolipop plot 
 Yes_profil <- data.frame(
@@ -591,6 +592,31 @@ graph_yes_profil
 
 #barplot(prop.table(Yes_profil) * 100, horiz=TRUE, main = "Relative frequency (%)", col = rainbow(3))
 ```
+
+The following plot shows a selection of the most important variables of our dataframe.
+The two main disadvantages of these methods are: The increasing overfitting risk when the number of observations is insufficient. The significant computation time when the number of variables is large.
+```{r}
+library(mlbench)
+library(caret)
+
+# transform table in matrix
+GermanCredit <- data.frame(GermanCredit)
+GermanCredit <- apply(as.matrix.noquote(GermanCredit),2,as.numeric)
+
+# select important variables
+control <- trainControl(method="repeatedcv", number=10, repeats=2)
+
+# train the model
+model <- train(RESPONSE~., data=GermanCredit, method="rpart", preProcess="scale", trControl=control)
+
+# estimate variable importance
+importance <- varImp(model, scale=FALSE)
+
+# summarize importance
+print(importance)
+
+# plot importance
+plot(importance)
+
+# comment: we should find a way to print only positive results or to print only 10 firsts variables. 
 ```
-
-
