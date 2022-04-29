@@ -25,53 +25,71 @@ The dataset is related to the German Credit. Each applicant is described by 30 v
 Let's have a look at the distribution of the applications graded as good and bad
 
 ```{r, message=FALSE}
-# Distribution of the grade of the applications
+# Distribution of the grade per credit applications
 GermanCredit %>% 
-  ggplot(aes(x = RESPONSE)) +
+  ggplot(aes(x = as.factor(RESPONSE), fill=as.factor(RESPONSE))) +
   geom_bar() +
-  scale_x_discrete(labels=c("0"="bad","1"="good")) +
   labs(title = "Number of credit applications per grade",
-       y = "Number of applications",
-       x = "Grade of applications")
+       y = "Number",
+       x = "Grade") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="bad", "1"="good")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 ```
 
 ```{r}
-# Distribution of the numerical columns, i.e. duration, amount age
+# Distribution of the continuous variables, i.e. duration, amount, age
+# Here duration
 
 p.duration <- GermanCredit %>% 
-  ggplot(aes(x = DURATION, y = as.factor(RESPONSE))) +
+  ggplot(aes(x = DURATION, y = as.factor(RESPONSE), fill = as.factor(RESPONSE))) +
   geom_boxplot() +
-  labs(title = "Duration of the credit applications",
+  labs(title = "Duration of the credit applications per grade",
        x = "Months",
-       y = "Grade")
+       y = "Grade") +
+  scale_y_discrete(label=c("0"="bad", "1"="good")) +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-# Not a lot to say about the duration of the credits. It varies a lot.
+p.duration
 
+# Nothing to note
+```
+
+
+```{r}
+# Same as above, for amount
 p.amount <- GermanCredit %>% 
-  ggplot(aes(x = AMOUNT, y = as.factor(RESPONSE))) +
+  ggplot(aes(x = AMOUNT, y = as.factor(RESPONSE), fill=as.factor(RESPONSE))) +
   geom_boxplot() +
-  labs(title = "Amount of the credit applications",
+  labs(title = "Amount of the credit applications per grade",
        x = "DM",
-       y = "Grade")
+       y = "Grade") +
+  scale_y_discrete(label=c("0"="bad", "1"="good")) +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-# Small amount better chance
+p.amount
 
-# Age
+# A lot of outliers for the good applications
+```
+
+```{r}
+# Same as above, for age
 
 p.age <- GermanCredit %>% 
-  ggplot(aes(x = AGE, y = as.factor(RESPONSE))) +
+  ggplot(aes(x = AGE, y = as.factor(RESPONSE), fill=as.factor(RESPONSE))) +
   geom_boxplot() +
   labs(title = "Age of the credit applicants",
        x = "Years",
-       y = "Grade")
+       y = "Grade") +
+  scale_y_discrete(label=c("0"="bad", "1"="good")) +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-
-
-# It is skewed, the younger, the better 
-
-p.amount
-p.duration
 p.age
+
+# One outlier to recode - 75 years old instead of 125 years old
 ```
 
 
