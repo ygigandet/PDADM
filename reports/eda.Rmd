@@ -277,7 +277,7 @@ p_fur
 ```{r}
 # RADIO/TV
 p_radtv <- GermanCredit %>% 
-  ggplot(aes(x = as.factor(`RADIO.TV`), fill = as.factor(RESPONSE))) +
+  ggplot(aes(x = as.factor(`RADIO/TV`), fill = as.factor(RESPONSE))) +
   geom_bar(position = "dodge") +
   labs(title = "Credit grade if for a radio/tv",
        x = "",
@@ -371,7 +371,7 @@ p_malmarwid
 ```{r}
 #CO APLLICANT
 p_coapp <- GermanCredit %>% 
-  ggplot(aes(x = as.factor(`CO.APPLICANT`), fill = as.factor(RESPONSE))) +
+  ggplot(aes(x = as.factor(`CO-APPLICANT`), fill = as.factor(RESPONSE))) +
   geom_bar(position = "dodge") +
   labs(title = "Credit grade if co-applicant",
        x = "",
@@ -537,7 +537,7 @@ mean_no
 cordata_fin <- GermanCredit[, c("CHK_ACCT", "HISTORY", "AMOUNT", "SAV_ACCT", "NUM_CREDITS", "RESPONSE") ] 
 ggpairs(cordata_fin, title="Correlogram on financial data")
 
-cordata_own <- GermanCredit[, c("NEW_CAR", "USED_CAR", "FURNITURE", "RADIO.TV", "RESPONSE") ]
+cordata_own <- GermanCredit[, c("NEW_CAR", "USED_CAR", "FURNITURE", "RADIO/TV", "RESPONSE") ]
 ggpairs(cordata_own, title="Correlogram on owned products data")
 
 cordata_pro <- GermanCredit[, c("JOB", "EDUCATION", "RETRAINING", "EMPLOYMENT", "RESPONSE") ] 
