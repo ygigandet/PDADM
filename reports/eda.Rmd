@@ -51,27 +51,9 @@ p.duration <- GermanCredit %>%
   theme(legend.position="none") +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-p.duration
+#p.duration
 
 # Nothing to note
-```
-
-
-```{r}
-# Same as above, for amount
-p.amount <- GermanCredit %>% 
-  ggplot(aes(x = AMOUNT, y = as.factor(RESPONSE), fill=as.factor(RESPONSE))) +
-  geom_boxplot() +
-  labs(title = "Amount of the credit applications per grade",
-       x = "DM",
-       y = "Grade") +
-  scale_y_discrete(label=c("0"="No", "1"="Yes")) +
-  theme(legend.position="none") +
-  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
-
-p.amount
-
-# A lot of outliers for the good applications
 ```
 
 ```{r}
@@ -87,9 +69,36 @@ p.age <- GermanCredit %>%
   theme(legend.position="none") +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-p.age
+#p.age
 
 # One outlier to recode - 75 years old instead of 125 years old
+```
+
+```{r}
+# Same as above, for amount
+p.amount <- GermanCredit %>% 
+  ggplot(aes(x = AMOUNT, y = as.factor(RESPONSE), fill=as.factor(RESPONSE))) +
+  geom_boxplot() +
+  labs(title = "Amount of the credit applications per grade",
+       x = "DM",
+       y = "Grade") +
+  scale_y_discrete(label=c("0"="No", "1"="Yes")) +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+#p.amount
+
+# A lot of outliers for the good applications
+```
+
+
+```{r}
+library("ggpubr")
+
+figure1 <- ggarrange(p.duration, p.age, p.amount,
+                    labels = c("A", "B", "C"),
+                    ncol = 2, nrow = 2)
+figure1
 ```
 
 ```{r}
@@ -123,7 +132,7 @@ p.history <- GermanCredit %>%
   theme(legend.position="none") +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
   
-p.history
+#p.history
 ```
 Here again, seems weird. At 3 and 4, it means the previous credit were not or partially reimbursed. But they are graded as good?
 
@@ -138,67 +147,10 @@ p.savacct <- GermanCredit %>%
   theme(legend.position="none") +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
   
-p.savacct
-```
-Some questions need to be asked. What's the difference between an application with a small saving accounts and one with none saving accounts? Why the bank gives good grades to the latest?
-
-```{r}
-# EMPLOYMENT
-p.empl <- GermanCredit %>% 
-  ggplot(aes(x = EMPLOYMENT, fill=as.factor(RESPONSE)))+
-  geom_bar(position = "dodge") +
-  labs(title = "Credit grade with regard to employment duration",
-       x = "Category",
-       y = "Number") +
-  theme(legend.position="none") +
-  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
-  
-p.empl
+#p.savacct
 ```
 
-```{r}
-# PRESENT_RESIDENTS
-p.preres <- GermanCredit %>% 
-  ggplot(aes(x = PRESENT_RESIDENT, fill=as.factor(RESPONSE)))+
-  geom_bar(position = "dodge") +
-  labs(title = "Credit grade related to residents duration stays",
-       x = "Category",
-       y = "Number") +
-  theme(legend.position="none") +
-  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
-  
-p.preres
-```
 
-Problem here, the categories should be between 0 and 3 but are between 1 and 4.
-
-```{r}
-#JOB
-p.job <- GermanCredit %>% 
-  ggplot(aes(x = JOB, fill=as.factor(RESPONSE)))+
-  geom_bar(position = "dodge") +
-  labs(title = "Credit grade related to the nature of jobs",
-       x = "Category",
-       y = "Number") +
-  theme(legend.position="none") +
-  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
-  
-p.job
-```
-
-```{r}
-# 
-p.insrat <- GermanCredit %>% 
-  ggplot(aes(x = INSTALL_RATE, fill=as.factor(RESPONSE)))+
-  geom_bar(position = "dodge") +
-  labs(title = "Credit grade per installment rate",
-       x = "% of disposable income",
-       y = "Number") +
-  theme(legend.position="none") +
-  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
-  
-p.insrat
-```
 
 ```{r}
 #NUM_CREDIT
@@ -211,22 +163,16 @@ p.numcre <- GermanCredit %>%
   theme(legend.position="none") +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
   
-p.numcre
+#p.numcre
 ```
 
 ```{r}
-#NUM_DEPENDENT
-p.numdep <- GermanCredit %>% 
-  ggplot(aes(x = as.factor(NUM_DEPENDENTS), fill=as.factor(RESPONSE)))+
-  geom_bar(position = "dodge") +
-  labs(title = "Credit grade related to the number of dependent",
-       x = "Number of people for whom liable to provide maintenance",
-       y = "Number") +
-  theme(legend.position="none") +
-  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
-  
-p.numdep
+figure_fin <- ggarrange(p.history, p.savacct, p.numcre, p.chkacct,
+                    labels = c("A", "B", "C", "D"),
+                    ncol = 2, nrow = 2)
+figure_fin
 ```
+
 
 ```{r}
 # Now let's have a look at the binary variables
@@ -241,12 +187,12 @@ p_newcar <- GermanCredit %>%
   scale_x_discrete(label=c("0"="No", "1"="Yes")) +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-p_newcar
+#p_newcar
 ```
 
 ```{r}
 # USED CAR
-p_usecar <- GermanCredit %>% 
+p_usedcar <- GermanCredit %>% 
   ggplot(aes(x = as.factor(USED_CAR), fill = as.factor(RESPONSE))) +
   geom_bar(position = "dodge") +
   labs(title = "Credit grade if for a used car",
@@ -256,7 +202,7 @@ p_usecar <- GermanCredit %>%
   scale_x_discrete(label=c("0"="No", "1"="Yes")) +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-p_usecar
+#p_usedcar
 ```
 
 ```{r}
@@ -271,13 +217,13 @@ p_fur <- GermanCredit %>%
   scale_x_discrete(label=c("0"="No", "1"="Yes")) +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-p_fur
+#p_fur
 ```
 
 ```{r}
 # RADIO/TV
 p_radtv <- GermanCredit %>% 
-  ggplot(aes(x = as.factor(`RADIO/TV`), fill = as.factor(RESPONSE))) +
+  ggplot(aes(x = as.factor('RADIO.TV'), fill = as.factor(RESPONSE))) +
   geom_bar(position = "dodge") +
   labs(title = "Credit grade if for a radio/tv",
        x = "",
@@ -286,7 +232,45 @@ p_radtv <- GermanCredit %>%
   scale_x_discrete(label=c("0"="No", "1"="Yes")) +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-p_radtv
+#p_radtv
+```
+
+```{r}
+figure_prod <- ggarrange(p_newcar, p_usedcar, p_fur, p_radtv,
+                    labels = c("A", "B", "C", "D"),
+                    ncol = 2, nrow = 2)
+figure_prod
+```
+
+
+Some questions need to be asked. What's the difference between an application with a small saving accounts and one with none saving accounts? Why the bank gives good grades to the latest?
+
+```{r}
+# EMPLOYMENT
+p.empl <- GermanCredit %>% 
+  ggplot(aes(x = EMPLOYMENT, fill=as.factor(RESPONSE)))+
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade with regard to employment duration",
+       x = "Category",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+  
+#p.empl
+```
+
+```{r}
+#JOB
+p.job <- GermanCredit %>% 
+  ggplot(aes(x = JOB, fill=as.factor(RESPONSE)))+
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade related to the nature of jobs",
+       x = "Category",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+  
+#p.job
 ```
 
 ```{r}
@@ -301,12 +285,10 @@ p_edu <- GermanCredit %>%
   scale_x_discrete(label=c("0"="No", "1"="Yes")) +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-p_edu
+#p_edu
 
-# comment: pourquoi dans celui-ci il a -1 alors que le code est exactement identique? ligne 37 de la colonne EDUCATION du data GermanCredit il y a un -1. Pas normal. 
+# comment: pourquoi dans celui-ci il a -1 alors que le code est exactement identique? ligne 37 de la colonne EDUCATION du data GermanCredit il y a un -1. Pas normal. It seems to be wrong. 
 ```
-
-There is a -1, which seems to be wrong.
 
 ```{r}
 # RETRAINING
@@ -320,86 +302,47 @@ p_ret <- GermanCredit %>%
   scale_x_discrete(label=c("0"="No", "1"="Yes")) +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-p_ret
+#p_ret
 ```
 
 ```{r}
-# MALE_DIV
-p_maldiv <- GermanCredit %>% 
-  ggplot(aes(x = as.factor(MALE_DIV), fill = as.factor(RESPONSE))) +
+figure_pro <- ggarrange(p.empl, p.job, p_edu, p_ret,
+                    labels = c("A", "B", "C", "D"),
+                    ncol = 2, nrow = 2)
+figure_pro
+```
+
+
+```{r}
+# PRESENT_RESIDENTS
+p.preres <- GermanCredit %>% 
+  ggplot(aes(x = PRESENT_RESIDENT, fill=as.factor(RESPONSE)))+
   geom_bar(position = "dodge") +
-  labs(title = "Credit grade if male and divorced",
-       x = "",
+  labs(title = "Credit grade related to residents duration stays",
+       x = "Category",
        y = "Number") +
   theme(legend.position="none") +
-  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+  
+#p.preres
 
-p_maldiv
+#Problem here, the categories should be between 0 and 3 but are between 1 and 4.
+
 ```
 
 ```{r}
-#MALE_SINGLE
-p_malsin <- GermanCredit %>% 
-  ggplot(aes(x = as.factor(MALE_SINGLE), fill = as.factor(RESPONSE))) +
+# 
+p.insrat <- GermanCredit %>% 
+  ggplot(aes(x = INSTALL_RATE, fill=as.factor(RESPONSE)))+
   geom_bar(position = "dodge") +
-  labs(title = "Credit grade if male and single",
-       x = "",
+  labs(title = "Credit grade per installment rate",
+       x = "% of disposable income",
        y = "Number") +
   theme(legend.position="none") +
-  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
-
-p_malsin
+  
+#p.insrat
 ```
-
-```{r}
-# MALE_MAR_or_WID
-p_malmarwid <- GermanCredit %>% 
-  ggplot(aes(x = as.factor(MALE_MAR_or_WID), fill = as.factor(RESPONSE))) +
-  geom_bar(position = "dodge") +
-  labs(title = "Credit grade if male married or widowed",
-       x = "",
-       y = "Number") +
-  theme(legend.position="none") +
-  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
-  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
-
-p_malmarwid
-```
-
-```{r}
-#CO APLLICANT
-p_coapp <- GermanCredit %>% 
-  ggplot(aes(x = as.factor(`CO-APPLICANT`), fill = as.factor(RESPONSE))) +
-  geom_bar(position = "dodge") +
-  labs(title = "Credit grade if co-applicant",
-       x = "",
-       y = "Number") +
-  theme(legend.position="none") +
-  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
-  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
-
-p_coapp
-```
-This one is also strange, meaning that if there is a co-applicant, it is more rejected? Must be the opposite
-
-```{r}
-#GUARANTOR
-p_gua <- GermanCredit %>% 
-  ggplot(aes(x = as.factor(GUARANTOR), fill = as.factor(RESPONSE))) +
-  geom_bar(position = "dodge") +
-  labs(title = "Credit grade if guarantor",
-       x = "",
-       y = "Number") +
-  theme(legend.position="none") +
-  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
-  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
-
-p_gua
-```
-
-Again, what the 2?
 
 ```{r}
 #REAL ESTATE
@@ -413,7 +356,7 @@ p_reaest <- GermanCredit %>%
   scale_x_discrete(label=c("0"="No", "1"="Yes")) +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-p_reaest
+#p_reaest
 ```
 
 ```{r}
@@ -428,24 +371,40 @@ p_prop <- GermanCredit %>%
   scale_x_discrete(label=c("0"="No", "1"="Yes")) +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-p_prop
+#p_prop
 ```
 
-What's the difference with real estate?
-
 ```{r}
-#OTHER INSTALL
-p_otherinstall <- GermanCredit %>% 
-  ggplot(aes(x = as.factor(OTHER_INSTALL), fill = as.factor(RESPONSE))) +
+#OWN_RES
+p_ownres <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(OWN_RES), fill = as.factor(RESPONSE))) +
   geom_bar(position = "dodge") +
-  labs(title = "Credit grade if other installment plan",
+  labs(title = "Credit grade if owns residence",
        x = "",
        y = "Number") +
   theme(legend.position="none") +
   scale_x_discrete(label=c("0"="No", "1"="Yes")) +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-p_otherinstall
+#p_ownres
+```
+
+```{r}
+#GUARANTOR
+p_gua <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(GUARANTOR), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if guarantor",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+#p_gua
+
+#Again, what the 2?
+
 ```
 
 ```{r}
@@ -460,44 +419,63 @@ p_apprent <- GermanCredit %>%
   scale_x_discrete(label=c("0"="No", "1"="Yes")) +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-p_apprent
+#p_apprent
 ```
-Not sure of the meaning of this one?
 
 ```{r}
-#OWN_RES
-p_ownres <- GermanCredit %>% 
-  ggplot(aes(x = as.factor(OWN_RES), fill = as.factor(RESPONSE))) +
+figure_reales <- ggarrange(p.preres, p.insrat, p_reaest, p_prop, p_ownres, p_gua, p_apprent,
+                    labels = c("A", "B", "C", "D", "E", "F", "G"),
+                    ncol = 2, nrow = 2)
+figure_reales
+```
+
+
+
+
+```{r}
+# MALE_DIV
+p_maldiv <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(MALE_DIV), fill = as.factor(RESPONSE))) +
   geom_bar(position = "dodge") +
-  labs(title = "Credit grade if owns residence",
+  labs(title = "Credit grade if male and divorced",
        x = "",
        y = "Number") +
   theme(legend.position="none") +
   scale_x_discrete(label=c("0"="No", "1"="Yes")) +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-p_ownres
+#p_maldiv
 ```
 
-Again what's the difference between this one and the two other ones: real estate and prop_unkn_none?
-Seems to be redundant
-
 ```{r}
-#TELEPHONE
-p_tel <- GermanCredit %>% 
-  ggplot(aes(x = as.factor(TELEPHONE), fill = as.factor(RESPONSE))) +
+#MALE_SINGLE
+p_malsin <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(MALE_SINGLE), fill = as.factor(RESPONSE))) +
   geom_bar(position = "dodge") +
-  labs(title = "Credit grade if telephone on his name",
+  labs(title = "Credit grade if male and single",
        x = "",
        y = "Number") +
   theme(legend.position="none") +
   scale_x_discrete(label=c("0"="No", "1"="Yes")) +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-p_tel
+#p_malsin
 ```
 
-Obviously, not of interest
+```{r}
+# MALE_MAR_or_WID
+p_malmarwid <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(MALE_MAR_or_WID), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if male married or widowed",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+#p_malmarwid
+```
 
 ```{r}
 #FOREIGN
@@ -511,8 +489,85 @@ p_for <- GermanCredit %>%
   scale_x_discrete(label=c("0"="No", "1"="Yes")) +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
-p_for
+#p_for
 ```
+
+```{r}
+figure_demo <- ggarrange(p_maldiv, p_malsin, p_malmarwid, p_for,
+                    labels = c("A", "B", "C", "D"),
+                    ncol = 2, nrow = 2)
+figure_demo
+```
+
+```{r}
+#CO APLLICANT
+p_coapp <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(`CO.APPLICANT`), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if co-applicant",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+#p_coapp
+
+#This one is also strange, meaning that if there is a co-applicant, it is more rejected? Must be the opposite
+
+```
+
+```{r}
+#OTHER INSTALL
+p_otherinstall <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(OTHER_INSTALL), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if other installment plan",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+#p_otherinstall
+```
+
+```{r}
+#NUM_DEPENDENT
+p.numdep <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(NUM_DEPENDENTS), fill=as.factor(RESPONSE)))+
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade related to the number of dependent",
+       x = "Number of people for whom liable to provide maintenance",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+  
+#p.numdep
+```
+
+```{r}
+#TELEPHONE
+p_tel <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(TELEPHONE), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if telephone on his name",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+#p_tel
+```
+
+```{r}
+figure_other <- ggarrange(p_coapp, p_otherinstall,p.numdep, p_tel,
+                    labels = c("A", "B", "C", "D"),
+                    ncol = 2, nrow = 2)
+figure_other
+```
+
 
 ```{r, include=FALSE}
 # let's check if old people have basically more credit than young people
@@ -537,7 +592,7 @@ mean_no
 cordata_fin <- GermanCredit[, c("CHK_ACCT", "HISTORY", "AMOUNT", "SAV_ACCT", "NUM_CREDITS", "RESPONSE") ] 
 ggpairs(cordata_fin, title="Correlogram on financial data")
 
-cordata_own <- GermanCredit[, c("NEW_CAR", "USED_CAR", "FURNITURE", "RADIO/TV", "RESPONSE") ]
+cordata_own <- GermanCredit[, c("NEW_CAR", "USED_CAR", "FURNITURE", "RADIO.TV", "RESPONSE") ]
 ggpairs(cordata_own, title="Correlogram on owned products data")
 
 cordata_pro <- GermanCredit[, c("JOB", "EDUCATION", "RETRAINING", "EMPLOYMENT", "RESPONSE") ] 
