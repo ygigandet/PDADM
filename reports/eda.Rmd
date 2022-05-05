@@ -113,7 +113,7 @@ p.chkacct <- GermanCredit %>%
   theme(legend.position="none") +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
   
-p.chkacct
+#p.chkacct
 
 # I didn't achieve to put the labels here for the x-axis
 ```
