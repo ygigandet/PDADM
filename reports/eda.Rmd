@@ -20,9 +20,11 @@ YES_GC <- filter(GermanCredit,RESPONSE=="1")
 NO_GC <- filter(GermanCredit,RESPONSE=="0")
 ```
 
-The dataset is related to the German Credit. Each applicant is described by 30 variables and the credit application is graded by good or bad.
+The German Credit data is heavily unbalanced: 700 credit applications rated as good versus 300 credit applications rated as bad.
 
-Let's have a look at the distribution of the applications graded as good and bad
+```{r}
+table(GermanCredit$RESPONSE)
+```
 
 ```{r, message=FALSE}
 # Distribution of the grade per credit applications
@@ -33,7 +35,7 @@ GermanCredit %>%
        y = "Number",
        x = "Grade") +
   theme(legend.position="none") +
-  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_x_discrete(label=c("0"="Bad", "1"="Good")) +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 ```
 
