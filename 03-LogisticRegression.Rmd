@@ -8,8 +8,7 @@ setwd(here::here("data/"))
 GermanCredit <- read_csv("GermanCreditClean.csv")
 ```
 
-The first model of supervised learning that we'll try is called the logistic regression.
-First, let's split the data into two models
+We fit a logistic regression to test if it could predict the output we desired.
 
 ```{r}
 # Creation of a training and a testing data sets
