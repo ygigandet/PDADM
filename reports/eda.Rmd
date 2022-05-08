@@ -22,7 +22,7 @@ NO_GC <- filter(GermanCredit,RESPONSE=="0")
 
 The German Credit data is heavily unbalanced: 700 credit applications rated as good versus 300 credit applications rated as bad.
 
-```{r}
+```{r, echo = FALSE, message = FALSE}
 table(GermanCredit$RESPONSE)
 ```
 
