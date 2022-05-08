@@ -1,6 +1,6 @@
 --- 
-title: "YOUR TITLE HERE"
-author: "YOUR NAME HERE"
+title: "Project in Data Analytics for Decision Making"
+author: "Manon Verjus and Yooby Gigandet"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
