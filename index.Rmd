@@ -5,5 +5,6 @@ date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
 
-# Down the rabbit-hole
+# Introduction
 
+During our course at HEC Lausanne called "Project in Data Analytics for Decision Making", we need to work on the german dataset to predict whether the client is a good or bad risk for the bank.
