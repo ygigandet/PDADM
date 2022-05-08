@@ -7,4 +7,7 @@ site: bookdown::bookdown_site
 
 # Introduction
 
-During our course at HEC Lausanne called "Project in Data Analytics for Decision Making", we need to work on the german dataset to predict whether the client is a good or bad risk for the bank.
+Our work for the course "Project in Data Analytics for Decision Making" is to predict the credit risk associated to customers for our client, a bank. 
+
+To do so, we used the CRISP-DM method:
+

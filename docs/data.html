@@ -32,7 +32,6 @@
   
 <link rel="prev" href="index.html"/>
 <link rel="next" href="models.html"/>
-<script src="libs/header-attrs-2.14/header-attrs.js"></script>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -50,8 +49,9 @@
 
 
 
-<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
 
@@ -102,10 +102,10 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="data" class="section level1" number="2">
-<h1><span class="header-section-number">Chapter 2</span> Data</h1>
-<div id="data-1" class="section level2" number="2.1">
-<h2><span class="header-section-number">2.1</span> Data</h2>
+<div id="data" class="section level1 hasAnchor" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Data<a href="data.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="data-1" class="section level2 hasAnchor" number="2.1">
+<h2><span class="header-section-number">2.1</span> Data<a href="data.html#data-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <div>
 <p>The German Credit data contains data on 1000 past credit applicants, described by 30 variables. Each applicant is rated as “Good” or “Bad”.</p>
 <p>By exploring the data, we find some inaccuracies and in agreement with the customer, we change them as follow:</p>
@@ -118,12 +118,9 @@
 </div>
 
 </div>
-<div id="exploratory-data-analysis" class="section level2" number="2.2">
-<h2><span class="header-section-number">2.2</span> Exploratory Data Analysis</h2>
+<div id="exploratory-data-analysis" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Exploratory Data Analysis<a href="data.html#exploratory-data-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The German Credit data is heavily unbalanced: 700 credit applications rated as good versus 300 credit applications rated as bad.</p>
-<pre><code>#&gt; 
-#&gt;   0   1 
-#&gt; 300 700</code></pre>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>What does the first category means? &lt;0, meaning 0? So the account is opened but there is nothing on it?
@@ -146,13 +143,10 @@ Another point, if you don’t have any checking account, your credit application
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-51-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>The following plot shows a selection of the most important variables of our dataframe.
 The two main disadvantages of these methods are: The increasing overfitting risk when the number of observations is insufficient. The significant computation time when the number of variables is large.</p>
-<pre><code>#&gt; Warning in train.default(x, y, weights = w, ...): You are trying to
-#&gt; do regression and your outcome only has two possible values Are you
-#&gt; trying to do classification? If so, use a 2 level factor as your
-#&gt; outcome column.
-#&gt; Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info
-#&gt; = trainInfo, : There were missing values in resampled performance
-#&gt; measures.
+<pre><code>#&gt; Warning in train.default(x, y, weights = w, ...): You are trying to do regression and your outcome only has two
+#&gt; possible values Are you trying to do classification? If so, use a 2 level factor as your outcome column.
+#&gt; Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info = trainInfo, : There were missing values in
+#&gt; resampled performance measures.
 #&gt; rpart variable importance
 #&gt; 
 #&gt;   only 20 most important variables shown (out of 30)
