@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 5 Decision Tree | Project in Data Analytics for Decision Making</title>
+  <meta name="description" content="Chapter 5 Decision Tree | Project in Data Analytics for Decision Making" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 5 Decision Tree | Project in Data Analytics for Decision Making" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 5 Decision Tree | Project in Data Analytics for Decision Making" />
+  
+  
+  
+
+<meta name="author" content="Manon Verjus and Yooby Gigandet" />
+
+
+<meta name="date" content="2022-05-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="models.html"/>
+
+<script src="libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">German Credit - Data analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>2</b> Data</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data.html"><a href="data.html#data-cleaning"><i class="fa fa-check"></i><b>2.1</b> Data cleaning</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="data-1.html"><a href="data-1.html"><i class="fa fa-check"></i><b>3</b> Data</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="data-1.html"><a href="data-1.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>3.1</b> Exploratory Data Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="models.html"><a href="models.html"><i class="fa fa-check"></i><b>4</b> Models</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="models.html"><a href="models.html#logistic-regression"><i class="fa fa-check"></i><b>4.1</b> Logistic Regression</a></li>
+<li class="chapter" data-level="4.2" data-path="models.html"><a href="models.html#trees"><i class="fa fa-check"></i><b>4.2</b> Trees</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="decision-tree.html"><a href="decision-tree.html"><i class="fa fa-check"></i><b>5</b> Decision Tree</a></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Project in Data Analytics for Decision Making</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="decision-tree" class="section level1" number="5">
+<h1><span class="header-section-number">Chapter 5</span> Decision Tree</h1>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-60-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-61-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-62-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<pre><code>#&gt;     Obs
+#&gt; Pred   0   1
+#&gt;    0  12   7
+#&gt;    1  91 224
+#&gt;         0     1
+#&gt; 1   0.384 0.616
+#&gt; 2   0.134 0.866
+#&gt; 3   0.384 0.616
+#&gt; 4   0.134 0.866
+#&gt; 5   0.134 0.866
+#&gt; 6   0.384 0.616
+#&gt; 7   0.384 0.616
+#&gt; 8   0.134 0.866
+#&gt; 9   0.714 0.286
+#&gt; 10  0.134 0.866
+#&gt; 11  0.384 0.616
+#&gt; 12  0.134 0.866
+#&gt; 13  0.134 0.866
+#&gt; 14  0.134 0.866
+#&gt; 15  0.384 0.616
+#&gt; 16  0.134 0.866
+#&gt; 17  0.384 0.616
+#&gt; 18  0.384 0.616
+#&gt; 19  0.384 0.616
+#&gt; 20  0.134 0.866
+#&gt; 21  0.134 0.866
+#&gt; 22  0.134 0.866
+#&gt; 23  0.134 0.866
+#&gt; 24  0.134 0.866
+#&gt; 25  0.384 0.616
+#&gt; 26  0.384 0.616
+#&gt; 27  0.714 0.286
+#&gt; 28  0.134 0.866
+#&gt; 29  0.384 0.616
+#&gt; 30  0.134 0.866
+#&gt; 31  0.384 0.616
+#&gt; 32  0.384 0.616
+#&gt; 33  0.384 0.616
+#&gt; 34  0.134 0.866
+#&gt; 35  0.134 0.866
+#&gt; 36  0.384 0.616
+#&gt; 37  0.134 0.866
+#&gt; 38  0.134 0.866
+#&gt; 39  0.384 0.616
+#&gt; 40  0.134 0.866
+#&gt; 41  0.384 0.616
+#&gt; 42  0.134 0.866
+#&gt; 43  0.134 0.866
+#&gt; 44  0.384 0.616
+#&gt; 45  0.134 0.866
+#&gt; 46  0.134 0.866
+#&gt; 47  0.134 0.866
+#&gt; 48  0.384 0.616
+#&gt; 49  0.134 0.866
+#&gt; 50  0.134 0.866
+#&gt; 51  0.384 0.616
+#&gt; 52  0.384 0.616
+#&gt; 53  0.134 0.866
+#&gt; 54  0.714 0.286
+#&gt; 55  0.384 0.616
+#&gt; 56  0.384 0.616
+#&gt; 57  0.134 0.866
+#&gt; 58  0.384 0.616
+#&gt; 59  0.384 0.616
+#&gt; 60  0.384 0.616
+#&gt; 61  0.134 0.866
+#&gt; 62  0.384 0.616
+#&gt; 63  0.384 0.616
+#&gt; 64  0.134 0.866
+#&gt; 65  0.384 0.616
+#&gt; 66  0.714 0.286
+#&gt; 67  0.714 0.286
+#&gt; 68  0.134 0.866
+#&gt; 69  0.384 0.616
+#&gt; 70  0.384 0.616
+#&gt; 71  0.134 0.866
+#&gt; 72  0.384 0.616
+#&gt; 73  0.714 0.286
+#&gt; 74  0.134 0.866
+#&gt; 75  0.134 0.866
+#&gt; 76  0.384 0.616
+#&gt; 77  0.384 0.616
+#&gt; 78  0.384 0.616
+#&gt; 79  0.134 0.866
+#&gt; 80  0.134 0.866
+#&gt; 81  0.134 0.866
+#&gt; 82  0.134 0.866
+#&gt; 83  0.134 0.866
+#&gt; 84  0.384 0.616
+#&gt; 85  0.134 0.866
+#&gt; 86  0.384 0.616
+#&gt; 87  0.134 0.866
+#&gt; 88  0.384 0.616
+#&gt; 89  0.384 0.616
+#&gt; 90  0.134 0.866
+#&gt; 91  0.134 0.866
+#&gt; 92  0.384 0.616
+#&gt; 93  0.384 0.616
+#&gt; 94  0.384 0.616
+#&gt; 95  0.384 0.616
+#&gt; 96  0.134 0.866
+#&gt; 97  0.384 0.616
+#&gt; 98  0.134 0.866
+#&gt; 99  0.134 0.866
+#&gt; 100 0.134 0.866
+#&gt; 101 0.384 0.616
+#&gt; 102 0.384 0.616
+#&gt; 103 0.384 0.616
+#&gt; 104 0.134 0.866
+#&gt; 105 0.134 0.866
+#&gt; 106 0.384 0.616
+#&gt; 107 0.714 0.286
+#&gt; 108 0.134 0.866
+#&gt; 109 0.384 0.616
+#&gt; 110 0.134 0.866
+#&gt; 111 0.134 0.866
+#&gt; 112 0.714 0.286
+#&gt; 113 0.384 0.616
+#&gt; 114 0.134 0.866
+#&gt; 115 0.384 0.616
+#&gt; 116 0.384 0.616
+#&gt; 117 0.134 0.866
+#&gt; 118 0.134 0.866
+#&gt; 119 0.134 0.866
+#&gt; 120 0.384 0.616
+#&gt; 121 0.384 0.616
+#&gt; 122 0.384 0.616
+#&gt; 123 0.134 0.866
+#&gt; 124 0.714 0.286
+#&gt; 125 0.134 0.866
+#&gt; 126 0.134 0.866
+#&gt; 127 0.134 0.866
+#&gt; 128 0.134 0.866
+#&gt; 129 0.384 0.616
+#&gt; 130 0.134 0.866
+#&gt; 131 0.384 0.616
+#&gt; 132 0.384 0.616
+#&gt; 133 0.134 0.866
+#&gt; 134 0.384 0.616
+#&gt; 135 0.134 0.866
+#&gt; 136 0.134 0.866
+#&gt; 137 0.384 0.616
+#&gt; 138 0.384 0.616
+#&gt; 139 0.384 0.616
+#&gt; 140 0.384 0.616
+#&gt; 141 0.384 0.616
+#&gt; 142 0.134 0.866
+#&gt; 143 0.134 0.866
+#&gt; 144 0.134 0.866
+#&gt; 145 0.134 0.866
+#&gt; 146 0.134 0.866
+#&gt; 147 0.384 0.616
+#&gt; 148 0.384 0.616
+#&gt; 149 0.134 0.866
+#&gt; 150 0.384 0.616
+#&gt; 151 0.134 0.866
+#&gt; 152 0.384 0.616
+#&gt; 153 0.134 0.866
+#&gt; 154 0.134 0.866
+#&gt; 155 0.384 0.616
+#&gt; 156 0.134 0.866
+#&gt; 157 0.134 0.866
+#&gt; 158 0.134 0.866
+#&gt; 159 0.134 0.866
+#&gt; 160 0.134 0.866
+#&gt; 161 0.384 0.616
+#&gt; 162 0.384 0.616
+#&gt; 163 0.384 0.616
+#&gt; 164 0.384 0.616
+#&gt; 165 0.134 0.866
+#&gt; 166 0.134 0.866
+#&gt; 167 0.384 0.616
+#&gt; 168 0.134 0.866
+#&gt; 169 0.384 0.616
+#&gt; 170 0.134 0.866
+#&gt; 171 0.384 0.616
+#&gt; 172 0.134 0.866
+#&gt; 173 0.134 0.866
+#&gt; 174 0.134 0.866
+#&gt; 175 0.384 0.616
+#&gt; 176 0.384 0.616
+#&gt; 177 0.384 0.616
+#&gt; 178 0.134 0.866
+#&gt; 179 0.134 0.866
+#&gt; 180 0.134 0.866
+#&gt; 181 0.384 0.616
+#&gt; 182 0.384 0.616
+#&gt; 183 0.134 0.866
+#&gt; 184 0.134 0.866
+#&gt; 185 0.384 0.616
+#&gt; 186 0.134 0.866
+#&gt; 187 0.384 0.616
+#&gt; 188 0.134 0.866
+#&gt; 189 0.384 0.616
+#&gt; 190 0.134 0.866
+#&gt; 191 0.134 0.866
+#&gt; 192 0.384 0.616
+#&gt; 193 0.134 0.866
+#&gt; 194 0.384 0.616
+#&gt; 195 0.134 0.866
+#&gt; 196 0.384 0.616
+#&gt; 197 0.384 0.616
+#&gt; 198 0.384 0.616
+#&gt; 199 0.384 0.616
+#&gt; 200 0.384 0.616
+#&gt; 201 0.134 0.866
+#&gt; 202 0.134 0.866
+#&gt; 203 0.384 0.616
+#&gt; 204 0.384 0.616
+#&gt; 205 0.714 0.286
+#&gt; 206 0.134 0.866
+#&gt; 207 0.714 0.286
+#&gt; 208 0.384 0.616
+#&gt; 209 0.384 0.616
+#&gt; 210 0.134 0.866
+#&gt; 211 0.384 0.616
+#&gt; 212 0.384 0.616
+#&gt; 213 0.384 0.616
+#&gt; 214 0.134 0.866
+#&gt; 215 0.714 0.286
+#&gt; 216 0.384 0.616
+#&gt; 217 0.384 0.616
+#&gt; 218 0.384 0.616
+#&gt; 219 0.384 0.616
+#&gt; 220 0.384 0.616
+#&gt; 221 0.384 0.616
+#&gt; 222 0.134 0.866
+#&gt; 223 0.134 0.866
+#&gt; 224 0.134 0.866
+#&gt; 225 0.384 0.616
+#&gt; 226 0.134 0.866
+#&gt; 227 0.134 0.866
+#&gt; 228 0.134 0.866
+#&gt; 229 0.384 0.616
+#&gt; 230 0.384 0.616
+#&gt; 231 0.134 0.866
+#&gt; 232 0.134 0.866
+#&gt; 233 0.134 0.866
+#&gt; 234 0.384 0.616
+#&gt; 235 0.714 0.286
+#&gt; 236 0.134 0.866
+#&gt; 237 0.384 0.616
+#&gt; 238 0.134 0.866
+#&gt; 239 0.384 0.616
+#&gt; 240 0.134 0.866
+#&gt; 241 0.384 0.616
+#&gt; 242 0.134 0.866
+#&gt; 243 0.714 0.286
+#&gt; 244 0.384 0.616
+#&gt; 245 0.714 0.286
+#&gt; 246 0.714 0.286
+#&gt; 247 0.134 0.866
+#&gt; 248 0.384 0.616
+#&gt; 249 0.384 0.616
+#&gt; 250 0.134 0.866
+#&gt; 251 0.134 0.866
+#&gt; 252 0.384 0.616
+#&gt; 253 0.134 0.866
+#&gt; 254 0.134 0.866
+#&gt; 255 0.384 0.616
+#&gt; 256 0.384 0.616
+#&gt; 257 0.134 0.866
+#&gt; 258 0.384 0.616
+#&gt; 259 0.384 0.616
+#&gt; 260 0.384 0.616
+#&gt; 261 0.134 0.866
+#&gt; 262 0.384 0.616
+#&gt; 263 0.384 0.616
+#&gt; 264 0.134 0.866
+#&gt; 265 0.134 0.866
+#&gt; 266 0.134 0.866
+#&gt; 267 0.384 0.616
+#&gt; 268 0.134 0.866
+#&gt; 269 0.134 0.866
+#&gt; 270 0.384 0.616
+#&gt; 271 0.134 0.866
+#&gt; 272 0.134 0.866
+#&gt; 273 0.384 0.616
+#&gt; 274 0.384 0.616
+#&gt; 275 0.134 0.866
+#&gt; 276 0.384 0.616
+#&gt; 277 0.384 0.616
+#&gt; 278 0.714 0.286
+#&gt; 279 0.384 0.616
+#&gt; 280 0.134 0.866
+#&gt; 281 0.384 0.616
+#&gt; 282 0.384 0.616
+#&gt; 283 0.134 0.866
+#&gt; 284 0.134 0.866
+#&gt; 285 0.134 0.866
+#&gt; 286 0.134 0.866
+#&gt; 287 0.384 0.616
+#&gt; 288 0.134 0.866
+#&gt; 289 0.384 0.616
+#&gt; 290 0.384 0.616
+#&gt; 291 0.134 0.866
+#&gt; 292 0.134 0.866
+#&gt; 293 0.384 0.616
+#&gt; 294 0.134 0.866
+#&gt; 295 0.134 0.866
+#&gt; 296 0.384 0.616
+#&gt; 297 0.134 0.866
+#&gt; 298 0.384 0.616
+#&gt; 299 0.384 0.616
+#&gt; 300 0.134 0.866
+#&gt; 301 0.384 0.616
+#&gt; 302 0.134 0.866
+#&gt; 303 0.384 0.616
+#&gt; 304 0.134 0.866
+#&gt; 305 0.134 0.866
+#&gt; 306 0.384 0.616
+#&gt; 307 0.134 0.866
+#&gt; 308 0.384 0.616
+#&gt; 309 0.384 0.616
+#&gt; 310 0.134 0.866
+#&gt; 311 0.384 0.616
+#&gt; 312 0.714 0.286
+#&gt; 313 0.134 0.866
+#&gt; 314 0.134 0.866
+#&gt; 315 0.384 0.616
+#&gt; 316 0.384 0.616
+#&gt; 317 0.384 0.616
+#&gt; 318 0.134 0.866
+#&gt; 319 0.134 0.866
+#&gt; 320 0.384 0.616
+#&gt; 321 0.384 0.616
+#&gt; 322 0.384 0.616
+#&gt; 323 0.134 0.866
+#&gt; 324 0.714 0.286
+#&gt; 325 0.384 0.616
+#&gt; 326 0.384 0.616
+#&gt; 327 0.134 0.866
+#&gt; 328 0.384 0.616
+#&gt; 329 0.134 0.866
+#&gt; 330 0.384 0.616
+#&gt; 331 0.384 0.616
+#&gt; 332 0.134 0.866
+#&gt; 333 0.384 0.616
+#&gt; 334 0.134 0.866</code></pre>
+
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="models.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ygigandet/PDADM/edit/master/03-models.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/ygigandet/PDADM/blob/master/03-models.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

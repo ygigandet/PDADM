@@ -1,0 +1,67 @@
+# Data
+
+```{r setup, include = FALSE}
+source(here::here("script/setup.R"))
+```
+
+## Data
+
+```{r, warning = FALSE}
+# Upload the data
+setwd(here::here("data/"))
+GermanCreditRaw <- read_csv2("GermanCredit.csv")
+```
+
+<div>
+
+The German Credit data contains data on `r nrow(GermanCreditRaw)` past credit applicants, described by 30 variables. Each applicant is rated as "Good" or "Bad". 
+
+By exploring the data, we find some inaccuracies and in agreement with the customer, we change them as follow:
+
+- One observation of the column "Age": 75 instead of 125 years old.
+- One observation of the column "Education": 1 instead of -1.
+- One observation of the column "Guarantor": 1 instead of 2.
+- Code the categories of the column "Present_resid": 0 to 3 instead of 1 to 4
+
+</div>
+
+```{r}
+# Removing the first column, aka "OBS#", because it is repetitive
+GermanCredit <- GermanCreditRaw %>% 
+  select(-c("OBS#"))
+```
+
+```{r}
+# First inaccuracy: one observation of the column age is miscoded.
+GermanCredit <- GermanCredit %>% 
+  mutate(AGE = replace(AGE, AGE == 125, 75))
+
+# Second inaccuracy: one observation of the column education is miscoded
+GermanCredit <- GermanCredit %>% 
+  mutate(EDUCATION = replace(EDUCATION, EDUCATION == -1, 1))
+
+# Third inaccuracy: one observation of the column guarantor is miscoded
+GermanCredit <- GermanCredit %>% 
+  mutate(GUARANTOR = replace(GUARANTOR, GUARANTOR == 2, 1))
+
+# Fourth inacurracy: the categories are miscoded for the column PRESENT_RESID
+GermanCredit <- GermanCredit %>% 
+  mutate(PRESENT_RESIDENT = replace(PRESENT_RESIDENT, PRESENT_RESIDENT == 1, 0)) %>% 
+  mutate(PRESENT_RESIDENT = replace(PRESENT_RESIDENT, PRESENT_RESIDENT == 2, 1)) %>% 
+  mutate(PRESENT_RESIDENT = replace(PRESENT_RESIDENT, PRESENT_RESIDENT == 3, 2)) %>% 
+  mutate(PRESENT_RESIDENT = replace(PRESENT_RESIDENT, PRESENT_RESIDENT == 4, 3))
+```
+
+```{r}
+# Coding as factors the following variables: CHK_ACCT, HISTORY, NEW_CAR, USED_CAR, FURNITURE, RADIO/TV, EDUCATION, RETRAINING, SAV_ACCT, EMPLOYMENT, MALE_DIV, MAL_SINGLE, MALE_MAR_WID, CO-APPLICANT, GUARANTOR, PRESENT_RESIDENT, REAL_ESTATE, PROP_UNKN_NONE, OTHER_INSTALL, RENT, OWN_RES, JOB, TELEPHONE, FOREIGN and RESPONSE.
+
+factor_column <- c("CHK_ACCT", "HISTORY", "NEW_CAR", "USED_CAR", "FURNITURE", "RADIO/TV", "EDUCATION", "RETRAINING", "SAV_ACCT", "EMPLOYMENT", "MALE_DIV", "MALE_SINGLE", "MALE_MAR_or_WID", "CO-APPLICANT", "GUARANTOR", "PRESENT_RESIDENT", "REAL_ESTATE", "PROP_UNKN_NONE", "OTHER_INSTALL", "RENT", "OWN_RES", "JOB", "TELEPHONE", "FOREIGN", "RESPONSE")
+
+GermanCredit[,factor_column] <- lapply(GermanCredit[,factor_column], factor)
+```
+
+```{r}
+# Write csv file
+setwd(here::here("data/"))
+write_csv(GermanCredit, "GermanCreditClean.csv")
+```

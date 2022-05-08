@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Data | Project in Data Analytics for Decision Making</title>
+  <meta name="description" content="Chapter 2 Data | Project in Data Analytics for Decision Making" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Data | Project in Data Analytics for Decision Making" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Data | Project in Data Analytics for Decision Making" />
+  
+  
+  
+
+<meta name="author" content="Manon Verjus and Yooby Gigandet" />
+
+
+<meta name="date" content="2022-05-08" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="models.html"/>
+<script src="libs/header-attrs-2.14/header-attrs.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">German Credit - Data analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="data.html"><a href="data.html"><i class="fa fa-check"></i><b>2</b> Data</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data.html"><a href="data.html#data-1"><i class="fa fa-check"></i><b>2.1</b> Data</a></li>
+<li class="chapter" data-level="2.2" data-path="data.html"><a href="data.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>2.2</b> Exploratory Data Analysis</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="models.html"><a href="models.html"><i class="fa fa-check"></i><b>3</b> Models</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="models.html"><a href="models.html#logistic-regression"><i class="fa fa-check"></i><b>3.1</b> Logistic Regression</a></li>
+<li class="chapter" data-level="3.2" data-path="models.html"><a href="models.html#trees"><i class="fa fa-check"></i><b>3.2</b> Trees</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Project in Data Analytics for Decision Making</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="data" class="section level1" number="2">
+<h1><span class="header-section-number">Chapter 2</span> Data</h1>
+<div id="data-1" class="section level2" number="2.1">
+<h2><span class="header-section-number">2.1</span> Data</h2>
+<div>
+<p>The German Credit data contains data on 1000 past credit applicants, described by 30 variables. Each applicant is rated as “Good” or “Bad”.</p>
+<p>By exploring the data, we find some inaccuracies and in agreement with the customer, we change them as follow:</p>
+<ul>
+<li>One observation of the column “Age”: 75 instead of 125 years old.</li>
+<li>One observation of the column “Education”: 1 instead of -1.</li>
+<li>One observation of the column “Guarantor”: 1 instead of 2.</li>
+<li>Code the categories of the column “Present_resid”: 0 to 3 instead of 1 to 4</li>
+</ul>
+</div>
+
+</div>
+<div id="exploratory-data-analysis" class="section level2" number="2.2">
+<h2><span class="header-section-number">2.2</span> Exploratory Data Analysis</h2>
+<p>The German Credit data is heavily unbalanced: 700 credit applications rated as good versus 300 credit applications rated as bad.</p>
+<pre><code>#&gt; 
+#&gt;   0   1 
+#&gt; 300 700</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>What does the first category means? &lt;0, meaning 0? So the account is opened but there is nothing on it?
+Another point, if you don’t have any checking account, your credit applications has more probability to be rated as good?</p>
+<p>Here again, seems weird. At 3 and 4, it means the previous credit were not or partially reimbursed. But they are graded as good?</p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>Some questions need to be asked. What’s the difference between an application with a small saving accounts and one with none saving accounts? Why the bank gives good grades to the latest?</p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<pre><code>#&gt; $`1`
+#&gt; 
+#&gt; $`2`
+#&gt; 
+#&gt; attr(,&quot;class&quot;)
+#&gt; [1] &quot;list&quot;      &quot;ggarrange&quot;</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-37-1.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-37-2.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-42-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-47-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-49-1.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-49-2.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-49-3.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-49-4.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-49-5.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-51-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>The following plot shows a selection of the most important variables of our dataframe.
+The two main disadvantages of these methods are: The increasing overfitting risk when the number of observations is insufficient. The significant computation time when the number of variables is large.</p>
+<pre><code>#&gt; Warning in train.default(x, y, weights = w, ...): You are trying to
+#&gt; do regression and your outcome only has two possible values Are you
+#&gt; trying to do classification? If so, use a 2 level factor as your
+#&gt; outcome column.
+#&gt; Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info
+#&gt; = trainInfo, : There were missing values in resampled performance
+#&gt; measures.
+#&gt; rpart variable importance
+#&gt; 
+#&gt;   only 20 most important variables shown (out of 30)
+#&gt; 
+#&gt;                  Overall
+#&gt; CHK_ACCT          0.1141
+#&gt; DURATION          0.0803
+#&gt; HISTORY           0.0767
+#&gt; SAV_ACCT          0.0684
+#&gt; AMOUNT            0.0516
+#&gt; REAL_ESTATE       0.0343
+#&gt; JOB               0.0000
+#&gt; MALE_MAR_or_WID   0.0000
+#&gt; PRESENT_RESIDENT  0.0000
+#&gt; TELEPHONE         0.0000
+#&gt; RETRAINING        0.0000
+#&gt; USED_CAR          0.0000
+#&gt; FURNITURE         0.0000
+#&gt; AGE               0.0000
+#&gt; OTHER_INSTALL     0.0000
+#&gt; GUARANTOR         0.0000
+#&gt; FOREIGN           0.0000
+#&gt; RADIO.TV          0.0000
+#&gt; OWN_RES           0.0000
+#&gt; NEW_CAR           0.0000</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-52-1.png" width="70%" style="display: block; margin: auto;" /></p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ygigandet/PDADM/edit/master/02-Data.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/ygigandet/PDADM/blob/master/02-Data.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
