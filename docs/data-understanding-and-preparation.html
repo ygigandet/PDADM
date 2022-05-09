@@ -77,7 +77,6 @@
 <ul>
 <li class="chapter" data-level="2.1" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#data-understanding"><i class="fa fa-check"></i><b>2.1</b> Data understanding</a></li>
 <li class="chapter" data-level="2.2" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>2.2</b> Exploratory Data Analysis</a></li>
-<li class="chapter" data-level="2.3" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#exploratory-data-analysis-1"><i class="fa fa-check"></i><b>2.3</b> Exploratory Data Analysis</a></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="models.html"><a href="models.html"><i class="fa fa-check"></i><b>3</b> Models</a>
 <ul>
@@ -107,8 +106,7 @@
 <h1><span class="header-section-number">Chapter 2</span> Data understanding and preparation<a href="data-understanding-and-preparation.html#data-understanding-and-preparation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="data-understanding" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Data understanding<a href="data-understanding-and-preparation.html#data-understanding" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div>
-<p>To create a model that will predict whether a client application represents a risk or not, we work on a dataset from our client containing data on 1000 past credit applicants, described by the following variables:</p>
+<p>To create a model that will predict whether a client application represents a risk or not, we work on a dataset from our client containing data on 1000 past credit applications, described by the following variables:</p>
 <ul>
 <li><p><strong>CHK_ACCT</strong>: The checking account status of the applicant in deutsche Mark (DM).</p></li>
 <li><p><strong>DURATION</strong>: The duration of the credit in months.</p></li>
@@ -140,18 +138,18 @@
 <li><p><strong>NUM_DEPENDENT</strong>: Number of people for whom liable to provide maintenance.</p></li>
 <li><p><strong>TELEPHONE</strong>: If the applicant has a phone in his or her name.</p></li>
 <li><p><strong>FOREIGN</strong>: If the applicant is a foreign worker.</p></li>
+<li><p><strong>RESPONSE</strong>: If the credit application is rated as “Good” or “Bad”.</p></li>
 </ul>
-<p>By exploring the data, we find some inaccuracies and in agreement with the customer, we change them as follow:</p>
+</div>
+<div id="exploratory-data-analysis" class="section level2 hasAnchor" number="2.2">
+<h2><span class="header-section-number">2.2</span> Exploratory Data Analysis<a href="data-understanding-and-preparation.html#exploratory-data-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>By exploring the dataset, we find some inaccuracies and in agreement with the customer, we change them as follow:</p>
 <ul>
 <li>One observation of the column “Age”: 75 instead of 125 years old.</li>
 <li>One observation of the column “Education”: 1 instead of -1.</li>
 <li>One observation of the column “Guarantor”: 1 instead of 2.</li>
 <li>Code the categories of the column “Present_resid”: 0 to 3 instead of 1 to 4</li>
 </ul>
-</div>
-</div>
-<div id="exploratory-data-analysis" class="section level2 hasAnchor" number="2.2">
-<h2><span class="header-section-number">2.2</span> Exploratory Data Analysis<a href="data-understanding-and-preparation.html#exploratory-data-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The German Credit data is heavily unbalanced: 700 credit applications rated as good versus 300 credit applications rated as bad.</p>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-14-1.png" width="70%" style="display: block; margin: auto;" /></p>
@@ -208,66 +206,6 @@ The two main disadvantages of these methods are: The increasing overfitting risk
 #&gt; NUM_DEPENDENTS    0.0000
 #&gt; OWN_RES           0.0000</code></pre>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-52-1.png" width="70%" style="display: block; margin: auto;" /></p>
-
-</div>
-<div id="exploratory-data-analysis-1" class="section level2 hasAnchor" number="2.3">
-<h2><span class="header-section-number">2.3</span> Exploratory Data Analysis<a href="data-understanding-and-preparation.html#exploratory-data-analysis-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The German Credit data is heavily unbalanced: 700 credit applications rated as good versus 300 credit applications rated as bad.</p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-57-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-61-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>What does the first category means? &lt;0, meaning 0? So the account is opened but there is nothing on it?
-Another point, if you don’t have any checking account, your credit applications has more probability to be rated as good?</p>
-<p>Here again, seems weird. At 3 and 4, it means the previous credit were not or partially reimbursed. But they are graded as good?</p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-66-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-71-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>Some questions need to be asked. What’s the difference between an application with a small saving accounts and one with none saving accounts? Why the bank gives good grades to the latest?</p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-76-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<pre><code>#&gt; $`1`
-#&gt; 
-#&gt; $`2`
-#&gt; 
-#&gt; attr(,&quot;class&quot;)
-#&gt; [1] &quot;list&quot;      &quot;ggarrange&quot;</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-84-1.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-84-2.png" width="70%" style="display: block; margin: auto;" /></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-89-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-94-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-96-1.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-96-2.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-96-3.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-96-4.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-96-5.png" width="70%" style="display: block; margin: auto;" /></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-98-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>The following plot shows a selection of the most important variables of our dataframe.
-The two main disadvantages of these methods are: The increasing overfitting risk when the number of observations is insufficient. The significant computation time when the number of variables is large.</p>
-<pre><code>#&gt; Warning in train.default(x, y, weights = w, ...): You are trying to
-#&gt; do regression and your outcome only has two possible values Are you
-#&gt; trying to do classification? If so, use a 2 level factor as your
-#&gt; outcome column.
-#&gt; Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info
-#&gt; = trainInfo, : There were missing values in resampled performance
-#&gt; measures.
-#&gt; rpart variable importance
-#&gt; 
-#&gt;   only 20 most important variables shown (out of 30)
-#&gt; 
-#&gt;                Overall
-#&gt; CHK_ACCT        0.1141
-#&gt; DURATION        0.0803
-#&gt; HISTORY         0.0767
-#&gt; SAV_ACCT        0.0684
-#&gt; AMOUNT          0.0516
-#&gt; REAL_ESTATE     0.0343
-#&gt; NUM_DEPENDENTS  0.0000
-#&gt; NEW_CAR         0.0000
-#&gt; FURNITURE       0.0000
-#&gt; USED_CAR        0.0000
-#&gt; FOREIGN         0.0000
-#&gt; OWN_RES         0.0000
-#&gt; PROP_UNKN_NONE  0.0000
-#&gt; GUARANTOR       0.0000
-#&gt; JOB             0.0000
-#&gt; INSTALL_RATE    0.0000
-#&gt; EDUCATION       0.0000
-#&gt; RADIO.TV        0.0000
-#&gt; CO.APPLICANT    0.0000
-#&gt; RENT            0.0000</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-99-1.png" width="70%" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>

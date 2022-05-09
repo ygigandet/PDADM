@@ -1,0 +1,58 @@
+# Models
+
+## Logistic Regression
+
+```{r} 
+# Download the cleaned data set
+setwd(here::here("data/"))
+GermanCredit <- read_csv("GermanCreditClean.csv")
+```
+
+We fit a logistic regression to test if it could predict the output we desired.
+
+```{r, include = FALSE}
+# Creation of a training and a testing data sets
+
+set.seed(234) # to be able to replicate the same training/testing sets
+index <- sample(x=c(1,2), size=nrow(GermanCredit), replace=TRUE, prob=c(0.75,0.25)) # 1==training set, 2==test set
+GermanCredit.tr <- GermanCredit[index==1,] # Training set
+GermanCredit.te <- GermanCredit[index==2,] # Testing set
+```
+
+For our first model we'll select all the variables given in the German Credit data set.
+
+```{r, include = FALSE}
+mod.logr <- glm(as_factor(RESPONSE)~., data = GermanCredit.tr, family="binomial")
+summary(mod.logr)
+```
+
+Our initial model is therefore:
+
+$$
+z_i = a_o + a_1CHKACCT_{1i} + ... + a_{32}Foreign_{1i}
+$$
+
+Let's check if we can select better variables for the model
+
+```{r, include = FALSE}
+# Using the AIC
+mod.logr.sel <- step(mod.logr) # Here by default, backwards selection
+summary(mod.logr.sel) # Reminder, the lower the AIC the better
+```
+
+Predictions: 
+
+```{r, include = FALSE}
+prob.te <- predict(mod.logr.sel, newdata=GermanCredit.te, type="response")
+pred.te <- ifelse(prob.te >= 0.5, 1, 0)
+table(Pred=pred.te, Obs=GermanCredit.te$RESPONSE)
+```
+
+Not a good model. Do not forget that the prior of this data set is not balanced at all. We should take it into account.
+
+As depicted below, if our model was good, we should have boxplot that are far away from the 0.5, which is not the case, especially for the bad credits.
+
+```{r, include = FALSE}
+boxplot(prob.te~GermanCredit.te$RESPONSE)
+```
+
