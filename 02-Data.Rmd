@@ -46,7 +46,7 @@ To create a model that will predict whether a client application represents a ri
 
 - **MALE_MAR_or_WID**: If the applicant is male, married or widowed.
 
-- **CO-APPLICANT**: If the applicant has a co-applicant.
+- **CO_APPLICANT**: If the applicant has a co-applicant.
 
 - **GUARANTOR**: If the applicant has a guarantor.
 
@@ -93,6 +93,10 @@ By doing an exploratory data analysis, we find some inaccuracies and in agreemen
 # Removing the first column, aka "OBS#", because not useful.
 GermanCredit <- GermanCreditRaw %>% 
   select(-c("OBS#"))
+
+# Renaming the variables:
+names(GermanCredit)[names(GermanCredit) == 'RADIO/TV'] <- 'RADIO_TV'
+names(GermanCredit)[names(GermanCredit) == 'CO-APPLICANT'] <- 'CO_APPLICANT'
 ```
 
 ```{r}
@@ -283,7 +287,7 @@ p_fur <- GermanCredit %>%
 
 # RADIO/TV
 p_radtv <- GermanCredit %>% 
-  ggplot(aes(x = as.factor('RADIO.TV'), fill = as.factor(RESPONSE))) +
+  ggplot(aes(x = as.factor(RADIO_TV), fill = as.factor(RESPONSE))) +
   geom_bar(position = "dodge") +
   labs(title = "Credit grade if for a radio/tv",
        x = "",
@@ -493,7 +497,7 @@ figure_demo
 ```{r}
 #CO APLLICANT
 p_coapp <- GermanCredit %>% 
-  ggplot(aes(x = as.factor(`CO-APPLICANT`), fill = as.factor(RESPONSE))) +
+  ggplot(aes(x = as.factor(CO_APPLICANT), fill = as.factor(RESPONSE))) +
   geom_bar(position = "dodge") +
   labs(title = "Credit grade if co-applicant",
        x = "",
@@ -569,7 +573,7 @@ mean_no
 cordata_fin <- GermanCredit[, c("CHK_ACCT", "HISTORY", "AMOUNT", "SAV_ACCT", "NUM_CREDITS", "RESPONSE") ] 
 ggpairs(cordata_fin, title="Correlogram on financial data")
 
-cordata_own <- GermanCredit[, c("NEW_CAR", "USED_CAR", "FURNITURE", "RADIO/TV", "RESPONSE") ]
+cordata_own <- GermanCredit[, c("NEW_CAR", "USED_CAR", "FURNITURE", "RADIO_TV", "RESPONSE") ]
 ggpairs(cordata_own, title="Correlogram on owned products data")
 
 cordata_pro <- GermanCredit[, c("JOB", "EDUCATION", "RETRAINING", "EMPLOYMENT", "RESPONSE") ] 
@@ -589,7 +593,7 @@ ggpairs(cordata_demo, title="Correlogram on demographic data")
 
 # remove OBS column
 Yes_profil<- YES_GC %>% 
-  select("CHK_ACCT", "DURATION", "HISTORY", "NEW_CAR", "USED_CAR", "FURNITURE", "RADIO/TV", "EDUCATION", "RETRAINING", "AMOUNT", "SAV_ACCT", "EMPLOYMENT", "INSTALL_RATE", "MALE_DIV", "MALE_SINGLE", "MALE_MAR_or_WID", "CO-APPLICANT", "GUARANTOR", "PRESENT_RESIDENT", "REAL_ESTATE", "PROP_UNKN_NONE", "AGE", "OTHER_INSTALL", "RENT", "OWN_RES", "NUM_CREDITS", "JOB", "NUM_DEPENDENTS", "TELEPHONE", "FOREIGN")
+  select("CHK_ACCT", "DURATION", "HISTORY", "NEW_CAR", "USED_CAR", "FURNITURE", "RADIO_TV", "EDUCATION", "RETRAINING", "AMOUNT", "SAV_ACCT", "EMPLOYMENT", "INSTALL_RATE", "MALE_DIV", "MALE_SINGLE", "MALE_MAR_or_WID", "CO_APPLICANT", "GUARANTOR", "PRESENT_RESIDENT", "REAL_ESTATE", "PROP_UNKN_NONE", "AGE", "OTHER_INSTALL", "RENT", "OWN_RES", "NUM_CREDITS", "JOB", "NUM_DEPENDENTS", "TELEPHONE", "FOREIGN")
 
 #Yes_profil <- data.frame(Yes_profil)
 #Yes_profil <- apply(as.matrix.noquote(Yes_profil),2,as.numeric)
@@ -599,7 +603,7 @@ Yes_profil <- summarize_all(Yes_profil, mean) # not yet find a way to use median
 
 # show matrix through lolipop plot 
 Yes_profil <- data.frame(
-  x=c('CHK_ACCT', 'DURATION', 'HISTORY', 'NEW_CAR', 'USED_CAR', 'FURNITURE', 'RADIO/TV', 'EDUCATION', 'RETRAINING', 'AMOUNT', 'SAV_ACCT', 'EMPLOYMENT', 'INSTALL_RATE', 'MALE_DIV', 'MALE_SINGLE', 'MALE_MAR_or_WID', 'CO.APPLICANT', 'GUARANTOR', 'PRESENT_RESIDENT', 'REAL_ESTATE', 'PROP_UNKN_NONE', 'AGE', 'OTHER_INSTALL', 'RENT', 'OWN_RES', 'NUM_CREDITS', 'JOB', 'NUM_DEPENDENTS', 'TELEPHONE', 'FOREIGN'),
+  x=c('CHK_ACCT', 'DURATION', 'HISTORY', 'NEW_CAR', 'USED_CAR', 'FURNITURE', 'RADIO_TV', 'EDUCATION', 'RETRAINING', 'AMOUNT', 'SAV_ACCT', 'EMPLOYMENT', 'INSTALL_RATE', 'MALE_DIV', 'MALE_SINGLE', 'MALE_MAR_or_WID', 'CO_APPLICANT', 'GUARANTOR', 'PRESENT_RESIDENT', 'REAL_ESTATE', 'PROP_UNKN_NONE', 'AGE', 'OTHER_INSTALL', 'RENT', 'OWN_RES', 'NUM_CREDITS', 'JOB', 'NUM_DEPENDENTS', 'TELEPHONE', 'FOREIGN'),
   y=abs(rnorm(30))
 )
 ```

@@ -8,4 +8,5 @@ models
 splitting-strategies
 balance-the-dataset
 logistic-regression
+cross-validation
 trees

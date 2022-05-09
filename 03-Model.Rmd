@@ -11,8 +11,9 @@ After the exploration of our data, we start with the modelling part.
 ## Splitting strategies
 
 In order to test the performance of our models, we use a splitting strategy of the dataset:
+
 - 80% is used as a training set
-- the remaining 20% is used as a test set.
+- The remaining 20% is used as a test set.
 
 ```{r}
 # Creation of the training and splitting data set
@@ -47,8 +48,8 @@ We fit a logistic regression to test if it could predict the output we desired.
 
 For our first model we'll select all the variables given in the German Credit data set.
 
-```{r, include = FALSE}
-mod.logr <- glm(as_factor(RESPONSE)~., data = GermanCredit.tr, family="binomial")
+```{r}
+mod.logr <- glm(as_factor(RESPONSE)~., data = GermanCredit.tr.subs, family="binomial")
 summary(mod.logr)
 ```
 
@@ -60,7 +61,7 @@ $$
 
 Let's check if we can select better variables for the model
 
-```{r, include = FALSE}
+```{r}
 # Using the AIC
 mod.logr.sel <- step(mod.logr) # Here by default, backwards selection
 summary(mod.logr.sel) # Reminder, the lower the AIC the better
@@ -68,7 +69,7 @@ summary(mod.logr.sel) # Reminder, the lower the AIC the better
 
 Predictions: 
 
-```{r, include = FALSE}
+```{r}
 prob.te <- predict(mod.logr.sel, newdata=GermanCredit.te, type="response")
 pred.te <- ifelse(prob.te >= 0.5, 1, 0)
 table(Pred=pred.te, Obs=GermanCredit.te$RESPONSE)
@@ -78,7 +79,24 @@ Not a good model. Do not forget that the prior of this data set is not balanced 
 
 As depicted below, if our model was good, we should have boxplot that are far away from the 0.5, which is not the case, especially for the bad credits.
 
-```{r, include = FALSE}
+```{r}
 boxplot(prob.te~GermanCredit.te$RESPONSE)
+```
+
+### Cross-validation
+
+```{r}
+trctrl <- trainControl(method = "cv", number=10)
+
+set.seed(346)
+GermanCredit.cv <- train(as_factor(RESPONSE) ~., data = GermanCredit.tr.subs, method = "glmStepAIC", family="binomial",
+                    trControl=trctrl, trace=0)
+
+GermanCredit.cv
+```
+
+```{r}
+GermanCredit.pred <- predict(GermanCredit.cv, newdata = GermanCredit.te)
+confusionMatrix(data=GermanCredit.cv, reference = GermanCredit.te$RESPONSE)
 ```
 

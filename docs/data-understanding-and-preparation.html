@@ -86,7 +86,10 @@
 <ul>
 <li class="chapter" data-level="3.1" data-path="models.html"><a href="models.html#splitting-strategies"><i class="fa fa-check"></i><b>3.1</b> Splitting strategies</a></li>
 <li class="chapter" data-level="3.2" data-path="models.html"><a href="models.html#balance-the-dataset"><i class="fa fa-check"></i><b>3.2</b> Balance the dataset</a></li>
-<li class="chapter" data-level="3.3" data-path="models.html"><a href="models.html#logistic-regression"><i class="fa fa-check"></i><b>3.3</b> Logistic Regression</a></li>
+<li class="chapter" data-level="3.3" data-path="models.html"><a href="models.html#logistic-regression"><i class="fa fa-check"></i><b>3.3</b> Logistic Regression</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="models.html"><a href="models.html#cross-validation"><i class="fa fa-check"></i><b>3.3.1</b> Cross-validation</a></li>
+</ul></li>
 <li class="chapter" data-level="3.4" data-path="models.html"><a href="models.html#trees"><i class="fa fa-check"></i><b>3.4</b> Trees</a></li>
 </ul></li>
 <li class="divider"></li>
@@ -130,7 +133,7 @@
 <li><p><strong>MALE_DIV</strong>: If the applicant is male and divorced.</p></li>
 <li><p><strong>MALE_SINGLE</strong>: If the applicant is male and single.</p></li>
 <li><p><strong>MALE_MAR_or_WID</strong>: If the applicant is male, married or widowed.</p></li>
-<li><p><strong>CO-APPLICANT</strong>: If the applicant has a co-applicant.</p></li>
+<li><p><strong>CO_APPLICANT</strong>: If the applicant has a co-applicant.</p></li>
 <li><p><strong>GUARANTOR</strong>: If the applicant has a guarantor.</p></li>
 <li><p><strong>PRESENT_RESIDENT</strong>: If the applicant is a resident and since how many years.</p></li>
 <li><p><strong>REAL_ESTATE</strong>: If the applicant owns real estate.</p></li>
@@ -163,15 +166,15 @@
 <div id="unbalanced-observations" class="section level3 hasAnchor" number="2.2.2">
 <h3><span class="header-section-number">2.2.2</span> Unbalanced observations<a href="data-understanding-and-preparation.html#unbalanced-observations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>One interesting point is that the dataset is heavily unbalanced: 700 credit applications rated as good versus 300 credit applications rated as bad. We will need to balance the dataset for our modelling.</p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre><code>#&gt; $`1`
 #&gt; 
 #&gt; $`2`
 #&gt; 
 #&gt; attr(,&quot;class&quot;)
 #&gt; [1] &quot;list&quot;      &quot;ggarrange&quot;</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-39-1.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-39-2.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-39-3.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-39-4.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-39-5.png" width="70%" style="display: block; margin: auto;" /></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-41-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-29-2.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-29-3.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-29-4.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-29-5.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-31-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>The following plot shows a selection of the most important variables of our dataframe.
 The two main disadvantages of these methods are: The increasing overfitting risk when the number of observations is insufficient. The significant computation time when the number of variables is large.</p>
 <pre><code>#&gt; Warning in train.default(x, y, weights = w, ...): You are trying to do regression and your outcome only has two
@@ -200,10 +203,10 @@ The two main disadvantages of these methods are: The increasing overfitting risk
 #&gt; OTHER_INSTALL     0.0000
 #&gt; GUARANTOR         0.0000
 #&gt; FOREIGN           0.0000
-#&gt; RADIO.TV          0.0000
+#&gt; RADIO_TV          0.0000
 #&gt; OWN_RES           0.0000
 #&gt; NEW_CAR           0.0000</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-42-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-32-1.png" width="70%" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>
