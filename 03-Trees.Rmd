@@ -7,22 +7,22 @@ GermanCredit.tr <- GermanCredit[index.tr,]
 GermanCredit.te <- GermanCredit[-index.tr,]
 ```
 
-```{r}
+```{r, include=FALSE}
 # Initialise our tree
 GermanCreditTree <- rpart(as_factor(RESPONSE)~., data=GermanCredit.tr)
 rpart.plot(GermanCreditTree)
 ```
 
-```{r}
+```{r, include=FALSE}
 plotcp(GermanCreditTree)
 ```
 
-```{r}
+```{r, include=FALSE}
 GermanCreditTree.prune <- prune(GermanCreditTree, cp=0.035)
 rpart.plot(GermanCreditTree.prune)
 ```
 
-```{r}
+```{r, include=FALSE}
 pred <- predict(GermanCreditTree.prune, newdata=GermanCredit.te, type="class")
 table(Pred=pred, Obs=GermanCredit.te$RESPONSE)
 

@@ -23,7 +23,7 @@
 <meta name="author" content="Manon Verjus and Yooby Gigandet" />
 
 
-<meta name="date" content="2022-05-08" />
+<meta name="date" content="2022-05-09" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -143,10 +143,13 @@ Another point, if you don’t have any checking account, your credit application
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-51-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>The following plot shows a selection of the most important variables of our dataframe.
 The two main disadvantages of these methods are: The increasing overfitting risk when the number of observations is insufficient. The significant computation time when the number of variables is large.</p>
-<pre><code>#&gt; Warning in train.default(x, y, weights = w, ...): You are trying to do regression and your outcome only has two
-#&gt; possible values Are you trying to do classification? If so, use a 2 level factor as your outcome column.
-#&gt; Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info = trainInfo, : There were missing values in
-#&gt; resampled performance measures.
+<pre><code>#&gt; Warning in train.default(x, y, weights = w, ...): You are trying to
+#&gt; do regression and your outcome only has two possible values Are you
+#&gt; trying to do classification? If so, use a 2 level factor as your
+#&gt; outcome column.
+#&gt; Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info
+#&gt; = trainInfo, : There were missing values in resampled performance
+#&gt; measures.
 #&gt; rpart variable importance
 #&gt; 
 #&gt;   only 20 most important variables shown (out of 30)
@@ -158,20 +161,20 @@ The two main disadvantages of these methods are: The increasing overfitting risk
 #&gt; SAV_ACCT          0.0684
 #&gt; AMOUNT            0.0516
 #&gt; REAL_ESTATE       0.0343
-#&gt; JOB               0.0000
-#&gt; MALE_MAR_or_WID   0.0000
-#&gt; PRESENT_RESIDENT  0.0000
-#&gt; TELEPHONE         0.0000
+#&gt; PROP_UNKN_NONE    0.0000
 #&gt; RETRAINING        0.0000
-#&gt; USED_CAR          0.0000
-#&gt; FURNITURE         0.0000
-#&gt; AGE               0.0000
-#&gt; OTHER_INSTALL     0.0000
+#&gt; TELEPHONE         0.0000
 #&gt; GUARANTOR         0.0000
+#&gt; MALE_DIV          0.0000
+#&gt; OTHER_INSTALL     0.0000
+#&gt; PRESENT_RESIDENT  0.0000
+#&gt; FURNITURE         0.0000
+#&gt; NUM_CREDITS       0.0000
 #&gt; FOREIGN           0.0000
-#&gt; RADIO.TV          0.0000
-#&gt; OWN_RES           0.0000
-#&gt; NEW_CAR           0.0000</code></pre>
+#&gt; MALE_SINGLE       0.0000
+#&gt; AGE               0.0000
+#&gt; NUM_DEPENDENTS    0.0000
+#&gt; OWN_RES           0.0000</code></pre>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-52-1.png" width="70%" style="display: block; margin: auto;" /></p>
 
 </div>
