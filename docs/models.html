@@ -75,13 +75,19 @@
 <li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
 <li class="chapter" data-level="2" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html"><i class="fa fa-check"></i><b>2</b> Data understanding and preparation</a>
 <ul>
-<li class="chapter" data-level="2.1" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#data-understanding"><i class="fa fa-check"></i><b>2.1</b> Data understanding</a></li>
-<li class="chapter" data-level="2.2" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>2.2</b> Exploratory Data Analysis</a></li>
+<li class="chapter" data-level="2.1" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#dataset"><i class="fa fa-check"></i><b>2.1</b> Dataset</a></li>
+<li class="chapter" data-level="2.2" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>2.2</b> Exploratory Data Analysis</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#inacurracies"><i class="fa fa-check"></i><b>2.2.1</b> Inacurracies</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#unbalanced-observations"><i class="fa fa-check"></i><b>2.2.2</b> Unbalanced observations</a></li>
+</ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="models.html"><a href="models.html"><i class="fa fa-check"></i><b>3</b> Models</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="models.html"><a href="models.html#logistic-regression"><i class="fa fa-check"></i><b>3.1</b> Logistic Regression</a></li>
-<li class="chapter" data-level="3.2" data-path="models.html"><a href="models.html#trees"><i class="fa fa-check"></i><b>3.2</b> Trees</a></li>
+<li class="chapter" data-level="3.1" data-path="models.html"><a href="models.html#splitting-strategies"><i class="fa fa-check"></i><b>3.1</b> Splitting strategies</a></li>
+<li class="chapter" data-level="3.2" data-path="models.html"><a href="models.html#balance-the-dataset"><i class="fa fa-check"></i><b>3.2</b> Balance the dataset</a></li>
+<li class="chapter" data-level="3.3" data-path="models.html"><a href="models.html#logistic-regression"><i class="fa fa-check"></i><b>3.3</b> Logistic Regression</a></li>
+<li class="chapter" data-level="3.4" data-path="models.html"><a href="models.html#trees"><i class="fa fa-check"></i><b>3.4</b> Trees</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -104,8 +110,19 @@
             <section class="normal" id="section-">
 <div id="models" class="section level1 hasAnchor" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Models<a href="models.html#models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="logistic-regression" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Logistic Regression<a href="models.html#logistic-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>After the exploration of our data, we start with the modelling part.</p>
+<div id="splitting-strategies" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Splitting strategies<a href="models.html#splitting-strategies" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In order to test the performance of our models, we use a splitting strategy of the dataset:
+- 80% is used as a training set
+- the remaining 20% is used as a test set.</p>
+</div>
+<div id="balance-the-dataset" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> Balance the dataset<a href="models.html#balance-the-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>As said in the exploratory data analysis, we notice that our data is heavily unbalanced. We need to balance it before fitting our model.</p>
+</div>
+<div id="logistic-regression" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Logistic Regression<a href="models.html#logistic-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We fit a logistic regression to test if it could predict the output we desired.</p>
 <p>For our first model we’ll select all the variables given in the German Credit data set.</p>
 <p>Our initial model is therefore:</p>
@@ -118,8 +135,8 @@ z_i = a_o + a_1CHKACCT_{1i} + ... + a_{32}Foreign_{1i}
 <p>As depicted below, if our model was good, we should have boxplot that are far away from the 0.5, which is not the case, especially for the bad credits.</p>
 
 </div>
-<div id="trees" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> Trees<a href="models.html#trees" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="trees" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Trees<a href="models.html#trees" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 
 </div>
 </div>
@@ -160,7 +177,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/ygigandet/PDADM/edit/master/LogisticRegression.Rmd",
+"link": "https://github.com/ygigandet/PDADM/edit/master/03-Model.Rmd",
 "text": "Edit"
 },
 "history": {
@@ -168,7 +185,7 @@ gitbook.start({
 "text": null
 },
 "view": {
-"link": "https://github.com/ygigandet/PDADM/blob/master/LogisticRegression.Rmd",
+"link": "https://github.com/ygigandet/PDADM/blob/master/03-Model.Rmd",
 "text": null
 },
 "download": null,
