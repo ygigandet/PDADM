@@ -87,7 +87,6 @@ By doing an exploratory data analysis, we find some inaccuracies and in agreemen
 - One observation of the variable "AGE": 75 instead of 125 years old.
 - One observation of the variable "EDUCATION": 1 instead of -1.
 - One observation of the variable "GUARANTOR": 1 instead of 2.
-- Code the categories of the variable "PRESENT_RESID": 0 to 3 instead of 1 to 4
 
 ```{r}
 # Removing the first column, aka "OBS#", because not useful.
@@ -111,13 +110,6 @@ GermanCredit <- GermanCredit %>%
 # Third inaccuracy: one observation of the column guarantor is miscoded
 GermanCredit <- GermanCredit %>% 
   mutate(GUARANTOR = replace(GUARANTOR, GUARANTOR == 2, 1))
-
-# Fourth inacurracy: the categories are miscoded for the column PRESENT_RESID
-GermanCredit <- GermanCredit %>% 
-  mutate(PRESENT_RESIDENT = replace(PRESENT_RESIDENT, PRESENT_RESIDENT == 1, 0)) %>% 
-  mutate(PRESENT_RESIDENT = replace(PRESENT_RESIDENT, PRESENT_RESIDENT == 2, 1)) %>% 
-  mutate(PRESENT_RESIDENT = replace(PRESENT_RESIDENT, PRESENT_RESIDENT == 3, 2)) %>% 
-  mutate(PRESENT_RESIDENT = replace(PRESENT_RESIDENT, PRESENT_RESIDENT == 4, 3))
 ```
 
 ```{r}
