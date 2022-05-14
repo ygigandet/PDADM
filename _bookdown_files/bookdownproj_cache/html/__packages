@@ -42,3 +42,5 @@ foreach
 iterators
 doParallel
 adabag
+nnet
+neuralnet

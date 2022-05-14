@@ -23,7 +23,7 @@
 <meta name="author" content="Manon Verjus and Yooby Gigandet" />
 
 
-<meta name="date" content="2022-05-09" />
+<meta name="date" content="2022-05-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -90,7 +90,8 @@
 <ul>
 <li class="chapter" data-level="3.3.1" data-path="models.html"><a href="models.html#cross-validation"><i class="fa fa-check"></i><b>3.3.1</b> Cross-validation</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="models.html"><a href="models.html#trees"><i class="fa fa-check"></i><b>3.4</b> Trees</a></li>
+<li class="chapter" data-level="3.4" data-path="models.html"><a href="models.html#neural-networks"><i class="fa fa-check"></i><b>3.4</b> Neural Networks</a></li>
+<li class="chapter" data-level="3.5" data-path="models.html"><a href="models.html#trees"><i class="fa fa-check"></i><b>3.5</b> Trees</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -160,27 +161,29 @@
 <li>One observation of the variable “AGE”: 75 instead of 125 years old.</li>
 <li>One observation of the variable “EDUCATION”: 1 instead of -1.</li>
 <li>One observation of the variable “GUARANTOR”: 1 instead of 2.</li>
-<li>Code the categories of the variable “PRESENT_RESID”: 0 to 3 instead of 1 to 4</li>
 </ul>
 </div>
 <div id="unbalanced-observations" class="section level3 hasAnchor" number="2.2.2">
 <h3><span class="header-section-number">2.2.2</span> Unbalanced observations<a href="data-understanding-and-preparation.html#unbalanced-observations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>One interesting point is that the dataset is heavily unbalanced: 700 credit applications rated as good versus 300 credit applications rated as bad. We will need to balance the dataset for our modelling.</p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre><code>#&gt; $`1`
 #&gt; 
 #&gt; $`2`
 #&gt; 
 #&gt; attr(,&quot;class&quot;)
 #&gt; [1] &quot;list&quot;      &quot;ggarrange&quot;</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-29-2.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-29-3.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-29-4.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-29-5.png" width="70%" style="display: block; margin: auto;" /></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-31-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-24-2.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-24-3.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-24-4.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-24-5.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-26-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>The following plot shows a selection of the most important variables of our dataframe.
 The two main disadvantages of these methods are: The increasing overfitting risk when the number of observations is insufficient. The significant computation time when the number of variables is large.</p>
-<pre><code>#&gt; Warning in train.default(x, y, weights = w, ...): You are trying to do regression and your outcome only has two
-#&gt; possible values Are you trying to do classification? If so, use a 2 level factor as your outcome column.
-#&gt; Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info = trainInfo, : There were missing values in
-#&gt; resampled performance measures.
+<pre><code>#&gt; Warning in train.default(x, y, weights = w, ...): You are trying to
+#&gt; do regression and your outcome only has two possible values Are you
+#&gt; trying to do classification? If so, use a 2 level factor as your
+#&gt; outcome column.
+#&gt; Warning in nominalTrainWorkflow(x = x, y = y, wts = weights, info
+#&gt; = trainInfo, : There were missing values in resampled performance
+#&gt; measures.
 #&gt; rpart variable importance
 #&gt; 
 #&gt;   only 20 most important variables shown (out of 30)
@@ -206,7 +209,7 @@ The two main disadvantages of these methods are: The increasing overfitting risk
 #&gt; RADIO_TV          0.0000
 #&gt; OWN_RES           0.0000
 #&gt; NEW_CAR           0.0000</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-32-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>

@@ -1,0 +1,896 @@
+--- 
+title: "Project in Data Analytics for Decision Making"
+author: "Manon Verjus and Yooby Gigandet"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+---
+
+# Introduction
+
+Our work for the course "Project in Data Analytics for Decision Making" is to predict the credit risk associated to customers for our client, a bank. 
+
+To do so, we used the CRISP-DM method (CRoss Industry Standard Process for Data Mining):
+
+- **Business understanding**: Credit risk is defined as the risk of loss resulting from the failure by a borrower to repay the principal and interest owed to the lender. By performing a credit risk analysis, the lender determines the borrower's ability to meet debt obligations in order to cushion itself from losses. It is therefore important to efficiently classify the risks of the credit applications.
+
+- **Data understanding and preparation**: We work on the `german` dataset. 
+
+- **Modelling**: For this part, we used several models.
+
+- **Evaluation**: 
+
+- **Deployment**:
+
+
+<!--chapter:end:index.Rmd-->
+
+# Data understanding and preparation
+
+```{r setup, include = FALSE}
+source(here::here("script/setup.R"))
+```
+
+## Dataset
+
+```{r, warning = FALSE}
+# Upload the data
+setwd(here::here("data/"))
+GermanCreditRaw <- read_csv2("GermanCredit.csv")
+```
+
+To create a model that will predict whether a client application represents a risk or not, we work on a dataset from our client containing data on `r nrow(GermanCreditRaw)` past credit applications, described by the following variables:
+
+- **CHK_ACCT**: The checking account status of the applicant in Deutsche Mark (DM).
+
+- **DURATION**: The duration of the credit in months.
+
+- **HISTORY**: The credit history of the applicant.
+
+- **NEW_CAR**: Purpose of the credit.
+
+- **USED_CAR**: Purpose of the credit.
+
+- **FURNITURE**: Purpose of the credit.
+
+- **RADIO/TV**: Purpose of the credit.
+
+- **EDUCATION**: Purpose of the credit.
+
+- **RETRAINING**: Purpose of the credit.
+
+- **AMOUNT**: The credit amount.
+
+- **SAV_ACCT**: The average balance in savings account in Deutsche Mark (DM).
+
+- **EMPLOYMENT**: If the applicant is employed and since how long.
+
+- **INSTALL_RATE**: The installment rate as percentage of disposable income.
+
+- **MALE_DIV**: If the applicant is male and divorced.
+
+- **MALE_SINGLE**: If the applicant is male and single.
+
+- **MALE_MAR_or_WID**: If the applicant is male, married or widowed.
+
+- **CO_APPLICANT**: If the applicant has a co-applicant.
+
+- **GUARANTOR**: If the applicant has a guarantor.
+
+- **PRESENT_RESIDENT**: If the applicant is a resident and since how many years.
+
+- **REAL_ESTATE**: If the applicant owns real estate.
+
+- **PROP-UNKN-NONE**: If the applicant owns no property (or unknown).
+
+- **AGE**: Age of the applicant.
+
+- **OTHER_INSTALL**: If the applicant has other installment plan credit.
+
+- **RENT**: If the applicant rents.
+
+- **OWN_RES**: If the applicant owns residence.
+
+- **NUM_CREDITS**: Number of existing credits of the applicant at our client bank.
+
+- **JOB**: The nature of the applicant's job.
+
+- **NUM_DEPENDENT**: Number of people for whom liable to provide maintenance.
+
+- **TELEPHONE**: If the applicant has a phone in his or her name.
+
+- **FOREIGN**: If the applicant is a foreign worker.
+
+- **RESPONSE**: If the credit application is rated as "Good" or "Bad".
+
+## Exploratory Data Analysis
+
+In this part, we thoroughly explore the dataset to get a better understanding.
+
+### Inacurracies
+
+By doing an exploratory data analysis, we find some inaccuracies and in agreement with our client, we change them as follow:
+
+- One observation of the variable "AGE": 75 instead of 125 years old.
+- One observation of the variable "EDUCATION": 1 instead of -1.
+- One observation of the variable "GUARANTOR": 1 instead of 2.
+
+```{r}
+# Removing the first column, aka "OBS#", because not useful.
+GermanCredit <- GermanCreditRaw %>% 
+  select(-c("OBS#"))
+
+# Renaming the variables:
+names(GermanCredit)[names(GermanCredit) == 'RADIO/TV'] <- 'RADIO_TV'
+names(GermanCredit)[names(GermanCredit) == 'CO-APPLICANT'] <- 'CO_APPLICANT'
+```
+
+```{r}
+# First inaccuracy: one observation of the column age is miscoded.
+GermanCredit <- GermanCredit %>% 
+  mutate(AGE = replace(AGE, AGE == 125, 75))
+
+# Second inaccuracy: one observation of the column education is miscoded
+GermanCredit <- GermanCredit %>% 
+  mutate(EDUCATION = replace(EDUCATION, EDUCATION == -1, 1))
+
+# Third inaccuracy: one observation of the column guarantor is miscoded
+GermanCredit <- GermanCredit %>% 
+  mutate(GUARANTOR = replace(GUARANTOR, GUARANTOR == 2, 1))
+```
+
+```{r}
+# GermanCredit accepted
+YES_GC <- filter(GermanCredit,RESPONSE=="1")
+```
+
+```{r}
+# GermanCredit refused
+NO_GC <- filter(GermanCredit,RESPONSE=="0")
+```
+
+### Unbalanced observations
+
+One interesting point is that the dataset is heavily unbalanced: 700 credit applications rated as good versus 300 credit applications rated as bad. We will need to balance the dataset for our modelling.
+
+```{r, echo = FALSE, results = 'hide'}
+table(GermanCredit$RESPONSE)
+```
+
+```{r, message=FALSE}
+# Distribution of the grade per credit applications
+GermanCredit %>% 
+  ggplot(aes(x = as.factor(RESPONSE), fill=as.factor(RESPONSE))) +
+  geom_bar() +
+  labs(title = "Number of credit applications per grade",
+       y = "Number",
+       x = "Grade") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="Bad", "1"="Good")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+```
+
+```{r, results = 'hide'}
+# Distribution of the continuous variables, i.e. duration, amount, age
+
+# Here duration
+
+p.duration <- GermanCredit %>% 
+  ggplot(aes(x = DURATION, y = as.factor(RESPONSE), fill = as.factor(RESPONSE))) +
+  geom_boxplot() +
+  labs(title = "Duration of the credit applications per grade",
+       x = "Months",
+       y = "Grade") +
+  scale_y_discrete(label=c("0"="No", "1"="Yes")) +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+# Amount
+
+p.amount <- GermanCredit %>% 
+  ggplot(aes(x = AMOUNT, y = as.factor(RESPONSE), fill=as.factor(RESPONSE))) +
+  geom_boxplot() +
+  labs(title = "Amount of the credit applications per grade",
+       x = "DM",
+       y = "Grade") +
+  scale_y_discrete(label=c("0"="No", "1"="Yes")) +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+# Age
+
+p.age <- GermanCredit %>% 
+  ggplot(aes(x = AGE, y = as.factor(RESPONSE), fill=as.factor(RESPONSE))) +
+  geom_boxplot() +
+  labs(title = "Age of the credit applicants",
+       x = "Years",
+       y = "Grade") +
+  scale_y_discrete(label=c("0"="No", "1"="Yes")) +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+```
+
+```{r, fig.show='hide'}
+figure1 <- ggarrange(p.duration, p.age, p.amount,
+                    labels = c("A", "B", "C"),
+                    ncol = 2, nrow = 2)
+figure1
+```
+
+```{r}
+# Let's explore the distribution of the categorical variables
+#CHK_ACCT
+p.chkacct <- GermanCredit %>% 
+  ggplot(aes(x = CHK_ACCT, fill=as.factor(RESPONSE)))+
+  geom_bar(position = "dodge") +
+  labs(title = "Status of the checking account per grade",
+       x = "Category",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+  
+#HISTORY
+p.history <- GermanCredit %>% 
+  ggplot(aes(x = HISTORY, fill=as.factor(RESPONSE)))+
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grades related to the history of past credits",
+       x = "Category",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+# SAV_ACCT
+p.savacct <- GermanCredit %>% 
+  ggplot(aes(x = SAV_ACCT, fill=as.factor(RESPONSE)))+
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grades in regard with the average balance in saving accounts",
+       x = "Category",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+#NUM_CREDIT
+p.numcre <- GermanCredit %>% 
+  ggplot(aes(x = NUM_CREDITS, fill=as.factor(RESPONSE)))+
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade related to the number of credits",
+       x = "Number of credits",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+```
+
+```{r, fig.show='hide'}
+figure_fin <- ggarrange(p.history, p.savacct, p.numcre, p.chkacct,
+                    labels = c("A", "B", "C", "D"),
+                    ncol = 2, nrow = 2)
+figure_fin
+```
+
+
+```{r}
+# Now let's have a look at the binary variables
+
+# NEW_CAR
+p_newcar <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(NEW_CAR), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if for a new car",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+# USED CAR
+p_usedcar <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(USED_CAR), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if for a used car",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+# FURNITURE
+p_fur <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(FURNITURE), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if for a furniture",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+# RADIO/TV
+p_radtv <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(RADIO_TV), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if for a radio/tv",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+```
+
+```{r, fig.show='hide'}
+figure_prod <- ggarrange(p_newcar, p_usedcar, p_fur, p_radtv,
+                    labels = c("A", "B", "C", "D"),
+                    ncol = 2, nrow = 2)
+figure_prod
+```
+
+```{r}
+# EMPLOYMENT
+p.empl <- GermanCredit %>% 
+  ggplot(aes(x = EMPLOYMENT, fill=as.factor(RESPONSE)))+
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade with regard to employment duration",
+       x = "Category",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+  
+#JOB
+p.job <- GermanCredit %>% 
+  ggplot(aes(x = JOB, fill=as.factor(RESPONSE)))+
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade related to the nature of jobs",
+       x = "Category",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+# EDUCATION
+p_edu <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(EDUCATION), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if for education",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+# RETRAINING
+p_ret <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(RETRAINING), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if for retraining",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+```
+
+```{r, fig.show='hide'}
+figure_pro <- ggarrange(p.empl, p.job, p_edu, p_ret,
+                    labels = c("A", "B", "C", "D"),
+                    ncol = 2, nrow = 2)
+figure_pro
+```
+
+
+```{r}
+# PRESENT_RESIDENTS
+p.preres <- GermanCredit %>% 
+  ggplot(aes(x = PRESENT_RESIDENT, fill=as.factor(RESPONSE)))+
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade related to residents duration stays",
+       x = "Category",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+# INSTALLMENT_RATE
+p.insrat <- GermanCredit %>% 
+  ggplot(aes(x = INSTALL_RATE, fill=as.factor(RESPONSE)))+
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade per installment rate",
+       x = "% of disposable income",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+#REAL ESTATE
+p_reaest <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(REAL_ESTATE), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if own real estate",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+#PROP_UNKN_NONE
+p_prop <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(PROP_UNKN_NONE), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if own no property or unknown",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+#OWN_RES
+p_ownres <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(OWN_RES), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if owns residence",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+#GUARANTOR
+p_gua <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(GUARANTOR), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if guarantor",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+# APPLICANT RENTS
+p_apprent <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(RENT), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if rent",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+```
+
+```{r, fig.show='hide'}
+figure_reales <- ggarrange(p.preres, p.insrat, p_reaest, p_prop, p_ownres, p_gua, p_apprent,
+                    labels = c("A", "B", "C", "D", "E", "F", "G"),
+                    ncol = 2, nrow = 2)
+figure_reales
+```
+
+```{r}
+# MALE_DIV
+p_maldiv <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(MALE_DIV), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if male and divorced",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+#MALE_SINGLE
+p_malsin <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(MALE_SINGLE), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if male and single",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+# MALE_MAR_or_WID
+p_malmarwid <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(MALE_MAR_or_WID), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if male married or widowed",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+#FOREIGN
+p_for <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(FOREIGN), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if foreign workers",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+```
+
+```{r, fig.show='hide'}
+figure_demo <- ggarrange(p_maldiv, p_malsin, p_malmarwid, p_for,
+                    labels = c("A", "B", "C", "D"),
+                    ncol = 2, nrow = 2)
+figure_demo
+```
+
+```{r}
+#CO APLLICANT
+p_coapp <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(CO_APPLICANT), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if co-applicant",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+#OTHER INSTALL
+p_otherinstall <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(OTHER_INSTALL), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if other installment plan",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+#NUM_DEPENDENT
+p.numdep <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(NUM_DEPENDENTS), fill=as.factor(RESPONSE)))+
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade related to the number of dependent",
+       x = "Number of people for whom liable to provide maintenance",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+
+#TELEPHONE
+p_tel <- GermanCredit %>% 
+  ggplot(aes(x = as.factor(TELEPHONE), fill = as.factor(RESPONSE))) +
+  geom_bar(position = "dodge") +
+  labs(title = "Credit grade if telephone on his name",
+       x = "",
+       y = "Number") +
+  theme(legend.position="none") +
+  scale_x_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
+```
+
+```{r, fig.show='hide'}
+figure_other <- ggarrange(p_coapp, p_otherinstall,p.numdep, p_tel,
+                    labels = c("A", "B", "C", "D"),
+                    ncol = 2, nrow = 2)
+figure_other
+```
+```{r, results='hide'}
+setwd(here::here("data/"))
+write_csv(GermanCredit, "GermanCreditClean.csv")
+```
+
+```{r, include=FALSE}
+# let's check if old people have basically more credit than young people
+mean_yes<-mean(YES_GC$AGE)
+mean_yes
+
+mean_no<-mean(NO_GC$AGE)
+mean_no
+
+# age does not seem to be a key criterion 
+```
+
+
+```{r}
+# correlation matrix
+
+#head(YES_GC)
+#corgc <- cor(GermanCredit)
+#corgc
+
+#creation of a new dataset
+cordata_fin <- GermanCredit[, c("CHK_ACCT", "HISTORY", "AMOUNT", "SAV_ACCT", "NUM_CREDITS", "RESPONSE") ] 
+ggpairs(cordata_fin, title="Correlogram on financial data")
+
+cordata_own <- GermanCredit[, c("NEW_CAR", "USED_CAR", "FURNITURE", "RADIO_TV", "RESPONSE") ]
+ggpairs(cordata_own, title="Correlogram on owned products data")
+
+cordata_pro <- GermanCredit[, c("JOB", "EDUCATION", "RETRAINING", "EMPLOYMENT", "RESPONSE") ] 
+ggpairs(cordata_pro, title="Correlogram on professional data")
+
+cordata_immo <- GermanCredit[, c("INSTALL_RATE", "REAL_ESTATE", "PRESENT_RESIDENT", "PROP_UNKN_NONE", "RENT", "OWN_RES", "RESPONSE") ]
+ggpairs(cordata_immo, title="Correlogram on real estate data")
+
+cordata_demo <- GermanCredit[, c("MALE_DIV", "MALE_SINGLE", "MALE_MAR_or_WID", "AGE", "FOREIGN", "RESPONSE") ] 
+ggpairs(cordata_demo, title="Correlogram on demographic data")
+
+#cor<-ggpairs(GermanCredit, title="correlogram with ggpairs()") 
+```
+
+```{r}
+# create an average profile of yes person
+
+# remove OBS column
+Yes_profil<- YES_GC %>% 
+  select("CHK_ACCT", "DURATION", "HISTORY", "NEW_CAR", "USED_CAR", "FURNITURE", "RADIO_TV", "EDUCATION", "RETRAINING", "AMOUNT", "SAV_ACCT", "EMPLOYMENT", "INSTALL_RATE", "MALE_DIV", "MALE_SINGLE", "MALE_MAR_or_WID", "CO_APPLICANT", "GUARANTOR", "PRESENT_RESIDENT", "REAL_ESTATE", "PROP_UNKN_NONE", "AGE", "OTHER_INSTALL", "RENT", "OWN_RES", "NUM_CREDITS", "JOB", "NUM_DEPENDENTS", "TELEPHONE", "FOREIGN")
+
+#Yes_profil <- data.frame(Yes_profil)
+#Yes_profil <- apply(as.matrix.noquote(Yes_profil),2,as.numeric)
+
+# take the mean of each column
+Yes_profil <- summarize_all(Yes_profil, mean) # not yet find a way to use median instead of mean
+
+# show matrix through lolipop plot 
+Yes_profil <- data.frame(
+  x=c('CHK_ACCT', 'DURATION', 'HISTORY', 'NEW_CAR', 'USED_CAR', 'FURNITURE', 'RADIO_TV', 'EDUCATION', 'RETRAINING', 'AMOUNT', 'SAV_ACCT', 'EMPLOYMENT', 'INSTALL_RATE', 'MALE_DIV', 'MALE_SINGLE', 'MALE_MAR_or_WID', 'CO_APPLICANT', 'GUARANTOR', 'PRESENT_RESIDENT', 'REAL_ESTATE', 'PROP_UNKN_NONE', 'AGE', 'OTHER_INSTALL', 'RENT', 'OWN_RES', 'NUM_CREDITS', 'JOB', 'NUM_DEPENDENTS', 'TELEPHONE', 'FOREIGN'),
+  y=abs(rnorm(30))
+)
+```
+
+```{r}
+graph_yes_profil <- ggplot(Yes_profil, aes(x=x, y=y)) +
+  geom_segment( aes(x=x, xend=x, y=0, yend=y), color="skyblue") +
+  geom_point( color="blue", size=4, alpha=0.6) +
+  labs(
+  title = "Mean of a YES profils",
+  y = "Variables name", x = "Value"
+)+
+  theme_light() +
+  coord_flip() +
+  theme(
+    panel.grid.major.y = element_blank(),
+    panel.border = element_blank(),
+    axis.ticks.y = element_blank() 
+)
+
+graph_yes_profil
+
+#barplot(prop.table(Yes_profil) * 100, horiz=TRUE, main = "Relative frequency (%)", col = rainbow(3))
+```
+
+The following plot shows a selection of the most important variables of our dataframe.
+The two main disadvantages of these methods are: The increasing overfitting risk when the number of observations is insufficient. The significant computation time when the number of variables is large.
+```{r}
+library(mlbench)
+library(caret)
+
+# transform table in matrix
+GermanCredit <- data.frame(GermanCredit)
+GermanCredit <- apply(as.matrix.noquote(GermanCredit),2,as.numeric)
+
+# select important variables
+control <- trainControl(method="repeatedcv", number=10, repeats=2)
+
+# train the model
+model <- train(RESPONSE~., data=GermanCredit, method="rpart", preProcess="scale", trControl=control)
+
+# estimate variable importance
+importance <- varImp(model, scale=FALSE)
+
+# summarize importance
+print(importance)
+
+# plot importance
+plot(importance)
+
+# comment: we should find a way to print only positive results or to print only 10 firsts variables. 
+```
+
+
+
+<!--chapter:end:02-Data.Rmd-->
+
+# Models
+
+```{r, warning = FALSE}
+# Upload the data
+setwd(here::here("data/"))
+GermanCredit <- read_csv("GermanCreditClean.csv")
+```
+
+After the exploration of our data, we start with the modelling part.
+
+## Splitting strategies
+
+In order to test the performance of our models, we use a splitting strategy of the dataset:
+
+- 80% is used as a training set
+- The remaining 20% is used as a test set.
+
+```{r}
+# Creation of the training and splitting data set
+set.seed(346) # To get the same results
+index.tr <- createDataPartition(y = GermanCredit$RESPONSE, p= 0.8, list = FALSE) #Creation of the index
+GermanCredit.tr <- GermanCredit[index.tr,] # Training set
+GermanCredit.te <- GermanCredit[-index.tr,] # Testing set
+```
+
+## Balance the dataset
+
+As said in the exploratory data analysis, we notice that our data is heavily unbalanced. We need to balance it before fitting our model. 
+
+```{r, results='hide'}
+# Balancing the training set
+table(GermanCredit.tr$RESPONSE)
+
+n <- min(table(GermanCredit.tr$RESPONSE))
+
+GermanCredit.tr.no <- filter(GermanCredit.tr, as_factor(RESPONSE)==0)
+GermanCredit.tr.yes <- filter(GermanCredit.tr, as_factor(RESPONSE)==1)
+
+index.no <- sample(size=n, x=1:nrow(GermanCredit.tr.no), replace=FALSE) ## sub-sample 236 instances from the "Yes"
+
+GermanCredit.tr.subs <- data.frame(rbind(GermanCredit.tr.no, GermanCredit.tr.yes[index.no,])) ## Bind all the "No" and the sub-sampled "Yes"
+table(GermanCredit.tr.subs$RESPONSE) ## The cases are balanced
+```
+
+## Logistic Regression
+
+We fit a logistic regression to test if it could predict the output we desired.
+
+For our first model we'll select all the variables given in the German Credit data set.
+
+```{r, results = 'hide'}
+mod.logr <- glm(as_factor(RESPONSE)~., data = GermanCredit.tr.subs, family="binomial")
+summary(mod.logr)
+```
+
+Our initial model is therefore:
+
+$$
+z_i = a_o + a_1{CHKACCT}_{31i} + ... + a_{31}Foreign_{31i}
+$$
+
+Selection of the model
+
+```{r, results = 'hide'}
+# Using the AIC
+mod.logr.sel <- step(mod.logr) # Here by default, backwards selection
+summary(mod.logr.sel) # Reminder, the lower the AIC the better
+```
+
+Final model:
+
+$$
+z_i = a_o + a_1{CHKACCT}_{1i} + a_2{DURATION}_{2i} + a_3{HISTORY}_{3i} + a_4{NEWCAR}_{4i} +  a_4{USEDCAR}_{4i} + a_5{AMOUNT}_{5i} + a_6{SAVACCT}_{6i} + a_7{EMPLOYMENT}_{7i} + a_8{INSTALLRATE}_{8i} + a_9{MALSINGLE}_{9i} + a_10{CO-APPLICANT}_{10i} + a_11{GUARANTOR}_{11i} + a_12{REALESTATE}_{12i} + a_13{OTHERINSTALL}_{13i} + a_14{OWNRES}_{14i} + a_15{NUMCREDITS}_{15i} + a_16{NUMDEPENDENTS}_{16i} + a_17{FOREIGN}_{17i}      
+$$
+Predictions: 
+
+```{r, results = 'hide'}
+prob.te <- predict(mod.logr.sel, newdata=GermanCredit.te, type="response")
+pred.te <- ifelse(prob.te >= 0.5, 1, 0)
+table(Pred=pred.te, Obs=GermanCredit.te$RESPONSE)
+
+cm<-confusionMatrix(spam.pred, spam$yesno)
+cm
+
+draw_confusion_matrix(cm)
+```
+
+```{r, results = 'hide'}
+draw_confusion_matrix <- function(cm) {
+  
+  layout(matrix(c(1,1,2)))
+  par(mar=c(2,2,2,2))
+  plot(c(100, 345), c(300, 450), type = "n", xlab="", ylab="", xaxt='n', yaxt='n')
+  title('CONFUSION MATRIX', cex.main=2)
+  
+  # create the matrix 
+  rect(150, 430, 240, 370, col='#3F97D0')
+  text(195, 435, 'Class1', cex=1.2)
+  rect(250, 430, 340, 370, col='#F7AD50')
+  text(295, 435, 'Class2', cex=1.2)
+  text(125, 370, 'Predicted', cex=1.3, srt=90, font=2)
+  text(245, 450, 'Actual', cex=1.3, font=2)
+  rect(150, 305, 240, 365, col='#F7AD50')
+  rect(250, 305, 340, 365, col='#3F97D0')
+  text(140, 400, 'Class1', cex=1.2, srt=90)
+  text(140, 335, 'Class2', cex=1.2, srt=90)
+  
+  # add in the cm results 
+  res <- as.numeric(cm$table)
+  text(195, 400, res[1], cex=1.6, font=2, col='white')
+  text(195, 335, res[2], cex=1.6, font=2, col='white')
+  text(295, 400, res[3], cex=1.6, font=2, col='white')
+  text(295, 335, res[4], cex=1.6, font=2, col='white')
+  
+  # add in the specifics 
+  plot(c(100, 0), c(100, 0), type = "n", xlab="", ylab="", main = "DETAILS", xaxt='n', yaxt='n')
+  text(10, 85, names(cm$byClass[1]), cex=1.2, font=2)
+  text(10, 70, round(as.numeric(cm$byClass[1]), 3), cex=1.2)
+  text(30, 85, names(cm$byClass[2]), cex=1.2, font=2)
+  text(30, 70, round(as.numeric(cm$byClass[2]), 3), cex=1.2)
+  text(50, 85, names(cm$byClass[5]), cex=1.2, font=2)
+  text(50, 70, round(as.numeric(cm$byClass[5]), 3), cex=1.2)
+  text(70, 85, names(cm$byClass[6]), cex=1.2, font=2)
+  text(70, 70, round(as.numeric(cm$byClass[6]), 3), cex=1.2)
+  text(90, 85, names(cm$byClass[7]), cex=1.2, font=2)
+  text(90, 70, round(as.numeric(cm$byClass[7]), 3), cex=1.2)
+  
+  # add in the accuracy information 
+  text(30, 35, names(cm$overall[1]), cex=1.5, font=2)
+  text(30, 20, round(as.numeric(cm$overall[1]), 3), cex=1.4)
+  text(70, 35, names(cm$overall[2]), cex=1.5, font=2)
+  text(70, 20, round(as.numeric(cm$overall[2]), 3), cex=1.4)
+}
+```
+
+```{r}
+prob_glm_aic <- predict(mod.logr.sel, newdata = GermanCredit.te, type = "response")
+pred_glm_aic <- ifelse(prob_glm_aic >= 0.5, 1, 0)
+cm_glm_aic <- confusionMatrix(data = as.factor(pred_glm_aic), reference = as.factor(GermanCredit.te$RESPONSE))
+draw_confusion_matrix(cm_glm_aic)
+```
+
+Not a good model. Do not forget that the prior of this data set is not balanced at all. We should take it into account.
+
+As depicted below, if our model was good, we should have boxplot that are far away from the 0.5, which is not the case, especially for the bad credits.
+
+```{r}
+boxplot(prob.te~GermanCredit.te$RESPONSE)
+```
+
+### Cross-validation
+
+```{r, results = 'hide'}
+trctrl <- trainControl(method = "cv", number=10)
+
+set.seed(346)
+GermanCredit.cv <- train(as_factor(RESPONSE) ~., data = GermanCredit.tr.subs, method = "glmStepAIC", family="binomial",
+                    trControl=trctrl, trace=0)
+
+GermanCredit.cv
+```
+
+```{r, results = 'hide'}
+GermanCredit.pred <- predict(GermanCredit.cv, newdata = GermanCredit.te)
+confusionMatrix(data=GermanCredit.cv, reference = GermanCredit.te$RESPONSE)
+```
+
+
+<!--chapter:end:03-Model.Rmd-->
+
+## Neural Networks
+
+```{r, results = 'hide'}
+nn1 <- nnet(as.factor(RESPONSE)~., data=GermanCredit.tr.subs, size=2)
+summary(nn1)
+
+pred1 <- predict(nn1, type="class")
+
+tab1 <- table(Obs=GermanCredit.tr.subs$RESPONSE, Pred=pred1)
+
+(acc1 <- sum(diag(tab1))/sum(tab1))
+```
+
+
+<!--chapter:end:NN.Rmd-->
+
+## Trees
+
+```{r}
+# Initialise our tree
+GermanCreditTree <- rpart(as_factor(RESPONSE)~., data=GermanCredit.tr.subs)
+rpart.plot(GermanCreditTree)
+```
+
+```{r}
+plotcp(GermanCreditTree)
+```
+
+```{r}
+GermanCreditTree.prune <- prune(GermanCreditTree, cp=0.02)
+rpart.plot(GermanCreditTree.prune)
+```
+
+```{r}
+pred <- predict(GermanCreditTree.prune, newdata=GermanCredit.te, type="class")
+table(Pred=pred, Obs=GermanCredit.te$RESPONSE)
+
+predict(GermanCreditTree.prune, newdata=GermanCredit.te, type="prob")
+```
+
+
+
+
+<!--chapter:end:Trees.Rmd-->
+

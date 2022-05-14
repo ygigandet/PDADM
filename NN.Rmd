@@ -1,0 +1,13 @@
+## Neural Networks
+
+```{r, results = 'hide'}
+nn1 <- nnet(as.factor(RESPONSE)~., data=GermanCredit.tr.subs, size=2)
+summary(nn1)
+
+pred1 <- predict(nn1, type="class")
+
+tab1 <- table(Obs=GermanCredit.tr.subs$RESPONSE, Pred=pred1)
+
+(acc1 <- sum(diag(tab1))/sum(tab1))
+```
+

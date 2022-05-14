@@ -23,7 +23,7 @@
 <meta name="author" content="Manon Verjus and Yooby Gigandet" />
 
 
-<meta name="date" content="2022-05-09" />
+<meta name="date" content="2022-05-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -90,7 +90,8 @@
 <ul>
 <li class="chapter" data-level="3.3.1" data-path="models.html"><a href="models.html#cross-validation"><i class="fa fa-check"></i><b>3.3.1</b> Cross-validation</a></li>
 </ul></li>
-<li class="chapter" data-level="3.4" data-path="models.html"><a href="models.html#trees"><i class="fa fa-check"></i><b>3.4</b> Trees</a></li>
+<li class="chapter" data-level="3.4" data-path="models.html"><a href="models.html#neural-networks"><i class="fa fa-check"></i><b>3.4</b> Neural Networks</a></li>
+<li class="chapter" data-level="3.5" data-path="models.html"><a href="models.html#trees"><i class="fa fa-check"></i><b>3.5</b> Trees</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -130,591 +131,58 @@
 <h2><span class="header-section-number">3.3</span> Logistic Regression<a href="models.html#logistic-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>We fit a logistic regression to test if it could predict the output we desired.</p>
 <p>For our first model we’ll select all the variables given in the German Credit data set.</p>
-<pre><code>#&gt; 
-#&gt; Call:
-#&gt; glm(formula = as_factor(RESPONSE) ~ ., family = &quot;binomial&quot;, data = GermanCredit.tr.subs)
-#&gt; 
-#&gt; Deviance Residuals: 
-#&gt;     Min       1Q   Median       3Q      Max  
-#&gt; -2.2781  -0.7776  -0.0471   0.8323   2.6551  
-#&gt; 
-#&gt; Coefficients:
-#&gt;                   Estimate Std. Error z value Pr(&gt;|z|)    
-#&gt; (Intercept)       6.70e-03   1.22e+00    0.01   0.9956    
-#&gt; CHK_ACCT          6.03e-01   1.03e-01    5.86  4.7e-09 ***
-#&gt; DURATION         -2.43e-02   1.27e-02   -1.92   0.0552 .  
-#&gt; HISTORY           4.00e-01   1.25e-01    3.19   0.0014 ** 
-#&gt; NEW_CAR          -5.80e-01   5.18e-01   -1.12   0.2624    
-#&gt; USED_CAR          1.10e+00   6.75e-01    1.62   0.1042    
-#&gt; FURNITURE        -1.79e-02   5.42e-01   -0.03   0.9737    
-#&gt; RADIO_TV         -2.47e-01   5.22e-01   -0.47   0.6358    
-#&gt; EDUCATION        -8.22e-01   7.21e-01   -1.14   0.2540    
-#&gt; RETRAINING       -8.61e-03   6.14e-01   -0.01   0.9888    
-#&gt; AMOUNT           -1.35e-04   6.31e-05   -2.14   0.0323 *  
-#&gt; SAV_ACCT          1.86e-01   7.91e-02    2.35   0.0188 *  
-#&gt; EMPLOYMENT        1.59e-01   1.09e-01    1.45   0.1473    
-#&gt; INSTALL_RATE     -3.65e-01   1.21e-01   -3.00   0.0027 ** 
-#&gt; MALE_DIV          3.84e-02   5.32e-01    0.07   0.9424    
-#&gt; MALE_SINGLE       6.55e-01   2.82e-01    2.32   0.0201 *  
-#&gt; MALE_MAR_or_WID   1.91e-01   4.32e-01    0.44   0.6583    
-#&gt; CO_APPLICANT     -8.07e-01   5.92e-01   -1.36   0.1730    
-#&gt; GUARANTOR         8.96e-01   5.31e-01    1.69   0.0912 .  
-#&gt; PRESENT_RESIDENT  1.10e-02   1.21e-01    0.09   0.9281    
-#&gt; REAL_ESTATE       4.00e-01   2.83e-01    1.41   0.1574    
-#&gt; PROP_UNKN_NONE   -9.33e-03   5.25e-01   -0.02   0.9858    
-#&gt; AGE               1.24e-02   1.28e-02    0.96   0.3354    
-#&gt; OTHER_INSTALL    -6.81e-01   2.97e-01   -2.30   0.0216 *  
-#&gt; RENT             -5.14e-02   6.47e-01   -0.08   0.9367    
-#&gt; OWN_RES           3.42e-01   6.27e-01    0.54   0.5860    
-#&gt; NUM_CREDITS      -4.61e-01   2.31e-01   -2.00   0.0457 *  
-#&gt; JOB               2.55e-02   1.94e-01    0.13   0.8952    
-#&gt; NUM_DEPENDENTS   -5.21e-01   3.45e-01   -1.51   0.1311    
-#&gt; TELEPHONE         1.94e-01   2.61e-01    0.74   0.4581    
-#&gt; FOREIGN           1.09e+00   7.31e-01    1.50   0.1345    
-#&gt; ---
-#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#&gt; 
-#&gt; (Dispersion parameter for binomial family taken to be 1)
-#&gt; 
-#&gt;     Null deviance: 654.33  on 471  degrees of freedom
-#&gt; Residual deviance: 477.83  on 441  degrees of freedom
-#&gt; AIC: 539.8
-#&gt; 
-#&gt; Number of Fisher Scoring iterations: 5</code></pre>
 <p>Our initial model is therefore:</p>
 <p><span class="math display">\[
-z_i = a_o + a_1CHKACCT_{1i} + ... + a_{32}Foreign_{1i}
+z_i = a_o + a_1{CHKACCT}_{31i} + ... + a_{31}Foreign_{31i}
 \]</span></p>
-<p>Let’s check if we can select better variables for the model</p>
-<pre><code>#&gt; Start:  AIC=540
-#&gt; as_factor(RESPONSE) ~ CHK_ACCT + DURATION + HISTORY + NEW_CAR + 
-#&gt;     USED_CAR + FURNITURE + RADIO_TV + EDUCATION + RETRAINING + 
-#&gt;     AMOUNT + SAV_ACCT + EMPLOYMENT + INSTALL_RATE + MALE_DIV + 
-#&gt;     MALE_SINGLE + MALE_MAR_or_WID + CO_APPLICANT + GUARANTOR + 
-#&gt;     PRESENT_RESIDENT + REAL_ESTATE + PROP_UNKN_NONE + AGE + OTHER_INSTALL + 
-#&gt;     RENT + OWN_RES + NUM_CREDITS + JOB + NUM_DEPENDENTS + TELEPHONE + 
-#&gt;     FOREIGN
-#&gt; 
-#&gt;                    Df Deviance AIC
-#&gt; - RETRAINING        1      478 538
-#&gt; - PROP_UNKN_NONE    1      478 538
-#&gt; - FURNITURE         1      478 538
-#&gt; - MALE_DIV          1      478 538
-#&gt; - RENT              1      478 538
-#&gt; - PRESENT_RESIDENT  1      478 538
-#&gt; - JOB               1      478 538
-#&gt; - MALE_MAR_or_WID   1      478 538
-#&gt; - RADIO_TV          1      478 538
-#&gt; - OWN_RES           1      478 538
-#&gt; - TELEPHONE         1      478 538
-#&gt; - AGE               1      479 539
-#&gt; - NEW_CAR           1      479 539
-#&gt; - EDUCATION         1      479 539
-#&gt; - CO_APPLICANT      1      480 540
-#&gt; &lt;none&gt;                     478 540
-#&gt; - REAL_ESTATE       1      480 540
-#&gt; - EMPLOYMENT        1      480 540
-#&gt; - NUM_DEPENDENTS    1      480 540
-#&gt; - FOREIGN           1      480 540
-#&gt; - USED_CAR          1      481 541
-#&gt; - GUARANTOR         1      481 541
-#&gt; - DURATION          1      482 542
-#&gt; - NUM_CREDITS       1      482 542
-#&gt; - AMOUNT            1      483 543
-#&gt; - OTHER_INSTALL     1      483 543
-#&gt; - MALE_SINGLE       1      483 543
-#&gt; - SAV_ACCT          1      483 543
-#&gt; - INSTALL_RATE      1      487 547
-#&gt; - HISTORY           1      489 549
-#&gt; - CHK_ACCT          1      515 575
-#&gt; 
-#&gt; Step:  AIC=538
-#&gt; as_factor(RESPONSE) ~ CHK_ACCT + DURATION + HISTORY + NEW_CAR + 
-#&gt;     USED_CAR + FURNITURE + RADIO_TV + EDUCATION + AMOUNT + SAV_ACCT + 
-#&gt;     EMPLOYMENT + INSTALL_RATE + MALE_DIV + MALE_SINGLE + MALE_MAR_or_WID + 
-#&gt;     CO_APPLICANT + GUARANTOR + PRESENT_RESIDENT + REAL_ESTATE + 
-#&gt;     PROP_UNKN_NONE + AGE + OTHER_INSTALL + RENT + OWN_RES + NUM_CREDITS + 
-#&gt;     JOB + NUM_DEPENDENTS + TELEPHONE + FOREIGN
-#&gt; 
-#&gt;                    Df Deviance AIC
-#&gt; - PROP_UNKN_NONE    1      478 536
-#&gt; - FURNITURE         1      478 536
-#&gt; - MALE_DIV          1      478 536
-#&gt; - RENT              1      478 536
-#&gt; - PRESENT_RESIDENT  1      478 536
-#&gt; - JOB               1      478 536
-#&gt; - MALE_MAR_or_WID   1      478 536
-#&gt; - OWN_RES           1      478 536
-#&gt; - RADIO_TV          1      478 536
-#&gt; - TELEPHONE         1      478 536
-#&gt; - AGE               1      479 537
-#&gt; - EDUCATION         1      480 538
-#&gt; - CO_APPLICANT      1      480 538
-#&gt; &lt;none&gt;                     478 538
-#&gt; - REAL_ESTATE       1      480 538
-#&gt; - EMPLOYMENT        1      480 538
-#&gt; - NEW_CAR           1      480 538
-#&gt; - NUM_DEPENDENTS    1      480 538
-#&gt; - FOREIGN           1      480 538
-#&gt; - GUARANTOR         1      481 539
-#&gt; - USED_CAR          1      482 540
-#&gt; - DURATION          1      482 540
-#&gt; - NUM_CREDITS       1      482 540
-#&gt; - AMOUNT            1      483 541
-#&gt; - OTHER_INSTALL     1      483 541
-#&gt; - MALE_SINGLE       1      483 541
-#&gt; - SAV_ACCT          1      483 541
-#&gt; - INSTALL_RATE      1      487 545
-#&gt; - HISTORY           1      489 547
-#&gt; - CHK_ACCT          1      515 573
-#&gt; 
-#&gt; Step:  AIC=536
-#&gt; as_factor(RESPONSE) ~ CHK_ACCT + DURATION + HISTORY + NEW_CAR + 
-#&gt;     USED_CAR + FURNITURE + RADIO_TV + EDUCATION + AMOUNT + SAV_ACCT + 
-#&gt;     EMPLOYMENT + INSTALL_RATE + MALE_DIV + MALE_SINGLE + MALE_MAR_or_WID + 
-#&gt;     CO_APPLICANT + GUARANTOR + PRESENT_RESIDENT + REAL_ESTATE + 
-#&gt;     AGE + OTHER_INSTALL + RENT + OWN_RES + NUM_CREDITS + JOB + 
-#&gt;     NUM_DEPENDENTS + TELEPHONE + FOREIGN
-#&gt; 
-#&gt;                    Df Deviance AIC
-#&gt; - FURNITURE         1      478 534
-#&gt; - MALE_DIV          1      478 534
-#&gt; - RENT              1      478 534
-#&gt; - PRESENT_RESIDENT  1      478 534
-#&gt; - JOB               1      478 534
-#&gt; - MALE_MAR_or_WID   1      478 534
-#&gt; - RADIO_TV          1      478 534
-#&gt; - TELEPHONE         1      478 534
-#&gt; - OWN_RES           1      478 534
-#&gt; - AGE               1      479 535
-#&gt; - EDUCATION         1      480 536
-#&gt; &lt;none&gt;                     478 536
-#&gt; - CO_APPLICANT      1      480 536
-#&gt; - REAL_ESTATE       1      480 536
-#&gt; - EMPLOYMENT        1      480 536
-#&gt; - NEW_CAR           1      480 536
-#&gt; - NUM_DEPENDENTS    1      480 536
-#&gt; - FOREIGN           1      480 536
-#&gt; - GUARANTOR         1      481 537
-#&gt; - USED_CAR          1      482 538
-#&gt; - DURATION          1      482 538
-#&gt; - NUM_CREDITS       1      482 538
-#&gt; - AMOUNT            1      483 539
-#&gt; - MALE_SINGLE       1      483 539
-#&gt; - OTHER_INSTALL     1      483 539
-#&gt; - SAV_ACCT          1      483 539
-#&gt; - INSTALL_RATE      1      487 543
-#&gt; - HISTORY           1      489 545
-#&gt; - CHK_ACCT          1      515 571
-#&gt; 
-#&gt; Step:  AIC=534
-#&gt; as_factor(RESPONSE) ~ CHK_ACCT + DURATION + HISTORY + NEW_CAR + 
-#&gt;     USED_CAR + RADIO_TV + EDUCATION + AMOUNT + SAV_ACCT + EMPLOYMENT + 
-#&gt;     INSTALL_RATE + MALE_DIV + MALE_SINGLE + MALE_MAR_or_WID + 
-#&gt;     CO_APPLICANT + GUARANTOR + PRESENT_RESIDENT + REAL_ESTATE + 
-#&gt;     AGE + OTHER_INSTALL + RENT + OWN_RES + NUM_CREDITS + JOB + 
-#&gt;     NUM_DEPENDENTS + TELEPHONE + FOREIGN
-#&gt; 
-#&gt;                    Df Deviance AIC
-#&gt; - MALE_DIV          1      478 532
-#&gt; - RENT              1      478 532
-#&gt; - PRESENT_RESIDENT  1      478 532
-#&gt; - JOB               1      478 532
-#&gt; - MALE_MAR_or_WID   1      478 532
-#&gt; - TELEPHONE         1      478 532
-#&gt; - OWN_RES           1      478 532
-#&gt; - RADIO_TV          1      478 532
-#&gt; - AGE               1      479 533
-#&gt; - EDUCATION         1      480 534
-#&gt; &lt;none&gt;                     478 534
-#&gt; - CO_APPLICANT      1      480 534
-#&gt; - REAL_ESTATE       1      480 534
-#&gt; - EMPLOYMENT        1      480 534
-#&gt; - NUM_DEPENDENTS    1      480 534
-#&gt; - FOREIGN           1      480 534
-#&gt; - GUARANTOR         1      481 535
-#&gt; - NEW_CAR           1      481 535
-#&gt; - DURATION          1      482 536
-#&gt; - NUM_CREDITS       1      482 536
-#&gt; - USED_CAR          1      482 536
-#&gt; - AMOUNT            1      483 537
-#&gt; - MALE_SINGLE       1      483 537
-#&gt; - OTHER_INSTALL     1      483 537
-#&gt; - SAV_ACCT          1      483 537
-#&gt; - INSTALL_RATE      1      487 541
-#&gt; - HISTORY           1      489 543
-#&gt; - CHK_ACCT          1      516 570
-#&gt; 
-#&gt; Step:  AIC=532
-#&gt; as_factor(RESPONSE) ~ CHK_ACCT + DURATION + HISTORY + NEW_CAR + 
-#&gt;     USED_CAR + RADIO_TV + EDUCATION + AMOUNT + SAV_ACCT + EMPLOYMENT + 
-#&gt;     INSTALL_RATE + MALE_SINGLE + MALE_MAR_or_WID + CO_APPLICANT + 
-#&gt;     GUARANTOR + PRESENT_RESIDENT + REAL_ESTATE + AGE + OTHER_INSTALL + 
-#&gt;     RENT + OWN_RES + NUM_CREDITS + JOB + NUM_DEPENDENTS + TELEPHONE + 
-#&gt;     FOREIGN
-#&gt; 
-#&gt;                    Df Deviance AIC
-#&gt; - PRESENT_RESIDENT  1      478 530
-#&gt; - RENT              1      478 530
-#&gt; - JOB               1      478 530
-#&gt; - MALE_MAR_or_WID   1      478 530
-#&gt; - TELEPHONE         1      478 530
-#&gt; - OWN_RES           1      478 530
-#&gt; - RADIO_TV          1      478 530
-#&gt; - AGE               1      479 531
-#&gt; &lt;none&gt;                     478 532
-#&gt; - EDUCATION         1      480 532
-#&gt; - CO_APPLICANT      1      480 532
-#&gt; - REAL_ESTATE       1      480 532
-#&gt; - EMPLOYMENT        1      480 532
-#&gt; - NUM_DEPENDENTS    1      480 532
-#&gt; - FOREIGN           1      480 532
-#&gt; - GUARANTOR         1      481 533
-#&gt; - NEW_CAR           1      482 534
-#&gt; - DURATION          1      482 534
-#&gt; - NUM_CREDITS       1      482 534
-#&gt; - USED_CAR          1      483 535
-#&gt; - AMOUNT            1      483 535
-#&gt; - OTHER_INSTALL     1      483 535
-#&gt; - SAV_ACCT          1      483 535
-#&gt; - MALE_SINGLE       1      484 536
-#&gt; - INSTALL_RATE      1      487 539
-#&gt; - HISTORY           1      489 541
-#&gt; - CHK_ACCT          1      516 568
-#&gt; 
-#&gt; Step:  AIC=530
-#&gt; as_factor(RESPONSE) ~ CHK_ACCT + DURATION + HISTORY + NEW_CAR + 
-#&gt;     USED_CAR + RADIO_TV + EDUCATION + AMOUNT + SAV_ACCT + EMPLOYMENT + 
-#&gt;     INSTALL_RATE + MALE_SINGLE + MALE_MAR_or_WID + CO_APPLICANT + 
-#&gt;     GUARANTOR + REAL_ESTATE + AGE + OTHER_INSTALL + RENT + OWN_RES + 
-#&gt;     NUM_CREDITS + JOB + NUM_DEPENDENTS + TELEPHONE + FOREIGN
-#&gt; 
-#&gt;                   Df Deviance AIC
-#&gt; - RENT             1      478 528
-#&gt; - JOB              1      478 528
-#&gt; - MALE_MAR_or_WID  1      478 528
-#&gt; - TELEPHONE        1      478 528
-#&gt; - OWN_RES          1      478 528
-#&gt; - RADIO_TV         1      478 528
-#&gt; - AGE              1      479 529
-#&gt; &lt;none&gt;                    478 530
-#&gt; - EDUCATION        1      480 530
-#&gt; - CO_APPLICANT     1      480 530
-#&gt; - REAL_ESTATE      1      480 530
-#&gt; - EMPLOYMENT       1      480 530
-#&gt; - NUM_DEPENDENTS   1      480 530
-#&gt; - FOREIGN          1      480 530
-#&gt; - GUARANTOR        1      481 531
-#&gt; - NEW_CAR          1      482 532
-#&gt; - DURATION         1      482 532
-#&gt; - NUM_CREDITS      1      482 532
-#&gt; - USED_CAR         1      483 533
-#&gt; - AMOUNT           1      483 533
-#&gt; - OTHER_INSTALL    1      483 533
-#&gt; - SAV_ACCT         1      484 534
-#&gt; - MALE_SINGLE      1      484 534
-#&gt; - INSTALL_RATE     1      487 537
-#&gt; - HISTORY          1      489 539
-#&gt; - CHK_ACCT         1      517 567
-#&gt; 
-#&gt; Step:  AIC=528
-#&gt; as_factor(RESPONSE) ~ CHK_ACCT + DURATION + HISTORY + NEW_CAR + 
-#&gt;     USED_CAR + RADIO_TV + EDUCATION + AMOUNT + SAV_ACCT + EMPLOYMENT + 
-#&gt;     INSTALL_RATE + MALE_SINGLE + MALE_MAR_or_WID + CO_APPLICANT + 
-#&gt;     GUARANTOR + REAL_ESTATE + AGE + OTHER_INSTALL + OWN_RES + 
-#&gt;     NUM_CREDITS + JOB + NUM_DEPENDENTS + TELEPHONE + FOREIGN
-#&gt; 
-#&gt;                   Df Deviance AIC
-#&gt; - JOB              1      478 526
-#&gt; - MALE_MAR_or_WID  1      478 526
-#&gt; - TELEPHONE        1      478 526
-#&gt; - RADIO_TV         1      478 526
-#&gt; - AGE              1      479 527
-#&gt; &lt;none&gt;                    478 528
-#&gt; - EDUCATION        1      480 528
-#&gt; - REAL_ESTATE      1      480 528
-#&gt; - CO_APPLICANT     1      480 528
-#&gt; - OWN_RES          1      480 528
-#&gt; - EMPLOYMENT       1      480 528
-#&gt; - NUM_DEPENDENTS   1      480 528
-#&gt; - FOREIGN          1      480 528
-#&gt; - GUARANTOR        1      481 529
-#&gt; - NEW_CAR          1      482 530
-#&gt; - DURATION         1      482 530
-#&gt; - NUM_CREDITS      1      482 530
-#&gt; - USED_CAR         1      483 531
-#&gt; - AMOUNT           1      483 531
-#&gt; - OTHER_INSTALL    1      483 531
-#&gt; - SAV_ACCT         1      484 532
-#&gt; - MALE_SINGLE      1      484 532
-#&gt; - INSTALL_RATE     1      487 535
-#&gt; - HISTORY          1      489 537
-#&gt; - CHK_ACCT         1      517 565
-#&gt; 
-#&gt; Step:  AIC=526
-#&gt; as_factor(RESPONSE) ~ CHK_ACCT + DURATION + HISTORY + NEW_CAR + 
-#&gt;     USED_CAR + RADIO_TV + EDUCATION + AMOUNT + SAV_ACCT + EMPLOYMENT + 
-#&gt;     INSTALL_RATE + MALE_SINGLE + MALE_MAR_or_WID + CO_APPLICANT + 
-#&gt;     GUARANTOR + REAL_ESTATE + AGE + OTHER_INSTALL + OWN_RES + 
-#&gt;     NUM_CREDITS + NUM_DEPENDENTS + TELEPHONE + FOREIGN
-#&gt; 
-#&gt;                   Df Deviance AIC
-#&gt; - MALE_MAR_or_WID  1      478 524
-#&gt; - RADIO_TV         1      478 524
-#&gt; - TELEPHONE        1      479 525
-#&gt; - AGE              1      479 525
-#&gt; &lt;none&gt;                    478 526
-#&gt; - REAL_ESTATE      1      480 526
-#&gt; - EDUCATION        1      480 526
-#&gt; - CO_APPLICANT     1      480 526
-#&gt; - OWN_RES          1      480 526
-#&gt; - NUM_DEPENDENTS   1      480 526
-#&gt; - EMPLOYMENT       1      480 526
-#&gt; - FOREIGN          1      480 526
-#&gt; - GUARANTOR        1      481 527
-#&gt; - DURATION         1      482 528
-#&gt; - NEW_CAR          1      482 528
-#&gt; - NUM_CREDITS      1      482 528
-#&gt; - USED_CAR         1      483 529
-#&gt; - AMOUNT           1      483 529
-#&gt; - OTHER_INSTALL    1      483 529
-#&gt; - SAV_ACCT         1      484 530
-#&gt; - MALE_SINGLE      1      484 530
-#&gt; - INSTALL_RATE     1      488 534
-#&gt; - HISTORY          1      489 535
-#&gt; - CHK_ACCT         1      517 563
-#&gt; 
-#&gt; Step:  AIC=524
-#&gt; as_factor(RESPONSE) ~ CHK_ACCT + DURATION + HISTORY + NEW_CAR + 
-#&gt;     USED_CAR + RADIO_TV + EDUCATION + AMOUNT + SAV_ACCT + EMPLOYMENT + 
-#&gt;     INSTALL_RATE + MALE_SINGLE + CO_APPLICANT + GUARANTOR + REAL_ESTATE + 
-#&gt;     AGE + OTHER_INSTALL + OWN_RES + NUM_CREDITS + NUM_DEPENDENTS + 
-#&gt;     TELEPHONE + FOREIGN
-#&gt; 
-#&gt;                  Df Deviance AIC
-#&gt; - RADIO_TV        1      479 523
-#&gt; - TELEPHONE       1      479 523
-#&gt; - AGE             1      479 523
-#&gt; &lt;none&gt;                   478 524
-#&gt; - CO_APPLICANT    1      480 524
-#&gt; - EDUCATION       1      480 524
-#&gt; - OWN_RES         1      480 524
-#&gt; - REAL_ESTATE     1      480 524
-#&gt; - NUM_DEPENDENTS  1      480 524
-#&gt; - EMPLOYMENT      1      480 524
-#&gt; - FOREIGN         1      481 525
-#&gt; - GUARANTOR       1      481 525
-#&gt; - DURATION        1      482 526
-#&gt; - NEW_CAR         1      482 526
-#&gt; - NUM_CREDITS     1      482 526
-#&gt; - USED_CAR        1      483 527
-#&gt; - AMOUNT          1      483 527
-#&gt; - OTHER_INSTALL   1      484 528
-#&gt; - SAV_ACCT        1      484 528
-#&gt; - MALE_SINGLE     1      484 528
-#&gt; - INSTALL_RATE    1      488 532
-#&gt; - HISTORY         1      490 534
-#&gt; - CHK_ACCT        1      517 561
-#&gt; 
-#&gt; Step:  AIC=523
-#&gt; as_factor(RESPONSE) ~ CHK_ACCT + DURATION + HISTORY + NEW_CAR + 
-#&gt;     USED_CAR + EDUCATION + AMOUNT + SAV_ACCT + EMPLOYMENT + INSTALL_RATE + 
-#&gt;     MALE_SINGLE + CO_APPLICANT + GUARANTOR + REAL_ESTATE + AGE + 
-#&gt;     OTHER_INSTALL + OWN_RES + NUM_CREDITS + NUM_DEPENDENTS + 
-#&gt;     TELEPHONE + FOREIGN
-#&gt; 
-#&gt;                  Df Deviance AIC
-#&gt; - TELEPHONE       1      479 521
-#&gt; - AGE             1      480 522
-#&gt; - EDUCATION       1      480 522
-#&gt; &lt;none&gt;                   479 523
-#&gt; - OWN_RES         1      481 523
-#&gt; - CO_APPLICANT    1      481 523
-#&gt; - REAL_ESTATE     1      481 523
-#&gt; - NUM_DEPENDENTS  1      481 523
-#&gt; - EMPLOYMENT      1      481 523
-#&gt; - FOREIGN         1      481 523
-#&gt; - GUARANTOR       1      481 523
-#&gt; - NEW_CAR         1      482 524
-#&gt; - DURATION        1      483 525
-#&gt; - NUM_CREDITS     1      483 525
-#&gt; - AMOUNT          1      483 525
-#&gt; - OTHER_INSTALL   1      484 526
-#&gt; - SAV_ACCT        1      484 526
-#&gt; - USED_CAR        1      484 526
-#&gt; - MALE_SINGLE     1      485 527
-#&gt; - INSTALL_RATE    1      488 530
-#&gt; - HISTORY         1      490 532
-#&gt; - CHK_ACCT        1      517 559
-#&gt; 
-#&gt; Step:  AIC=521
-#&gt; as_factor(RESPONSE) ~ CHK_ACCT + DURATION + HISTORY + NEW_CAR + 
-#&gt;     USED_CAR + EDUCATION + AMOUNT + SAV_ACCT + EMPLOYMENT + INSTALL_RATE + 
-#&gt;     MALE_SINGLE + CO_APPLICANT + GUARANTOR + REAL_ESTATE + AGE + 
-#&gt;     OTHER_INSTALL + OWN_RES + NUM_CREDITS + NUM_DEPENDENTS + 
-#&gt;     FOREIGN
-#&gt; 
-#&gt;                  Df Deviance AIC
-#&gt; - AGE             1      481 521
-#&gt; - EDUCATION       1      481 521
-#&gt; &lt;none&gt;                   479 521
-#&gt; - REAL_ESTATE     1      481 521
-#&gt; - OWN_RES         1      481 521
-#&gt; - CO_APPLICANT    1      481 521
-#&gt; - EMPLOYMENT      1      482 522
-#&gt; - NUM_DEPENDENTS  1      482 522
-#&gt; - FOREIGN         1      482 522
-#&gt; - GUARANTOR       1      482 522
-#&gt; - NEW_CAR         1      483 523
-#&gt; - AMOUNT          1      483 523
-#&gt; - NUM_CREDITS     1      483 523
-#&gt; - DURATION        1      484 524
-#&gt; - OTHER_INSTALL   1      484 524
-#&gt; - SAV_ACCT        1      485 525
-#&gt; - USED_CAR        1      485 525
-#&gt; - MALE_SINGLE     1      485 525
-#&gt; - INSTALL_RATE    1      489 529
-#&gt; - HISTORY         1      491 531
-#&gt; - CHK_ACCT        1      517 557
-#&gt; 
-#&gt; Step:  AIC=521
-#&gt; as_factor(RESPONSE) ~ CHK_ACCT + DURATION + HISTORY + NEW_CAR + 
-#&gt;     USED_CAR + EDUCATION + AMOUNT + SAV_ACCT + EMPLOYMENT + INSTALL_RATE + 
-#&gt;     MALE_SINGLE + CO_APPLICANT + GUARANTOR + REAL_ESTATE + OTHER_INSTALL + 
-#&gt;     OWN_RES + NUM_CREDITS + NUM_DEPENDENTS + FOREIGN
-#&gt; 
-#&gt;                  Df Deviance AIC
-#&gt; - EDUCATION       1      483 521
-#&gt; - OWN_RES         1      483 521
-#&gt; - REAL_ESTATE     1      483 521
-#&gt; &lt;none&gt;                   481 521
-#&gt; - NUM_DEPENDENTS  1      483 521
-#&gt; - CO_APPLICANT    1      483 521
-#&gt; - FOREIGN         1      483 521
-#&gt; - GUARANTOR       1      484 522
-#&gt; - NEW_CAR         1      484 522
-#&gt; - EMPLOYMENT      1      484 522
-#&gt; - NUM_CREDITS     1      485 523
-#&gt; - AMOUNT          1      485 523
-#&gt; - OTHER_INSTALL   1      486 524
-#&gt; - DURATION        1      486 524
-#&gt; - USED_CAR        1      487 525
-#&gt; - SAV_ACCT        1      487 525
-#&gt; - MALE_SINGLE     1      488 526
-#&gt; - INSTALL_RATE    1      491 529
-#&gt; - HISTORY         1      493 531
-#&gt; - CHK_ACCT        1      519 557
-#&gt; 
-#&gt; Step:  AIC=521
-#&gt; as_factor(RESPONSE) ~ CHK_ACCT + DURATION + HISTORY + NEW_CAR + 
-#&gt;     USED_CAR + AMOUNT + SAV_ACCT + EMPLOYMENT + INSTALL_RATE + 
-#&gt;     MALE_SINGLE + CO_APPLICANT + GUARANTOR + REAL_ESTATE + OTHER_INSTALL + 
-#&gt;     OWN_RES + NUM_CREDITS + NUM_DEPENDENTS + FOREIGN
-#&gt; 
-#&gt;                  Df Deviance AIC
-#&gt; &lt;none&gt;                   483 521
-#&gt; - CO_APPLICANT    1      485 521
-#&gt; - NUM_DEPENDENTS  1      485 521
-#&gt; - REAL_ESTATE     1      485 521
-#&gt; - OWN_RES         1      485 521
-#&gt; - NEW_CAR         1      485 521
-#&gt; - FOREIGN         1      485 521
-#&gt; - GUARANTOR       1      486 522
-#&gt; - EMPLOYMENT      1      486 522
-#&gt; - NUM_CREDITS     1      486 522
-#&gt; - AMOUNT          1      487 523
-#&gt; - DURATION        1      487 523
-#&gt; - OTHER_INSTALL   1      488 524
-#&gt; - SAV_ACCT        1      489 525
-#&gt; - USED_CAR        1      489 525
-#&gt; - MALE_SINGLE     1      489 525
-#&gt; - INSTALL_RATE    1      493 529
-#&gt; - HISTORY         1      494 530
-#&gt; - CHK_ACCT        1      521 557
-#&gt; 
-#&gt; Call:
-#&gt; glm(formula = as_factor(RESPONSE) ~ CHK_ACCT + DURATION + HISTORY + 
-#&gt;     NEW_CAR + USED_CAR + AMOUNT + SAV_ACCT + EMPLOYMENT + INSTALL_RATE + 
-#&gt;     MALE_SINGLE + CO_APPLICANT + GUARANTOR + REAL_ESTATE + OTHER_INSTALL + 
-#&gt;     OWN_RES + NUM_CREDITS + NUM_DEPENDENTS + FOREIGN, family = &quot;binomial&quot;, 
-#&gt;     data = GermanCredit.tr.subs)
-#&gt; 
-#&gt; Deviance Residuals: 
-#&gt;     Min       1Q   Median       3Q      Max  
-#&gt; -2.3291  -0.7941  -0.0223   0.8436   2.7271  
-#&gt; 
-#&gt; Coefficients:
-#&gt;                 Estimate Std. Error z value Pr(&gt;|z|)    
-#&gt; (Intercept)     0.278774   0.688865    0.40   0.6857    
-#&gt; CHK_ACCT        0.586161   0.098355    5.96  2.5e-09 ***
-#&gt; DURATION       -0.026793   0.012312   -2.18   0.0295 *  
-#&gt; HISTORY         0.396195   0.120761    3.28   0.0010 ** 
-#&gt; NEW_CAR        -0.418013   0.266963   -1.57   0.1174    
-#&gt; USED_CAR        1.274349   0.506059    2.52   0.0118 *  
-#&gt; AMOUNT         -0.000118   0.000060   -1.97   0.0489 *  
-#&gt; SAV_ACCT        0.192047   0.077843    2.47   0.0136 *  
-#&gt; EMPLOYMENT      0.189099   0.102915    1.84   0.0661 .  
-#&gt; INSTALL_RATE   -0.371760   0.116127   -3.20   0.0014 ** 
-#&gt; MALE_SINGLE     0.648522   0.249422    2.60   0.0093 ** 
-#&gt; CO_APPLICANT   -0.820815   0.588238   -1.40   0.1629    
-#&gt; GUARANTOR       0.876033   0.523354    1.67   0.0942 .  
-#&gt; REAL_ESTATE     0.398212   0.264990    1.50   0.1329    
-#&gt; OTHER_INSTALL  -0.650676   0.286898   -2.27   0.0233 *  
-#&gt; OWN_RES         0.391979   0.251667    1.56   0.1193    
-#&gt; NUM_CREDITS    -0.415974   0.221120   -1.88   0.0599 .  
-#&gt; NUM_DEPENDENTS -0.505290   0.339192   -1.49   0.1363    
-#&gt; FOREIGN         1.105547   0.726194    1.52   0.1279    
-#&gt; ---
-#&gt; Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
-#&gt; 
-#&gt; (Dispersion parameter for binomial family taken to be 1)
-#&gt; 
-#&gt;     Null deviance: 654.33  on 471  degrees of freedom
-#&gt; Residual deviance: 482.61  on 453  degrees of freedom
-#&gt; AIC: 520.6
-#&gt; 
-#&gt; Number of Fisher Scoring iterations: 5</code></pre>
-<p>Predictions:</p>
-<pre><code>#&gt;     Obs
-#&gt; Pred   0   1
-#&gt;    0  46  36
-#&gt;    1  18 100</code></pre>
+<p>Selection of the model</p>
+<p>Final model:</p>
+<p><span class="math display">\[
+z_i = a_o + a_1{CHKACCT}_{1i} + a_2{DURATION}_{2i} + a_3{HISTORY}_{3i} + a_4{NEWCAR}_{4i} + a_4{USEDCAR}_{4i} + a_5{AMOUNT}_{5i} + a_6{SAVACCT}_{6i} + a_7{EMPLOYMENT}_{7i} + a_8{INSTALLRATE}_{8i} + a_9{MALSINGLE}_{9i} + a_10{CO-APPLICANT}_{10i} + a_11{GUARANTOR}_{11i} + a_12{REALESTATE}_{12i} + a_13{OTHERINSTALL}_{13i} + a_14{OWNRES}_{14i} + a_15{NUMCREDITS}_{15i} + a_16{NUMDEPENDENTS}_{16i} + a_17{FOREIGN}_{17i}      
+\]</span>
+Predictions:</p>
 <p>Not a good model. Do not forget that the prior of this data set is not balanced at all. We should take it into account.</p>
 <p>As depicted below, if our model was good, we should have boxplot that are far away from the 0.5, which is not the case, especially for the bad credits.</p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-39-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-34-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <div id="cross-validation" class="section level3 hasAnchor" number="3.3.1">
 <h3><span class="header-section-number">3.3.1</span> Cross-validation<a href="models.html#cross-validation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<pre><code>#&gt; Generalized Linear Model with Stepwise Feature Selection 
-#&gt; 
-#&gt; 472 samples
-#&gt;  30 predictor
-#&gt;   2 classes: &#39;0&#39;, &#39;1&#39; 
-#&gt; 
-#&gt; No pre-processing
-#&gt; Resampling: Cross-Validated (10 fold) 
-#&gt; Summary of sample sizes: 425, 425, 425, 425, 424, 424, ... 
-#&gt; Resampling results:
-#&gt; 
-#&gt;   Accuracy  Kappa
-#&gt;   0.703     0.407</code></pre>
-<pre><code>#&gt; Cross-Validated (10 fold) Confusion Matrix 
-#&gt; 
-#&gt; (entries are percentual average cell counts across resamples)
-#&gt;  
-#&gt;           Reference
-#&gt; Prediction    0    1
-#&gt;          0 35.6 15.3
-#&gt;          1 14.4 34.7
-#&gt;                             
-#&gt;  Accuracy (average) : 0.7034</code></pre>
 
 </div>
 </div>
-<div id="trees" class="section level2 hasAnchor" number="3.4">
-<h2><span class="header-section-number">3.4</span> Trees<a href="models.html#trees" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-42-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-43-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-44-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div id="neural-networks" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Neural Networks<a href="models.html#neural-networks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<pre><code>#&gt; # weights:  65
+#&gt; initial  value 328.042130 
+#&gt; final  value 327.165469 
+#&gt; converged
+#&gt; a 30-2-1 network with 65 weights
+#&gt; options were - entropy fitting 
+#&gt;   b-&gt;h1  i1-&gt;h1  i2-&gt;h1  i3-&gt;h1  i4-&gt;h1  i5-&gt;h1  i6-&gt;h1  i7-&gt;h1 
+#&gt;   -0.21   -0.20    0.09    0.08   -0.13    0.13    0.05   -0.53 
+#&gt;  i8-&gt;h1  i9-&gt;h1 i10-&gt;h1 i11-&gt;h1 i12-&gt;h1 i13-&gt;h1 i14-&gt;h1 i15-&gt;h1 
+#&gt;   -0.67    0.64   -0.43   -0.59   -0.68   -0.20   -0.25   -0.61 
+#&gt; i16-&gt;h1 i17-&gt;h1 i18-&gt;h1 i19-&gt;h1 i20-&gt;h1 i21-&gt;h1 i22-&gt;h1 i23-&gt;h1 
+#&gt;    0.12   -0.03    0.09   -0.02   -0.27   -0.35   -0.01   -0.36 
+#&gt; i24-&gt;h1 i25-&gt;h1 i26-&gt;h1 i27-&gt;h1 i28-&gt;h1 i29-&gt;h1 i30-&gt;h1 
+#&gt;   -0.18   -0.60   -0.60   -0.48    0.22    0.61   -0.51 
+#&gt;   b-&gt;h2  i1-&gt;h2  i2-&gt;h2  i3-&gt;h2  i4-&gt;h2  i5-&gt;h2  i6-&gt;h2  i7-&gt;h2 
+#&gt;    0.16    0.64    0.70    0.11   -0.09   -0.28   -0.58   -0.17 
+#&gt;  i8-&gt;h2  i9-&gt;h2 i10-&gt;h2 i11-&gt;h2 i12-&gt;h2 i13-&gt;h2 i14-&gt;h2 i15-&gt;h2 
+#&gt;    0.48   -0.70   -0.35   -0.20   -0.19   -0.36    0.39    0.10 
+#&gt; i16-&gt;h2 i17-&gt;h2 i18-&gt;h2 i19-&gt;h2 i20-&gt;h2 i21-&gt;h2 i22-&gt;h2 i23-&gt;h2 
+#&gt;   -0.15   -0.50    0.33    0.01    0.55   -0.41    0.43    0.54 
+#&gt; i24-&gt;h2 i25-&gt;h2 i26-&gt;h2 i27-&gt;h2 i28-&gt;h2 i29-&gt;h2 i30-&gt;h2 
+#&gt;    0.11    0.59    0.11    0.07   -0.05    0.62    0.36 
+#&gt;  b-&gt;o h1-&gt;o h2-&gt;o 
+#&gt;  0.00  0.55 -0.29
+#&gt; [1] 0.5</code></pre>
+
+</div>
+<div id="trees" class="section level2 hasAnchor" number="3.5">
+<h2><span class="header-section-number">3.5</span> Trees<a href="models.html#trees" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-39-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-40-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-41-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre><code>#&gt;     Obs
 #&gt; Pred  0  1
 #&gt;    0 42 48
