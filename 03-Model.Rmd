@@ -78,11 +78,6 @@ Predictions:
 prob.te <- predict(mod.logr.sel, newdata=GermanCredit.te, type="response")
 pred.te <- ifelse(prob.te >= 0.5, 1, 0)
 table(Pred=pred.te, Obs=GermanCredit.te$RESPONSE)
-
-cm<-confusionMatrix(spam.pred, spam$yesno)
-cm
-
-draw_confusion_matrix(cm)
 ```
 
 ```{r, results = 'hide'}
