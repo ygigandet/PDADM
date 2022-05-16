@@ -112,6 +112,7 @@ GermanCredit <- GermanCredit %>%
   mutate(GUARANTOR = replace(GUARANTOR, GUARANTOR == 2, 1))
 ```
 
+Then, we separated the database in 2 parts: the first part consider only the good clients, and the second part consider only the bad clients. 
 ```{r}
 # GermanCredit accepted
 YES_GC <- filter(GermanCredit,RESPONSE=="1")
@@ -143,6 +144,8 @@ GermanCredit %>%
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 ```
 
+To have a better visualization of our variables. We did some boxplot which show the distribution of the data. 
+
 ```{r, results = 'hide'}
 # Distribution of the continuous variables, i.e. duration, amount, age
 
@@ -154,7 +157,7 @@ p.duration <- GermanCredit %>%
   labs(title = "Duration of the credit applications per grade",
        x = "Months",
        y = "Grade") +
-  scale_y_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_y_discrete(label=c("0"="Bad", "1"="Good")) +
   theme(legend.position="none") +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
@@ -166,7 +169,7 @@ p.amount <- GermanCredit %>%
   labs(title = "Amount of the credit applications per grade",
        x = "DM",
        y = "Grade") +
-  scale_y_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_y_discrete(label=c("0"="Bad", "1"="Good")) +
   theme(legend.position="none") +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 
@@ -178,7 +181,7 @@ p.age <- GermanCredit %>%
   labs(title = "Age of the credit applicants",
        x = "Years",
        y = "Grade") +
-  scale_y_discrete(label=c("0"="No", "1"="Yes")) +
+  scale_y_discrete(label=c("0"="Bad", "1"="Good")) +
   theme(legend.position="none") +
   scale_fill_manual(values = alpha(c("red3", "springgreen4"), .5))
 ```
@@ -189,7 +192,9 @@ figure1 <- ggarrange(p.duration, p.age, p.amount,
                     ncol = 2, nrow = 2)
 figure1
 ```
+This first boxplot A shows that bad clients mostly asked for longer duration credit than good clients. This could be a raison why they received a refusal. The second boxplot B shows that the age of clients doesn not seem to be a key criteria but the amount of the credit (boxplot C) seems to be more important as most of the good clients asked for a smaller amount. 
 
+Then, we explored the distribution of the financial variables.
 ```{r}
 # Let's explore the distribution of the categorical variables
 #CHK_ACCT
@@ -240,10 +245,12 @@ figure_fin <- ggarrange(p.history, p.savacct, p.numcre, p.chkacct,
 figure_fin
 ```
 
+The first graph A present the situation with past credits. The behavior for good and bad clients is almost the same which does not allow us to make a clear difference. On the graph B we can see that most of the clients have small savings of even no savings at all. Most of the clients have already 1 or 2 credits at this bank. Almost none of them ask for a third or fourth credit. 
+On the histogram D we see that the amount of money on the account not so important. Indeed, most of the good client do not even have a checking account. 
+
+The graphs below displays fournitures and products owned by the clients. 
 
 ```{r}
-# Now let's have a look at the binary variables
-
 # NEW_CAR
 p_newcar <- GermanCredit %>% 
   ggplot(aes(x = as.factor(NEW_CAR), fill = as.factor(RESPONSE))) +
@@ -295,6 +302,7 @@ figure_prod <- ggarrange(p_newcar, p_usedcar, p_fur, p_radtv,
                     ncol = 2, nrow = 2)
 figure_prod
 ```
+Most of the time the credits are not very favorable to finance products. However, new cars are more appreciated by banks than used cars and radio/tv are more financed than furnitures. 
 
 ```{r}
 # EMPLOYMENT
@@ -347,6 +355,7 @@ figure_pro <- ggarrange(p.empl, p.job, p_edu, p_ret,
 figure_pro
 ```
 
+As we can see on the graph before, most of the time, if the client ask a credit to pay education, the bank will refuse, even if the client is good. It is slightly the same for retraining. Most of the good client have a job for more than a year and are skilled employees. 
 
 ```{r}
 # PRESENT_RESIDENTS
@@ -426,11 +435,23 @@ p_apprent <- GermanCredit %>%
 ```
 
 ```{r, fig.show='hide'}
-figure_reales <- ggarrange(p.preres, p.insrat, p_reaest, p_prop, p_ownres, p_gua, p_apprent,
-                    labels = c("A", "B", "C", "D", "E", "F", "G"),
+figure_reales1 <- ggarrange(p.preres, p.insrat, p_reaest, p_prop, p_ownres, p_gua, p_apprent,
+                    labels = c("A", "B", "C", "D"),
                     ncol = 2, nrow = 2)
-figure_reales
+figure_reales1
 ```
+
+The graph A presents the qualification of client depending of the duration stays in their home. This criteria does not seem to be really indicative even if the most good clients live in their place since more than 4 years. The installment rate does not seem to impact the qualification of the client neither as most of the good and bad clients are rated by 4 (see graph B). Owning a real estate is not the key to be perceived as a good client neither. As the graph C prove, a lot of good clients do not have any real estate. But at the opposite having no property is a bad situation in the case of asking for a credit. 
+
+```{r, fig.show='hide'}
+figure_reales2 <- ggarrange(p_ownres, p_gua, p_apprent,
+                    labels = c("E", "F", "G"),
+                    ncol = 2, nrow = 2)
+figure_reales2
+```
+
+The graphs show that most of the good clients own their residence and not rent but a guarantor is definitely not a must. 
+
 
 ```{r}
 # MALE_DIV
@@ -485,6 +506,7 @@ figure_demo <- ggarrange(p_maldiv, p_malsin, p_malmarwid, p_for,
                     ncol = 2, nrow = 2)
 figure_demo
 ```
+About the demographic data of an applicant, clients are generally not male and single and not foreign workers. 
 
 ```{r}
 #CO APLLICANT
@@ -537,11 +559,14 @@ figure_other <- ggarrange(p_coapp, p_otherinstall,p.numdep, p_tel,
                     ncol = 2, nrow = 2)
 figure_other
 ```
+The population of clients basically do not have co-applicants and they do not have other installment plan neither for majority of them. The name's telephone does not seem to be important as a lot of clients have and have not the telephone on their name. However, most of the clients are not liable to provide maintenance. 
+
 ```{r, results='hide'}
 setwd(here::here("data/"))
 write_csv(GermanCredit, "GermanCreditClean.csv")
 ```
 
+We can see below the mean of good clients and the mean of bad clients. It is important to keep in account that the sample of good clients is much higher than the number of bad clients. 
 ```{r, include=FALSE}
 # let's check if old people have basically more credit than young people
 mean_yes<-mean(YES_GC$AGE)
@@ -553,7 +578,7 @@ mean_no
 # age does not seem to be a key criterion 
 ```
 
-
+The matrix below present the correlations between variables. To read in a easiest way, we separated the variables in categories. As before, the categories were created based on their area. 
 ```{r}
 # correlation matrix
 
@@ -580,6 +605,7 @@ ggpairs(cordata_demo, title="Correlogram on demographic data")
 #cor<-ggpairs(GermanCredit, title="correlogram with ggpairs()") 
 ```
 
+The following part of the project is focus on defining a typical profile of a good client. The goal is to define an average good client based on the average of all the variables defined. 
 ```{r}
 # create an average profile of yes person
 
@@ -600,13 +626,14 @@ Yes_profil <- data.frame(
 )
 ```
 
+The lollipop plot below present the mean profile to be qualified as a good client. From these results, most of them ask for a new car, rent their flat but have real estate. The good client in average has a quite good amount of money and has a guarantor. These results are quite different than what we presented before. 
 ```{r}
 graph_yes_profil <- ggplot(Yes_profil, aes(x=x, y=y)) +
   geom_segment( aes(x=x, xend=x, y=0, yend=y), color="skyblue") +
   geom_point( color="blue", size=4, alpha=0.6) +
   labs(
   title = "Mean of a YES profils",
-  y = "Variables name", x = "Value"
+  y = "Value", x = "Variables name"
 )+
   theme_light() +
   coord_flip() +
@@ -623,6 +650,8 @@ graph_yes_profil
 
 The following plot shows a selection of the most important variables of our dataframe.
 The two main disadvantages of these methods are: The increasing overfitting risk when the number of observations is insufficient. The significant computation time when the number of variables is large.
+
+The result below displays that we seem to have 6 relevant variables: checking the account, the duration of the credit asked, the history of previous credits, the savings, the amount of money owned by the applicant and the real estate owned. 
 ```{r}
 library(mlbench)
 library(caret)
