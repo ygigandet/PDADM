@@ -222,7 +222,7 @@ draw_confusion_matrix(cm_tree)
 
 Neural Network is a method based on combining several predictions of small nodes. 
 
-```{r}
+```{r, echo = TRUE, results = 'hide'}
 trctrl <- trainControl(method = "cv", number=5)
 search_grid <- expand.grid(size = 1:10,
                            decay = seq(0, 0.5, 0.1))
@@ -240,8 +240,23 @@ pred_neural_network <-  predict(neural_network, newdata = GermanCredit.te)
 cm_neural_network <- confusionMatrix(data = as.factor(pred_neural_network), reference = as.factor(GermanCredit.te$RESPONSE))
 draw_confusion_matrix(cm_neural_network)
 ```
+
+## Support Vector Machines
+
+```{r, echo = TRUE, results = 'hide'}
+trctrl <- trainControl(method = "cv", number=5)
+search_grid <- expand.grid(C = c(0.01, 0.1, 1, 10, 100, 1000))
+
+set.seed(346)
+svm <- train(as_factor(RESPONSE) ~.,
+             data = GermanCredit.tr.subs,
+             method = "svmLinear",
+             trControl=trctrl,
+             tuneGrid = search_grid)
 ```
 
-
-
-
+```{r}
+pred_svm <-  predict(svm, newdata = GermanCredit.te)
+cm_svm <- confusionMatrix(data = as.factor(pred_svm), reference = as.factor(GermanCredit.te$RESPONSE))
+draw_confusion_matrix(cm_svm)
+```

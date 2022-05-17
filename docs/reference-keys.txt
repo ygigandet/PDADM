@@ -10,5 +10,5 @@ k-nearest-neighbors-k-nn
 naive-bayes
 logistic-regression
 trees
-neural-networks
-trees-1
+neural-network
+support-vector-machines
