@@ -23,7 +23,7 @@
 <meta name="author" content="Manon Verjus and Yooby Gigandet" />
 
 
-<meta name="date" content="2022-05-14" />
+<meta name="date" content="2022-05-17" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -54,6 +54,70 @@
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 
 
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 
 <link rel="stylesheet" href="style.css" type="text/css" />
@@ -84,14 +148,13 @@
 </ul></li>
 <li class="chapter" data-level="3" data-path="models.html"><a href="models.html"><i class="fa fa-check"></i><b>3</b> Models</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="models.html"><a href="models.html#splitting-strategies"><i class="fa fa-check"></i><b>3.1</b> Splitting strategies</a></li>
-<li class="chapter" data-level="3.2" data-path="models.html"><a href="models.html#balance-the-dataset"><i class="fa fa-check"></i><b>3.2</b> Balance the dataset</a></li>
-<li class="chapter" data-level="3.3" data-path="models.html"><a href="models.html#logistic-regression"><i class="fa fa-check"></i><b>3.3</b> Logistic Regression</a>
-<ul>
-<li class="chapter" data-level="3.3.1" data-path="models.html"><a href="models.html#cross-validation"><i class="fa fa-check"></i><b>3.3.1</b> Cross-validation</a></li>
-</ul></li>
-<li class="chapter" data-level="3.4" data-path="models.html"><a href="models.html#neural-networks"><i class="fa fa-check"></i><b>3.4</b> Neural Networks</a></li>
+<li class="chapter" data-level="3.1" data-path="models.html"><a href="models.html#splitting-strategies-and-balancing"><i class="fa fa-check"></i><b>3.1</b> Splitting strategies and balancing</a></li>
+<li class="chapter" data-level="3.2" data-path="models.html"><a href="models.html#k-nearest-neighbors-k-nn"><i class="fa fa-check"></i><b>3.2</b> K-Nearest Neighbors (K-NN)</a></li>
+<li class="chapter" data-level="3.3" data-path="models.html"><a href="models.html#naive-bayes"><i class="fa fa-check"></i><b>3.3</b> Naive Bayes</a></li>
+<li class="chapter" data-level="3.4" data-path="models.html"><a href="models.html#logistic-regression"><i class="fa fa-check"></i><b>3.4</b> Logistic Regression</a></li>
 <li class="chapter" data-level="3.5" data-path="models.html"><a href="models.html#trees"><i class="fa fa-check"></i><b>3.5</b> Trees</a></li>
+<li class="chapter" data-level="3.6" data-path="models.html"><a href="models.html#neural-networks"><i class="fa fa-check"></i><b>3.6</b> Neural Networks</a></li>
+<li class="chapter" data-level="3.7" data-path="models.html"><a href="models.html#trees-1"><i class="fa fa-check"></i><b>3.7</b> Trees</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -114,51 +177,373 @@
             <section class="normal" id="section-">
 <div id="models" class="section level1 hasAnchor" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Models<a href="models.html#models" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>After the exploration of our data, we start with the modelling part.</p>
-<div id="splitting-strategies" class="section level2 hasAnchor" number="3.1">
-<h2><span class="header-section-number">3.1</span> Splitting strategies<a href="models.html#splitting-strategies" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In order to test the performance of our models, we use a splitting strategy of the dataset:</p>
+<p>Now that our data set is cleaned, we move on to the creation of models to predict our outcome.</p>
+<div id="splitting-strategies-and-balancing" class="section level2 hasAnchor" number="3.1">
+<h2><span class="header-section-number">3.1</span> Splitting strategies and balancing<a href="models.html#splitting-strategies-and-balancing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In machine learning, a method to measure the accuracy of the models is to split the data into a training and a test set. The first subset is a portion of our data set that is fed into the machine learning model to discover and learn patterns. The other subset is to test our model. We split our data set as follows:</p>
 <ul>
-<li>80% is used as a training set</li>
-<li>The remaining 20% is used as a test set.</li>
+<li><strong>Training set:</strong> 80% of the data</li>
+<li><strong>Test set:</strong> the remaining 20% of the data</li>
 </ul>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="models.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Splitting</span></span>
+<span id="cb3-2"><a href="models.html#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="models.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">346</span>)</span>
+<span id="cb3-4"><a href="models.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Creation of the index</span></span>
+<span id="cb3-5"><a href="models.html#cb3-5" aria-hidden="true" tabindex="-1"></a>index.tr <span class="ot">&lt;-</span> <span class="fu">createDataPartition</span>(<span class="at">y =</span> GermanCredit<span class="sc">$</span>RESPONSE, <span class="at">p=</span> <span class="fl">0.8</span>, <span class="at">list =</span> <span class="cn">FALSE</span>) </span>
+<span id="cb3-6"><a href="models.html#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="models.html#cb3-7" aria-hidden="true" tabindex="-1"></a>GermanCredit.tr <span class="ot">&lt;-</span> GermanCredit[index.tr,] <span class="co"># Training set</span></span>
+<span id="cb3-8"><a href="models.html#cb3-8" aria-hidden="true" tabindex="-1"></a>GermanCredit.te <span class="ot">&lt;-</span> GermanCredit[<span class="sc">-</span>index.tr,] <span class="co"># Testing set</span></span></code></pre></div>
+<p>As said in the exploratory data analysis, we notice that our data is heavily unbalanced.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center;">
+Outcome
+</th>
+<th style="text-align:center;">
+Frequence
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+236
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+564
+</td>
+</tr>
+</tbody>
+</table>
+<p>Therefore, any model that favors the majority will reach an higher accuracy. However, in our case, we need to make sure to rightly classify any credit applications to avoid losses. To do so, we use a method called sub-sampling that balance the observations.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="models.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balancing</span></span>
+<span id="cb4-2"><a href="models.html#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="models.html#cb4-3" aria-hidden="true" tabindex="-1"></a>n_no <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">table</span>(GermanCredit.tr<span class="sc">$</span>RESPONSE))</span>
+<span id="cb4-4"><a href="models.html#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="models.html#cb4-5" aria-hidden="true" tabindex="-1"></a>GermanCredit.tr.no <span class="ot">&lt;-</span> <span class="fu">filter</span>(GermanCredit.tr, <span class="fu">as_factor</span>(RESPONSE)<span class="sc">==</span><span class="dv">0</span>)</span>
+<span id="cb4-6"><a href="models.html#cb4-6" aria-hidden="true" tabindex="-1"></a>GermanCredit.tr.yes <span class="ot">&lt;-</span> <span class="fu">filter</span>(GermanCredit.tr, <span class="fu">as_factor</span>(RESPONSE)<span class="sc">==</span><span class="dv">1</span>)</span>
+<span id="cb4-7"><a href="models.html#cb4-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-8"><a href="models.html#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="do">## sub-sample 236 instances from the &quot;Good&quot;</span></span>
+<span id="cb4-9"><a href="models.html#cb4-9" aria-hidden="true" tabindex="-1"></a>index.no <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">size=</span>n_no, <span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(GermanCredit.tr.no), <span class="at">replace=</span><span class="cn">FALSE</span>) </span>
+<span id="cb4-10"><a href="models.html#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="models.html#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Bind all the &quot;Bad&quot; and the sub-sampled &quot;Good&quot;</span></span>
+<span id="cb4-12"><a href="models.html#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="models.html#cb4-13" aria-hidden="true" tabindex="-1"></a>GermanCredit.tr.subs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="fu">rbind</span>(GermanCredit.tr.no, GermanCredit.tr.yes[index.no,])) </span></code></pre></div>
+<table>
+<thead>
+<tr>
+<th style="text-align:center;">
+Outcome
+</th>
+<th style="text-align:center;">
+Frequence
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+0
+</td>
+<td style="text-align:center;">
+236
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+1
+</td>
+<td style="text-align:center;">
+236
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="balance-the-dataset" class="section level2 hasAnchor" number="3.2">
-<h2><span class="header-section-number">3.2</span> Balance the dataset<a href="models.html#balance-the-dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>As said in the exploratory data analysis, we notice that our data is heavily unbalanced. We need to balance it before fitting our model.</p>
+<div id="k-nearest-neighbors-k-nn" class="section level2 hasAnchor" number="3.2">
+<h2><span class="header-section-number">3.2</span> K-Nearest Neighbors (K-NN)<a href="models.html#k-nearest-neighbors-k-nn" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A K-Nearest Neighbors tries to predict the correct class for the test data by calculating the distances between the test data and all the training points. Then select a number, K, of the closest point of the test set (thus the name K-nearest neighbors).</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="models.html#cb5-1" aria-hidden="true" tabindex="-1"></a>trctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number=</span><span class="dv">10</span>)</span>
+<span id="cb5-2"><a href="models.html#cb5-2" aria-hidden="true" tabindex="-1"></a>search_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">k =</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">85</span>, <span class="at">by =</span> <span class="dv">1</span>))</span>
+<span id="cb5-3"><a href="models.html#cb5-3" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb5-4"><a href="models.html#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">346</span>)</span>
+<span id="cb5-5"><a href="models.html#cb5-5" aria-hidden="true" tabindex="-1"></a>knn_cv <span class="ot">&lt;-</span> <span class="fu">train</span>(<span class="fu">as_factor</span>(RESPONSE)<span class="sc">~</span>.,</span>
+<span id="cb5-6"><a href="models.html#cb5-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">data =</span> GermanCredit.tr.subs,</span>
+<span id="cb5-7"><a href="models.html#cb5-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">method =</span> <span class="st">&quot;knn&quot;</span>,</span>
+<span id="cb5-8"><a href="models.html#cb5-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">trControl =</span> trctrl,</span>
+<span id="cb5-9"><a href="models.html#cb5-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">metric =</span> <span class="st">&quot;Accuracy&quot;</span>,</span>
+<span id="cb5-10"><a href="models.html#cb5-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">tuneGrid =</span> search_grid)</span></code></pre></div>
+<p>We need to select the K number of points closest that give the optimal accuracy</p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-37-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-38-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
-<div id="logistic-regression" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> Logistic Regression<a href="models.html#logistic-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>We fit a logistic regression to test if it could predict the output we desired.</p>
-<p>For our first model we’ll select all the variables given in the German Credit data set.</p>
-<p>Our initial model is therefore:</p>
-<p><span class="math display">\[
-z_i = a_o + a_1{CHKACCT}_{31i} + ... + a_{31}Foreign_{31i}
-\]</span></p>
-<p>Selection of the model</p>
-<p>Final model:</p>
-<p><span class="math display">\[
-z_i = a_o + a_1{CHKACCT}_{1i} + a_2{DURATION}_{2i} + a_3{HISTORY}_{3i} + a_4{NEWCAR}_{4i} +  a_4{USEDCAR}_{4i} + a_5{AMOUNT}_{5i} + a_6{SAVACCT}_{6i} + a_7{EMPLOYMENT}_{7i} + a_8{INSTALLRATE}_{8i} + a_9{MALSINGLE}_{9i} + a_10{CO-APPLICANT}_{10i} + a_11{GUARANTOR}_{11i} + a_12{REALESTATE}_{12i} + a_13{OTHERINSTALL}_{13i} + a_14{OWNRES}_{14i} + a_15{NUMCREDITS}_{15i} + a_16{NUMDEPENDENTS}_{16i} + a_17{FOREIGN}_{17i}      
-\]</span>
-Predictions:</p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-35-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>Not a good model. Do not forget that the prior of this data set is not balanced at all. We should take it into account.</p>
-<p>As depicted below, if our model was good, we should have boxplot that are far away from the 0.5, which is not the case, especially for the bad credits.</p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-36-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<div id="cross-validation" class="section level3 hasAnchor" number="3.3.1">
-<h3><span class="header-section-number">3.3.1</span> Cross-validation<a href="models.html#cross-validation" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-
+<div id="naive-bayes" class="section level2 hasAnchor" number="3.3">
+<h2><span class="header-section-number">3.3</span> Naive Bayes<a href="models.html#naive-bayes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Bayes classifiers use a probabilistic approach</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="models.html#cb6-1" aria-hidden="true" tabindex="-1"></a>trctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number=</span><span class="dv">10</span>)</span>
+<span id="cb6-2"><a href="models.html#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="models.html#cb6-3" aria-hidden="true" tabindex="-1"></a>search_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(</span>
+<span id="cb6-4"><a href="models.html#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">usekernel =</span> <span class="fu">c</span>(<span class="cn">TRUE</span>, <span class="cn">FALSE</span>),</span>
+<span id="cb6-5"><a href="models.html#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">laplace =</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">5</span>,</span>
+<span id="cb6-6"><a href="models.html#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">adjust =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="at">by =</span> <span class="dv">1</span>)</span>
+<span id="cb6-7"><a href="models.html#cb6-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-8"><a href="models.html#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="models.html#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">346</span>)</span>
+<span id="cb6-10"><a href="models.html#cb6-10" aria-hidden="true" tabindex="-1"></a>naive_bayes <span class="ot">&lt;-</span> <span class="fu">train</span>(<span class="fu">as_factor</span>(RESPONSE) <span class="sc">~</span>.,</span>
+<span id="cb6-11"><a href="models.html#cb6-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> GermanCredit.tr.subs,</span>
+<span id="cb6-12"><a href="models.html#cb6-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">&quot;naive_bayes&quot;</span>,</span>
+<span id="cb6-13"><a href="models.html#cb6-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trControl=</span>trctrl,</span>
+<span id="cb6-14"><a href="models.html#cb6-14" aria-hidden="true" tabindex="-1"></a>                 <span class="at">tuneGrid =</span> search_grid)</span></code></pre></div>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-40-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
-</div>
-<div id="neural-networks" class="section level2 hasAnchor" number="3.4">
-<h2><span class="header-section-number">3.4</span> Neural Networks<a href="models.html#neural-networks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-
+<div id="logistic-regression" class="section level2 hasAnchor" number="3.4">
+<h2><span class="header-section-number">3.4</span> Logistic Regression<a href="models.html#logistic-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>A logistic regression is a regression adapted to binary classification.</p>
+<p>We use a cross-validation method to train our model and choose the Akaïke Information Criterion (AIC) to select the variables.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="models.html#cb7-1" aria-hidden="true" tabindex="-1"></a>trctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number=</span><span class="dv">10</span>)</span>
+<span id="cb7-2"><a href="models.html#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="models.html#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">346</span>)</span>
+<span id="cb7-4"><a href="models.html#cb7-4" aria-hidden="true" tabindex="-1"></a>glm_aic <span class="ot">&lt;-</span> <span class="fu">train</span>(<span class="fu">as_factor</span>(RESPONSE) <span class="sc">~</span>.,</span>
+<span id="cb7-5"><a href="models.html#cb7-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">data =</span> GermanCredit.tr.subs,</span>
+<span id="cb7-6"><a href="models.html#cb7-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">&quot;glmStepAIC&quot;</span>,</span>
+<span id="cb7-7"><a href="models.html#cb7-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">family=</span><span class="st">&quot;binomial&quot;</span>,</span>
+<span id="cb7-8"><a href="models.html#cb7-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trControl=</span>trctrl,</span>
+<span id="cb7-9"><a href="models.html#cb7-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trace=</span><span class="dv">0</span>)</span></code></pre></div>
+<p>The resulting confusion matrix of the logistic regression:</p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-42-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="trees" class="section level2 hasAnchor" number="3.5">
 <h2><span class="header-section-number">3.5</span> Trees<a href="models.html#trees" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-40-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-41-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-42-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>The trees represent a hierarchical set of binary rules in a shape of a tree.</p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-44-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-45-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-46-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-47-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<pre><code>#&gt;     Obs
+#&gt; Pred  0  1
+#&gt;    0 42 48
+#&gt;    1 22 88
+#&gt;         0     1
+#&gt; 1   0.257 0.743
+#&gt; 2   0.683 0.317
+#&gt; 3   0.683 0.317
+#&gt; 4   0.343 0.657
+#&gt; 5   0.683 0.317
+#&gt; 6   0.683 0.317
+#&gt; 7   0.257 0.743
+#&gt; 8   0.257 0.743
+#&gt; 9   0.683 0.317
+#&gt; 10  0.683 0.317
+#&gt; 11  0.257 0.743
+#&gt; 12  0.257 0.743
+#&gt; 13  0.683 0.317
+#&gt; 14  0.683 0.317
+#&gt; 15  0.257 0.743
+#&gt; 16  0.683 0.317
+#&gt; 17  0.683 0.317
+#&gt; 18  0.683 0.317
+#&gt; 19  0.257 0.743
+#&gt; 20  0.343 0.657
+#&gt; 21  0.683 0.317
+#&gt; 22  0.683 0.317
+#&gt; 23  0.683 0.317
+#&gt; 24  0.257 0.743
+#&gt; 25  0.257 0.743
+#&gt; 26  0.257 0.743
+#&gt; 27  0.683 0.317
+#&gt; 28  0.257 0.743
+#&gt; 29  0.683 0.317
+#&gt; 30  0.683 0.317
+#&gt; 31  0.257 0.743
+#&gt; 32  0.257 0.743
+#&gt; 33  0.683 0.317
+#&gt; 34  0.257 0.743
+#&gt; 35  0.257 0.743
+#&gt; 36  0.343 0.657
+#&gt; 37  0.683 0.317
+#&gt; 38  0.257 0.743
+#&gt; 39  0.343 0.657
+#&gt; 40  0.257 0.743
+#&gt; 41  0.683 0.317
+#&gt; 42  0.683 0.317
+#&gt; 43  0.257 0.743
+#&gt; 44  0.683 0.317
+#&gt; 45  0.257 0.743
+#&gt; 46  0.257 0.743
+#&gt; 47  0.257 0.743
+#&gt; 48  0.343 0.657
+#&gt; 49  0.683 0.317
+#&gt; 50  0.257 0.743
+#&gt; 51  0.257 0.743
+#&gt; 52  0.683 0.317
+#&gt; 53  0.257 0.743
+#&gt; 54  0.257 0.743
+#&gt; 55  0.257 0.743
+#&gt; 56  0.257 0.743
+#&gt; 57  0.683 0.317
+#&gt; 58  0.683 0.317
+#&gt; 59  0.257 0.743
+#&gt; 60  0.257 0.743
+#&gt; 61  0.683 0.317
+#&gt; 62  0.257 0.743
+#&gt; 63  0.257 0.743
+#&gt; 64  0.257 0.743
+#&gt; 65  0.683 0.317
+#&gt; 66  0.683 0.317
+#&gt; 67  0.683 0.317
+#&gt; 68  0.683 0.317
+#&gt; 69  0.683 0.317
+#&gt; 70  0.683 0.317
+#&gt; 71  0.257 0.743
+#&gt; 72  0.257 0.743
+#&gt; 73  0.683 0.317
+#&gt; 74  0.683 0.317
+#&gt; 75  0.257 0.743
+#&gt; 76  0.343 0.657
+#&gt; 77  0.257 0.743
+#&gt; 78  0.683 0.317
+#&gt; 79  0.257 0.743
+#&gt; 80  0.683 0.317
+#&gt; 81  0.257 0.743
+#&gt; 82  0.257 0.743
+#&gt; 83  0.683 0.317
+#&gt; 84  0.683 0.317
+#&gt; 85  0.683 0.317
+#&gt; 86  0.683 0.317
+#&gt; 87  0.343 0.657
+#&gt; 88  0.683 0.317
+#&gt; 89  0.257 0.743
+#&gt; 90  0.683 0.317
+#&gt; 91  0.257 0.743
+#&gt; 92  0.257 0.743
+#&gt; 93  0.257 0.743
+#&gt; 94  0.257 0.743
+#&gt; 95  0.683 0.317
+#&gt; 96  0.257 0.743
+#&gt; 97  0.683 0.317
+#&gt; 98  0.257 0.743
+#&gt; 99  0.343 0.657
+#&gt; 100 0.257 0.743
+#&gt; 101 0.257 0.743
+#&gt; 102 0.343 0.657
+#&gt; 103 0.257 0.743
+#&gt; 104 0.343 0.657
+#&gt; 105 0.257 0.743
+#&gt; 106 0.683 0.317
+#&gt; 107 0.257 0.743
+#&gt; 108 0.343 0.657
+#&gt; 109 0.683 0.317
+#&gt; 110 0.257 0.743
+#&gt; 111 0.683 0.317
+#&gt; 112 0.257 0.743
+#&gt; 113 0.343 0.657
+#&gt; 114 0.683 0.317
+#&gt; 115 0.257 0.743
+#&gt; 116 0.683 0.317
+#&gt; 117 0.683 0.317
+#&gt; 118 0.257 0.743
+#&gt; 119 0.343 0.657
+#&gt; 120 0.683 0.317
+#&gt; 121 0.683 0.317
+#&gt; 122 0.683 0.317
+#&gt; 123 0.343 0.657
+#&gt; 124 0.343 0.657
+#&gt; 125 0.257 0.743
+#&gt; 126 0.683 0.317
+#&gt; 127 0.683 0.317
+#&gt; 128 0.683 0.317
+#&gt; 129 0.343 0.657
+#&gt; 130 0.257 0.743
+#&gt; 131 0.257 0.743
+#&gt; 132 0.257 0.743
+#&gt; 133 0.257 0.743
+#&gt; 134 0.683 0.317
+#&gt; 135 0.683 0.317
+#&gt; 136 0.257 0.743
+#&gt; 137 0.257 0.743
+#&gt; 138 0.257 0.743
+#&gt; 139 0.683 0.317
+#&gt; 140 0.257 0.743
+#&gt; 141 0.257 0.743
+#&gt; 142 0.257 0.743
+#&gt; 143 0.257 0.743
+#&gt; 144 0.257 0.743
+#&gt; 145 0.257 0.743
+#&gt; 146 0.683 0.317
+#&gt; 147 0.683 0.317
+#&gt; 148 0.683 0.317
+#&gt; 149 0.257 0.743
+#&gt; 150 0.683 0.317
+#&gt; 151 0.257 0.743
+#&gt; 152 0.683 0.317
+#&gt; 153 0.257 0.743
+#&gt; 154 0.257 0.743
+#&gt; 155 0.683 0.317
+#&gt; 156 0.683 0.317
+#&gt; 157 0.683 0.317
+#&gt; 158 0.343 0.657
+#&gt; 159 0.683 0.317
+#&gt; 160 0.683 0.317
+#&gt; 161 0.683 0.317
+#&gt; 162 0.683 0.317
+#&gt; 163 0.683 0.317
+#&gt; 164 0.257 0.743
+#&gt; 165 0.683 0.317
+#&gt; 166 0.257 0.743
+#&gt; 167 0.257 0.743
+#&gt; 168 0.683 0.317
+#&gt; 169 0.257 0.743
+#&gt; 170 0.683 0.317
+#&gt; 171 0.683 0.317
+#&gt; 172 0.257 0.743
+#&gt; 173 0.343 0.657
+#&gt; 174 0.257 0.743
+#&gt; 175 0.257 0.743
+#&gt; 176 0.683 0.317
+#&gt; 177 0.257 0.743
+#&gt; 178 0.257 0.743
+#&gt; 179 0.257 0.743
+#&gt; 180 0.683 0.317
+#&gt; 181 0.683 0.317
+#&gt; 182 0.683 0.317
+#&gt; 183 0.683 0.317
+#&gt; 184 0.343 0.657
+#&gt; 185 0.343 0.657
+#&gt; 186 0.683 0.317
+#&gt; 187 0.257 0.743
+#&gt; 188 0.257 0.743
+#&gt; 189 0.683 0.317
+#&gt; 190 0.683 0.317
+#&gt; 191 0.683 0.317
+#&gt; 192 0.257 0.743
+#&gt; 193 0.683 0.317
+#&gt; 194 0.257 0.743
+#&gt; 195 0.257 0.743
+#&gt; 196 0.257 0.743
+#&gt; 197 0.683 0.317
+#&gt; 198 0.683 0.317
+#&gt; 199 0.257 0.743
+#&gt; 200 0.683 0.317</code></pre>
+
+</div>
+<div id="neural-networks" class="section level2 hasAnchor" number="3.6">
+<h2><span class="header-section-number">3.6</span> Neural Networks<a href="models.html#neural-networks" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+
+</div>
+<div id="trees-1" class="section level2 hasAnchor" number="3.7">
+<h2><span class="header-section-number">3.7</span> Trees<a href="models.html#trees-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-50-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-51-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-52-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <pre><code>#&gt;     Obs
 #&gt; Pred  0  1
 #&gt;    0 42 48
@@ -427,20 +812,6 @@ gitbook.start({
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 </body>
 
 </html>

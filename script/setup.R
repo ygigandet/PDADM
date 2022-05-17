@@ -10,7 +10,7 @@ packages <- c(
   "usethis", # git
   "ggplot2", "readr", "plotly", "viridis", "caret", "lattice", "hrbrthemes", "extrafontdb", "Rttf2pt1", "extrafont", "gdtools", "GGally",
   "patchwork", "dygraphs", "gganimate", "lattice", "maps", "cluster", "factoextra", "gganimate", "xtable", "shiny", "datasets", "caret", "mlbench", "ggpubr",
-  "tree", "ISLR", "rpart", "rpart.plot", "adabag", # Decision tree
+  "tree", "ISLR", "rpart", "rpart.plot", "adabag", "rattle", # Decision tree
   "nnet", "neuralnet", "caret" #Neural networks
 )
 

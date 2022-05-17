@@ -44,3 +44,5 @@ doParallel
 adabag
 nnet
 neuralnet
+bitops
+rattle
