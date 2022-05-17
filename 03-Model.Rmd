@@ -236,7 +236,10 @@ neural_network <- train(as_factor(RESPONSE) ~.,
 ```
 
 ```{r}
-plotnet(neural_network$finalModel)
+pred_neural_network <-  predict(neural_network, newdata = GermanCredit.te)
+cm_neural_network <- confusionMatrix(data = as.factor(pred_neural_network), reference = as.factor(GermanCredit.te$RESPONSE))
+draw_confusion_matrix(cm_neural_network)
+```
 ```
 
 
