@@ -1,4 +1,4 @@
-# Models
+# Modelling
 
 ```{r, warning = FALSE}
 # Upload the data
@@ -55,7 +55,7 @@ draw_confusion_matrix <- function(cm) {
 }
 ```
 
-Now that our data set is cleaned, we move on to the creation of models to predict our outcome.
+Now that our data set is cleaned, we move on to the creation of models.
 
 ## Splitting strategies and balancing 
 
@@ -75,11 +75,15 @@ GermanCredit.tr <- GermanCredit[index.tr,] # Training set
 GermanCredit.te <- GermanCredit[-index.tr,] # Testing set
 ```
 
+<br>
+
 As said in the exploratory data analysis, we notice that our data is heavily unbalanced.
 
 ```{r, echo = FALSE}
 table(GermanCredit.tr$RESPONSE) %>% kable(align = "c", col.names = c("Outcome", "Frequence"))
 ```
+
+<br>
 
 Therefore, any model that favors the majority will reach an higher accuracy. However, in our case, we need to make sure to rightly classify any credit applications to avoid losses. To do so, we use a method called sub-sampling that balance the observations.
 
@@ -100,6 +104,10 @@ index.no <- sample(size=n_no, x=1:nrow(GermanCredit.tr.no), replace=FALSE)
 GermanCredit.tr.subs <- data.frame(rbind(GermanCredit.tr.no, GermanCredit.tr.yes[index.no,])) 
 ```
 
+<br>
+
+By doing so, we get the following subsampled training set:
+
 ```{r, echo = FALSE}
 table(GermanCredit.tr.subs$RESPONSE) %>% kable(align = "c", col.names = c("Outcome", "Frequence"))
 ```
@@ -107,10 +115,12 @@ table(GermanCredit.tr.subs$RESPONSE) %>% kable(align = "c", col.names = c("Outco
 
 ## K-Nearest Neighbors (K-NN)
 
-A K-Nearest Neighbors tries to predict the correct class for the test data by calculating the distances between the test data and all the training points. Then select a number, K, of the closest point of the test set (thus the name K-nearest neighbors).
+A K-Nearest Neighbors tries to predict the correct class for the test data by calculating the distances between the test data and all the training points. Then to predict, it selects a number, K, of the closest point of the test set (thus the name K-nearest neighbors).
 
 ```{r, echo = TRUE}
-trctrl <- trainControl(method = "cv", number=10)
+# K-Nearest Neighbors (K-NN)
+
+trctrl <- trainControl(method = "cv", number=10) # Cross-validation
 search_grid <- expand.grid(k = seq(1, 85, by = 1))
   
 set.seed(346)
@@ -122,12 +132,13 @@ knn_cv <- train(as_factor(RESPONSE)~.,
                 tuneGrid = search_grid)
 ```
 
-We need to select the K number of points closest that give the optimal accuracy
-
 ```{r, results = 'hide'}
 K_optimal <- knn_cv$finalModel$k
 ```
 
+<br>
+
+We need to select the K number of points closest that give the optimal accuracy. In this case, it is `r K_optimal`
 
 ```{r, results = 'hide'}
 plot(knn_cv)
@@ -144,6 +155,8 @@ draw_confusion_matrix(cmknn)
 Bayes classifiers use a probabilistic approach
 
 ```{r, warning = FALSE, echo = TRUE}
+# Naive Bayes
+
 trctrl <- trainControl(method = "cv", number=10)
 
 search_grid <- expand.grid(
@@ -173,6 +186,8 @@ A logistic regression is a regression adapted to binary classification.
 We use a cross-validation method to train our model and choose the Akaïke Information Criterion (AIC) to select the variables.
 
 ```{r, echo = TRUE}
+# Logistic Regression
+
 trctrl <- trainControl(method = "cv", number=10)
 
 set.seed(346)
@@ -197,6 +212,8 @@ draw_confusion_matrix(cm_glm_aic)
 The trees represent a hierarchical set of binary rules in a shape of a tree.
 
 ```{r}
+# Trees
+
 trctrl <- trainControl(method = "cv", number=10)
 search_grid <- expand.grid(cp = seq(from = 0.1, to = 0, by = -0.01))
 
@@ -223,6 +240,8 @@ draw_confusion_matrix(cm_tree)
 Neural Network is a method based on combining several predictions of small nodes. 
 
 ```{r, echo = TRUE, results = 'hide'}
+# Neural Network (NN)
+
 trctrl <- trainControl(method = "cv", number=5)
 search_grid <- expand.grid(size = 1:10,
                            decay = seq(0, 0.5, 0.1))
@@ -244,6 +263,8 @@ draw_confusion_matrix(cm_neural_network)
 ## Support Vector Machines
 
 ```{r, echo = TRUE, results = 'hide'}
+# Support Vector Machines
+
 trctrl <- trainControl(method = "cv", number=5)
 search_grid <- expand.grid(C = c(0.01, 0.1, 1, 10, 100, 1000))
 
@@ -260,3 +281,75 @@ pred_svm <-  predict(svm, newdata = GermanCredit.te)
 cm_svm <- confusionMatrix(data = as.factor(pred_svm), reference = as.factor(GermanCredit.te$RESPONSE))
 draw_confusion_matrix(cm_svm)
 ```
+
+## Random Forest
+
+```{r, echo = TRUE, results = 'hide'}
+# Random Forest
+
+trctrl <- trainControl(method = "cv", number=5) 
+search_grid <- expand.grid(.mtry = c(1:15)) 
+
+set.seed(346)
+rf <- train(as_factor(RESPONSE) ~., 
+            data = GermanCredit.tr.subs,
+            method = "rf",
+            trControl = trctrl,
+            tuneGrid = search_grid
+)
+```
+
+```{r}
+pred_rf <-  predict(rf, newdata = GermanCredit.te)
+cm_rf <- confusionMatrix(data = as.factor(pred_rf), reference = as.factor(GermanCredit.te$RESPONSE))
+draw_confusion_matrix(cm_rf)
+```
+
+## Summary
+
+To evaluate our models, there are many metrics that can be used. We decided to choose first the accuracy and then have a look at the sensitivity and the specificity. In other words, we want to have a model with a good accuracy and the best sensitivity and specificity.
+
+```{r, results = 'hide'}
+accuracy_svm = cm_svm$overall['Accuracy']
+accuracy_tree = cm_svm$overall['Accuracy']
+accuracy_nn = cm_neural_network$overall['Accuracy']
+accuracy_knn = cmknn$overall['Accuracy']
+accuracy_nb = cm_naive_bayes$overall['Accuracy']
+accuracy_glm = cm_glm_aic$overall['Accuracy']
+accuracy_rf = cm_rf$overall['Accuracy']
+
+sensitivity_svm = cm_svm$byClass['Sensitivity']
+sensitivity_tree = cm_tree$byClass['Sensitivity']
+sensitivity_nn = cm_neural_network$byClass['Sensitivity']
+sensitivity_knn = cmknn$byClass['Sensitivity']
+sensitivity_nb = cm_naive_bayes$byClass['Sensitivity']
+sensitivity_glm = cm_glm_aic$byClass['Sensitivity']
+sensitivity_rf = cm_rf$byClass['Sensitivity']
+
+specificity_svm = cm_svm$byClass['Specificity']
+specificity_tree = cm_tree$byClass['Specificity']
+specificity_nn = cm_neural_network$byClass['Specificity']
+specificity_knn = cmknn$byClass['Specificity']
+specificity_nb = cm_naive_bayes$byClass['Specificity']
+specificity_glm = cm_glm_aic$byClass['Specificity']
+specificity_rf = cm_rf$byClass['Specificity']
+```
+
+```{r, echo = FALSE}
+# Create a table to show the variables
+metrics = c(accuracy_svm, sensitivity_svm, specificity_svm, accuracy_tree, sensitivity_tree, specificity_tree, accuracy_nn, sensitivity_nn, specificity_nn, accuracy_knn, sensitivity_knn, specificity_knn, accuracy_nb, sensitivity_nb, specificity_nb, accuracy_glm, sensitivity_glm, specificity_glm, accuracy_rf, sensitivity_rf, specificity_rf)
+cnames = c("Accuracy", "Sensitivity", "Specificity")
+rnames = c("Support Vector Machines", "Tree", "Neural Network", "K-nearest neighbors", "Naive Bayes", "Logistic Regression", "Random Forest")
+model_output <- matrix(metrics, ncol = 3, byrow=TRUE, dimnames=list(rnames,cnames))
+model_output <- model_output[order(model_output[,1],decreasing=TRUE),]
+
+kable(model_output, digits = 2)  %>% 
+  kable_styling(bootstrap_options = c("striped","condensed"), fixed_thead = T)
+```
+
+<br>
+
+By looking at this summary table of the models, we can see that Support Vector Machines, Tree and Logistic Regression are our top models. However, in terms of sensitivity and specificity, two models outpeform the other. As a reminder, in our case, we want to be sure to have an balanced sensitivity and specificity. Therefore, we take only the two models for the following part: 
+
+- Support Vector Machines
+- Logistic Regression

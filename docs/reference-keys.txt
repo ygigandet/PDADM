@@ -4,7 +4,7 @@ dataset
 exploratory-data-analysis
 inacurracies
 unbalanced-observations
-models
+modelling
 splitting-strategies-and-balancing
 k-nearest-neighbors-k-nn
 naive-bayes
@@ -12,3 +12,7 @@ logistic-regression
 trees
 neural-network
 support-vector-machines
+random-forest
+summary
+evaluation
+deployment

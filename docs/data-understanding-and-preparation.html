@@ -23,7 +23,7 @@
 <meta name="author" content="Manon Verjus and Yooby Gigandet" />
 
 
-<meta name="date" content="2022-05-17" />
+<meta name="date" content="2022-06-03" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="index.html"/>
-<link rel="next" href="models.html"/>
+<link rel="next" href="modelling.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -52,6 +52,8 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">
@@ -146,16 +148,20 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="2.2.2" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#unbalanced-observations"><i class="fa fa-check"></i><b>2.2.2</b> Unbalanced observations</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="3" data-path="models.html"><a href="models.html"><i class="fa fa-check"></i><b>3</b> Models</a>
+<li class="chapter" data-level="3" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>3</b> Modelling</a>
 <ul>
-<li class="chapter" data-level="3.1" data-path="models.html"><a href="models.html#splitting-strategies-and-balancing"><i class="fa fa-check"></i><b>3.1</b> Splitting strategies and balancing</a></li>
-<li class="chapter" data-level="3.2" data-path="models.html"><a href="models.html#k-nearest-neighbors-k-nn"><i class="fa fa-check"></i><b>3.2</b> K-Nearest Neighbors (K-NN)</a></li>
-<li class="chapter" data-level="3.3" data-path="models.html"><a href="models.html#naive-bayes"><i class="fa fa-check"></i><b>3.3</b> Naive Bayes</a></li>
-<li class="chapter" data-level="3.4" data-path="models.html"><a href="models.html#logistic-regression"><i class="fa fa-check"></i><b>3.4</b> Logistic Regression</a></li>
-<li class="chapter" data-level="3.5" data-path="models.html"><a href="models.html#trees"><i class="fa fa-check"></i><b>3.5</b> Trees</a></li>
-<li class="chapter" data-level="3.6" data-path="models.html"><a href="models.html#neural-network"><i class="fa fa-check"></i><b>3.6</b> Neural Network</a></li>
-<li class="chapter" data-level="3.7" data-path="models.html"><a href="models.html#support-vector-machines"><i class="fa fa-check"></i><b>3.7</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="3.1" data-path="modelling.html"><a href="modelling.html#splitting-strategies-and-balancing"><i class="fa fa-check"></i><b>3.1</b> Splitting strategies and balancing</a></li>
+<li class="chapter" data-level="3.2" data-path="modelling.html"><a href="modelling.html#k-nearest-neighbors-k-nn"><i class="fa fa-check"></i><b>3.2</b> K-Nearest Neighbors (K-NN)</a></li>
+<li class="chapter" data-level="3.3" data-path="modelling.html"><a href="modelling.html#naive-bayes"><i class="fa fa-check"></i><b>3.3</b> Naive Bayes</a></li>
+<li class="chapter" data-level="3.4" data-path="modelling.html"><a href="modelling.html#logistic-regression"><i class="fa fa-check"></i><b>3.4</b> Logistic Regression</a></li>
+<li class="chapter" data-level="3.5" data-path="modelling.html"><a href="modelling.html#trees"><i class="fa fa-check"></i><b>3.5</b> Trees</a></li>
+<li class="chapter" data-level="3.6" data-path="modelling.html"><a href="modelling.html#neural-network"><i class="fa fa-check"></i><b>3.6</b> Neural Network</a></li>
+<li class="chapter" data-level="3.7" data-path="modelling.html"><a href="modelling.html#support-vector-machines"><i class="fa fa-check"></i><b>3.7</b> Support Vector Machines</a></li>
+<li class="chapter" data-level="3.8" data-path="modelling.html"><a href="modelling.html#random-forest"><i class="fa fa-check"></i><b>3.8</b> Random Forest</a></li>
+<li class="chapter" data-level="3.9" data-path="modelling.html"><a href="modelling.html#summary"><i class="fa fa-check"></i><b>3.9</b> Summary</a></li>
 </ul></li>
+<li class="chapter" data-level="4" data-path="evaluation.html"><a href="evaluation.html"><i class="fa fa-check"></i><b>4</b> Evaluation</a></li>
+<li class="chapter" data-level="5" data-path="deployment.html"><a href="deployment.html"><i class="fa fa-check"></i><b>5</b> Deployment</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -230,7 +236,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="unbalanced-observations" class="section level3 hasAnchor" number="2.2.2">
 <h3><span class="header-section-number">2.2.2</span> Unbalanced observations<a href="data-understanding-and-preparation.html#unbalanced-observations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>One interesting point is that the dataset is heavily unbalanced: 700 credit applications rated as good versus 300 credit applications rated as bad. We will need to balance the dataset for our modelling.</p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>To have a better visualization of our variables. We did some boxplot which show the distribution of the data.</p>
 <p>This first boxplot A shows that bad clients mostly asked for longer duration credit than good clients. This could be a raison why they received a refusal. The second boxplot B shows that the age of clients doesn not seem to be a key criteria but the amount of the credit (boxplot C) seems to be more important as most of the good clients asked for a smaller amount.</p>
 <p>Then, we explored the distribution of the financial variables.</p>
@@ -251,10 +257,10 @@ On the histogram D we see that the amount of money on the account not so importa
 <p>The population of clients basically do not have co-applicants and they do not have other installment plan neither for majority of them. The name’s telephone does not seem to be important as a lot of clients have and have not the telephone on their name. However, most of the clients are not liable to provide maintenance.</p>
 <p>We can see below the mean of good clients and the mean of bad clients. It is important to keep in account that the sample of good clients is much higher than the number of bad clients.</p>
 <p>The matrix below present the correlations between variables. To read in a easiest way, we separated the variables in categories. As before, the categories were created based on their area.
-<img src="bookdownproj_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-25-2.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-25-3.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-25-4.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-25-5.png" width="70%" style="display: block; margin: auto;" /></p>
+<img src="bookdownproj_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-27-2.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-27-3.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-27-4.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-27-5.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>The following part of the project is focus on defining a typical profile of a good client. The goal is to define an average good client based on the average of all the variables defined.</p>
 <p>The lollipop plot below present the mean profile to be qualified as a good client. From these results, most of them ask for a new car, rent their flat but have real estate. The good client in average has a quite good amount of money and has a guarantor. These results are quite different than what we presented before.
-<img src="bookdownproj_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<img src="bookdownproj_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>The following plot shows a selection of the most important variables of our dataframe.
 The two main disadvantages of these methods are: The increasing overfitting risk when the number of observations is insufficient. The significant computation time when the number of variables is large.</p>
 <p>The result below displays that we seem to have 6 relevant variables: checking the account, the duration of the credit asked, the history of previous credits, the savings, the amount of money owned by the applicant and the real estate owned.</p>
@@ -269,28 +275,28 @@ The two main disadvantages of these methods are: The increasing overfitting risk
 #&gt; 
 #&gt;   only 20 most important variables shown (out of 30)
 #&gt; 
-#&gt;                  Overall
-#&gt; CHK_ACCT          0.1141
-#&gt; DURATION          0.0803
-#&gt; HISTORY           0.0767
-#&gt; SAV_ACCT          0.0684
-#&gt; AMOUNT            0.0516
-#&gt; REAL_ESTATE       0.0343
-#&gt; MALE_SINGLE       0.0000
-#&gt; FURNITURE         0.0000
-#&gt; NUM_DEPENDENTS    0.0000
-#&gt; CO_APPLICANT      0.0000
-#&gt; OTHER_INSTALL     0.0000
-#&gt; INSTALL_RATE      0.0000
-#&gt; PROP_UNKN_NONE    0.0000
-#&gt; JOB               0.0000
-#&gt; TELEPHONE         0.0000
-#&gt; NUM_CREDITS       0.0000
-#&gt; USED_CAR          0.0000
-#&gt; MALE_MAR_or_WID   0.0000
-#&gt; EMPLOYMENT        0.0000
-#&gt; PRESENT_RESIDENT  0.0000</code></pre>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;" /></p>
+#&gt;                 Overall
+#&gt; CHK_ACCT         0.1141
+#&gt; DURATION         0.0803
+#&gt; HISTORY          0.0767
+#&gt; SAV_ACCT         0.0684
+#&gt; AMOUNT           0.0516
+#&gt; REAL_ESTATE      0.0343
+#&gt; INSTALL_RATE     0.0000
+#&gt; CO_APPLICANT     0.0000
+#&gt; USED_CAR         0.0000
+#&gt; FURNITURE        0.0000
+#&gt; NUM_CREDITS      0.0000
+#&gt; EMPLOYMENT       0.0000
+#&gt; MALE_MAR_or_WID  0.0000
+#&gt; JOB              0.0000
+#&gt; AGE              0.0000
+#&gt; OTHER_INSTALL    0.0000
+#&gt; EDUCATION        0.0000
+#&gt; OWN_RES          0.0000
+#&gt; RADIO_TV         0.0000
+#&gt; TELEPHONE        0.0000</code></pre>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-30-1.png" width="70%" style="display: block; margin: auto;" /></p>
 
 </div>
 </div>
@@ -301,7 +307,7 @@ The two main disadvantages of these methods are: The increasing overfitting risk
         </div>
       </div>
 <a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="models.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="modelling.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
