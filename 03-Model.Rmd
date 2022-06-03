@@ -55,7 +55,7 @@ draw_confusion_matrix <- function(cm) {
 }
 ```
 
-Now that our data set is cleaned, we move on to the creation of models.
+After cleaning and visualizing the data set, we move on to the creation of models.
 
 ## Splitting strategies and balancing 
 
@@ -85,7 +85,7 @@ table(GermanCredit.tr$RESPONSE) %>% kable(align = "c", col.names = c("Outcome", 
 
 <br>
 
-Therefore, any model that favors the majority will reach an higher accuracy. However, in our case, we need to make sure to rightly classify any credit applications to avoid losses. To do so, we use a method called sub-sampling that balance the observations.
+Therefore, any model that favors the majority will reach an higher accuracy. However, in our case, we need to make sure to rightly classify any credit applications to avoid losses. To do so, we use a method called sub-sampling that balance the observations. It will allow us to have two equivalent samples. 
 
 
 ```{r, echo = TRUE}
@@ -106,7 +106,7 @@ GermanCredit.tr.subs <- data.frame(rbind(GermanCredit.tr.no, GermanCredit.tr.yes
 
 <br>
 
-By doing so, we get the following subsampled training set:
+By doing so, we get the following sub sampled training set:
 
 ```{r, echo = FALSE}
 table(GermanCredit.tr.subs$RESPONSE) %>% kable(align = "c", col.names = c("Outcome", "Frequence"))
@@ -115,7 +115,7 @@ table(GermanCredit.tr.subs$RESPONSE) %>% kable(align = "c", col.names = c("Outco
 
 ## K-Nearest Neighbors (K-NN)
 
-A K-Nearest Neighbors tries to predict the correct class for the test data by calculating the distances between the test data and all the training points. Then to predict, it selects a number, K, of the closest point of the test set (thus the name K-nearest neighbors).
+A K-Nearest Neighbors tries to predict the correct class for the test data by calculating the distances between the test data and all the training points. Then to predict, it selects a number K, of the closest point of the test set (thus the name K-nearest neighbors).
 
 ```{r, echo = TRUE}
 # K-Nearest Neighbors (K-NN)
@@ -143,8 +143,10 @@ We need to select the K number of points closest that give the optimal accuracy.
 ```{r, results = 'hide'}
 plot(knn_cv)
 ```
+We did several confusion matrix to measure the performance. The first one was with knn method. We found an accuracy of 0.615 which corresponds to well predicted clients (good and bad). The best accuracy value is 1 so 0.615 is considered as a not bad value. 
 
-```{r, results = 'hide'}
+
+```{r, results = 'hide}
 pred_knn <- predict(knn_cv, newdata = GermanCredit.te)
 cmknn <- confusionMatrix(data = as.factor(pred_knn), reference = as.factor(GermanCredit.te$RESPONSE))
 draw_confusion_matrix(cmknn)
@@ -152,9 +154,9 @@ draw_confusion_matrix(cmknn)
 
 ## Naive Bayes
 
-Bayes classifiers use a probabilistic approach
+Then, we used a probabilistic approach with Bayes classifiers. With this method, the confusion matrix provides a better accuracy of 0.72. 
 
-```{r, warning = FALSE, echo = TRUE}
+```{r echo=, warning=FALSE}
 # Naive Bayes
 
 trctrl <- trainControl(method = "cv", number=10)
@@ -183,7 +185,7 @@ draw_confusion_matrix(cm_naive_bayes)
 
 A logistic regression is a regression adapted to binary classification.
 
-We use a cross-validation method to train our model and choose the Akaïke Information Criterion (AIC) to select the variables.
+We use a cross-validation method to train our model and choose the Akaïke Information Criterion (AIC) to select the variables. The AIC is used to select the model based on the number of  parameters. We choose the model with the smallest AIC.
 
 ```{r, echo = TRUE}
 # Logistic Regression
@@ -199,7 +201,7 @@ glm_aic <- train(as_factor(RESPONSE) ~.,
                  trace=0)
 ```
 
-The resulting confusion matrix of the logistic regression:
+The following plot corresponds to the resulting confusion matrix of the logistic regression:
 
 ```{r}
 pred_glm_aic <-  predict(glm_aic, newdata = GermanCredit.te)
@@ -207,24 +209,8 @@ cm_glm_aic <- confusionMatrix(data = as.factor(pred_glm_aic), reference = as.fac
 draw_confusion_matrix(cm_glm_aic)
 ```
 
-## Linear Discriminant Analysis
+It provides an accuracy of 0.73.
 
-```{r, echo = TRUE, results = 'hide'}
-# Linear Discriminant Analysis
-trctrl <- trainControl(method = "cv", number=10)
-
-set.seed(346)
-lda.model <- train(as_factor(RESPONSE) ~.,
-                 data = GermanCredit.tr.subs,
-                 method = "lda",
-                 trControl = trctrl)
-```
-
-```{r}
-pred_lda <-  predict(lda.model, newdata = GermanCredit.te)
-cm_lda <- confusionMatrix(data = as.factor(pred_lda), reference = as.factor(GermanCredit.te$RESPONSE))
-draw_confusion_matrix(cm_lda)
-```
 
 ## Trees
 
@@ -278,6 +264,7 @@ pred_neural_network <-  predict(neural_network, newdata = GermanCredit.te)
 cm_neural_network <- confusionMatrix(data = as.factor(pred_neural_network), reference = as.factor(GermanCredit.te$RESPONSE))
 draw_confusion_matrix(cm_neural_network)
 ```
+The confusion matrix with neural network presents a good accuracy of 0.705.
 
 ## Support Vector Machines
 
@@ -285,7 +272,7 @@ draw_confusion_matrix(cm_neural_network)
 # Support Vector Machines
 
 trctrl <- trainControl(method = "cv", number=5)
-search_grid <- expand.grid(C = c(0.1, 1, 10, 100, 1000))
+search_grid <- expand.grid(C = c(0.01, 0.1, 1, 10, 100, 1000))
 
 set.seed(346)
 svm <- train(as_factor(RESPONSE) ~.,
@@ -300,6 +287,8 @@ pred_svm <-  predict(svm, newdata = GermanCredit.te)
 cm_svm <- confusionMatrix(data = as.factor(pred_svm), reference = as.factor(GermanCredit.te$RESPONSE))
 draw_confusion_matrix(cm_svm)
 ```
+The cinfusion matrix presents an accuracy of 0.745.
+
 
 ## Random Forest
 
@@ -323,6 +312,8 @@ pred_rf <-  predict(rf, newdata = GermanCredit.te)
 cm_rf <- confusionMatrix(data = as.factor(pred_rf), reference = as.factor(GermanCredit.te$RESPONSE))
 draw_confusion_matrix(cm_rf)
 ```
+Again, this models shares an accuracy of 0.73.
+
 
 ## Summary
 
@@ -336,7 +327,6 @@ accuracy_knn = cmknn$overall['Accuracy']
 accuracy_nb = cm_naive_bayes$overall['Accuracy']
 accuracy_glm = cm_glm_aic$overall['Accuracy']
 accuracy_rf = cm_rf$overall['Accuracy']
-accuracy_lda = cm_lda$overall['Accuracy']
 
 sensitivity_svm = cm_svm$byClass['Sensitivity']
 sensitivity_tree = cm_tree$byClass['Sensitivity']
@@ -345,7 +335,6 @@ sensitivity_knn = cmknn$byClass['Sensitivity']
 sensitivity_nb = cm_naive_bayes$byClass['Sensitivity']
 sensitivity_glm = cm_glm_aic$byClass['Sensitivity']
 sensitivity_rf = cm_rf$byClass['Sensitivity']
-sensitivity_lda = cm_lda$byClass['Sensitivity']
 
 specificity_svm = cm_svm$byClass['Specificity']
 specificity_tree = cm_tree$byClass['Specificity']
@@ -354,14 +343,13 @@ specificity_knn = cmknn$byClass['Specificity']
 specificity_nb = cm_naive_bayes$byClass['Specificity']
 specificity_glm = cm_glm_aic$byClass['Specificity']
 specificity_rf = cm_rf$byClass['Specificity']
-specificity_lda = cm_lda$byClass['Specificity']
 ```
 
 ```{r, echo = FALSE}
 # Create a table to show the variables
-metrics = c(accuracy_svm, sensitivity_svm, specificity_svm, accuracy_tree, sensitivity_tree, specificity_tree, accuracy_nn, sensitivity_nn, specificity_nn, accuracy_knn, sensitivity_knn, specificity_knn, accuracy_nb, sensitivity_nb, specificity_nb, accuracy_glm, sensitivity_glm, specificity_glm, accuracy_rf, sensitivity_rf, specificity_rf, accuracy_lda, sensitivity_lda, specificity_lda)
+metrics = c(accuracy_svm, sensitivity_svm, specificity_svm, accuracy_tree, sensitivity_tree, specificity_tree, accuracy_nn, sensitivity_nn, specificity_nn, accuracy_knn, sensitivity_knn, specificity_knn, accuracy_nb, sensitivity_nb, specificity_nb, accuracy_glm, sensitivity_glm, specificity_glm, accuracy_rf, sensitivity_rf, specificity_rf)
 cnames = c("Accuracy", "Sensitivity", "Specificity")
-rnames = c("Support Vector Machines", "Tree", "Neural Network", "K-nearest neighbors", "Naive Bayes", "Logistic Regression", "Random Forest", "Linear Discriminant Analysis")
+rnames = c("Support Vector Machines", "Tree", "Neural Network", "K-nearest neighbors", "Naive Bayes", "Logistic Regression", "Random Forest")
 model_output <- matrix(metrics, ncol = 3, byrow=TRUE, dimnames=list(rnames,cnames))
 model_output <- model_output[order(model_output[,1],decreasing=TRUE),]
 
@@ -371,7 +359,7 @@ kable(model_output, digits = 2)  %>%
 
 <br>
 
-By looking at this summary table of the models, we can see that Support Vector Machines, Tree and Logistic Regression are our top models. However, in terms of sensitivity and specificity, two models outpeform the other. As a reminder, in our case, we want to be sure to have an balanced sensitivity and specificity. Therefore, we take only the two models for the following part: 
+By looking at this summary table of the models, we can see that Support Vector Machines, Tree and Logistic Regression are our top models. However, in terms of sensitivity and specificity, two models outperform the other. As a reminder, in our case, we want to be sure to have an balanced sensitivity and specificity. Therefore, we take only the two models for the following part: 
 
 - Support Vector Machines
 - Logistic Regression
