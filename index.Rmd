@@ -7,17 +7,16 @@ site: bookdown::bookdown_site
 
 # Introduction
 
-Our work for the course "Project in Data Analytics for Decision Making" is to predict the credit risk linked to customers for our client, a bank. 
+Our work for the course "Project in Data Analytics for Decision Making" is to predict the credit risk linked to customers for our client, a German bank. 
 
 To do so, we used the CRISP-DM method (CRoss Industry Standard Process for Data Mining):
 
 - **Business understanding**: Credit risk is defined as the risk of loss resulting from the failure by a borrower to repay the principal and interest owed to the lender. By performing a credit risk analysis, the lender determines the borrower's ability to meet debt obligations in order to cushion itself from losses. It is therefore important to efficiently classify the risks of the credit applications.
 
-- **Data understanding and preparation**: We work on the `german` data set. 
+- **Data understanding and preparation**: We study the `german` data set. This part focus on visualization of the data set. We observed the variables, the distribution of the data through plots and tables. The goal of this part is to well understand the data set we work with to be able to find relevant model later. 
 
-- **Modelling**: We fitted several models to assess which one was the best.
+- **Modelling**: After observing our data set, we need to find which model is the most relevant for the analysis. We fitted several models to assess which one(s) is(are) the best.
 
-- **Evaluation**: 
+- **Evaluation**: By testing several model, we can sum the output and decide the most relevant model to use. The evaluation part focuses on the application of the chosen model(s). 
 
-- **Deployment**:
-
+- **Deployment**: To finish this study, we will assess some proposals and hypothesis on the customer profiles to avoid or to favor to minimize the risk in the bank.
