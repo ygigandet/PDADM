@@ -1,1 +1,44 @@
 # Evaluation
+
+We have chosen the models (Support Vector Machines, Logistic Regression) that perform the best in terms of accuracy, specificity and sensitivity.
+
+In this part, we want to evaluate if there is room for improvement for these models, in other words, if we can remove some variables to make the analysis easier without loosing the performance.
+
+## Variable Importance - Support Vector Machines
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results = 'hide'}
+p_fun <- function(object, newdata){predict(object, newdata=newdata, type="prob")[,2]}
+
+x_train = GermanCredit.tr.subs
+y_train = GermanCredit.tr.subs %>% pull(RESPONSE)
+
+explainer_glm <- DALEX::explain(model = glm_aic,
+                                 data = x_train, 
+                                 y = y_train,
+                                 label = "Logistic Regression")
+
+explainer_svm <- DALEX::explain(model = svm,
+                                data = x_train,
+                                y = GermanCredit.tr.subs$RESPONSE,
+                                label = "Support Vector Machine")
+```
+
+```{r}
+calculate_importance <- function(your_model_explainer, n_permutations = 10) {
+  imp <- model_parts(explainer = your_model_explainer,
+                     B = n_permutations,
+                     type = "ratio",
+                     N = NULL)
+  return(imp)
+}
+```
+
+```{r}
+importance_glm  <- calculate_importance(explainer_glm)
+importance_svm <- calculate_importance(explainer_svm)
+
+plot(importance_lm, importance_svm) +
+  ggtitle("Mean variable-importance ratio over 10 permutations", "")
+```
+
+

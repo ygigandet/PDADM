@@ -207,6 +207,25 @@ cm_glm_aic <- confusionMatrix(data = as.factor(pred_glm_aic), reference = as.fac
 draw_confusion_matrix(cm_glm_aic)
 ```
 
+## Linear Discriminant Analysis
+
+```{r, echo = TRUE, results = 'hide'}
+# Linear Discriminant Analysis
+trctrl <- trainControl(method = "cv", number=10)
+
+set.seed(346)
+lda.model <- train(as_factor(RESPONSE) ~.,
+                 data = GermanCredit.tr.subs,
+                 method = "lda",
+                 trControl = trctrl)
+```
+
+```{r}
+pred_lda <-  predict(lda.model, newdata = GermanCredit.te)
+cm_lda <- confusionMatrix(data = as.factor(pred_lda), reference = as.factor(GermanCredit.te$RESPONSE))
+draw_confusion_matrix(cm_lda)
+```
+
 ## Trees
 
 The trees represent a hierarchical set of binary rules in a shape of a tree.
@@ -266,7 +285,7 @@ draw_confusion_matrix(cm_neural_network)
 # Support Vector Machines
 
 trctrl <- trainControl(method = "cv", number=5)
-search_grid <- expand.grid(C = c(0.01, 0.1, 1, 10, 100, 1000))
+search_grid <- expand.grid(C = c(0.1, 1, 10, 100, 1000))
 
 set.seed(346)
 svm <- train(as_factor(RESPONSE) ~.,
@@ -317,6 +336,7 @@ accuracy_knn = cmknn$overall['Accuracy']
 accuracy_nb = cm_naive_bayes$overall['Accuracy']
 accuracy_glm = cm_glm_aic$overall['Accuracy']
 accuracy_rf = cm_rf$overall['Accuracy']
+accuracy_lda = cm_lda$overall['Accuracy']
 
 sensitivity_svm = cm_svm$byClass['Sensitivity']
 sensitivity_tree = cm_tree$byClass['Sensitivity']
@@ -325,6 +345,7 @@ sensitivity_knn = cmknn$byClass['Sensitivity']
 sensitivity_nb = cm_naive_bayes$byClass['Sensitivity']
 sensitivity_glm = cm_glm_aic$byClass['Sensitivity']
 sensitivity_rf = cm_rf$byClass['Sensitivity']
+sensitivity_lda = cm_lda$byClass['Sensitivity']
 
 specificity_svm = cm_svm$byClass['Specificity']
 specificity_tree = cm_tree$byClass['Specificity']
@@ -333,13 +354,14 @@ specificity_knn = cmknn$byClass['Specificity']
 specificity_nb = cm_naive_bayes$byClass['Specificity']
 specificity_glm = cm_glm_aic$byClass['Specificity']
 specificity_rf = cm_rf$byClass['Specificity']
+specificity_lda = cm_lda$byClass['Specificity']
 ```
 
 ```{r, echo = FALSE}
 # Create a table to show the variables
-metrics = c(accuracy_svm, sensitivity_svm, specificity_svm, accuracy_tree, sensitivity_tree, specificity_tree, accuracy_nn, sensitivity_nn, specificity_nn, accuracy_knn, sensitivity_knn, specificity_knn, accuracy_nb, sensitivity_nb, specificity_nb, accuracy_glm, sensitivity_glm, specificity_glm, accuracy_rf, sensitivity_rf, specificity_rf)
+metrics = c(accuracy_svm, sensitivity_svm, specificity_svm, accuracy_tree, sensitivity_tree, specificity_tree, accuracy_nn, sensitivity_nn, specificity_nn, accuracy_knn, sensitivity_knn, specificity_knn, accuracy_nb, sensitivity_nb, specificity_nb, accuracy_glm, sensitivity_glm, specificity_glm, accuracy_rf, sensitivity_rf, specificity_rf, accuracy_lda, sensitivity_lda, specificity_lda)
 cnames = c("Accuracy", "Sensitivity", "Specificity")
-rnames = c("Support Vector Machines", "Tree", "Neural Network", "K-nearest neighbors", "Naive Bayes", "Logistic Regression", "Random Forest")
+rnames = c("Support Vector Machines", "Tree", "Neural Network", "K-nearest neighbors", "Naive Bayes", "Logistic Regression", "Random Forest", "Linear Discriminant Analysis")
 model_output <- matrix(metrics, ncol = 3, byrow=TRUE, dimnames=list(rnames,cnames))
 model_output <- model_output[order(model_output[,1],decreasing=TRUE),]
 
