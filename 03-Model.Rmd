@@ -298,32 +298,6 @@ draw_confusion_matrix(cm_neural_network)
 
 The confusion matrix with neural network presents a good accuracy of 0.705.
 
-## Support Vector Machines
-
-```{r, echo = TRUE, results = 'hide'}
-# Support Vector Machines
-
-trctrl <- trainControl(method = "cv", number=5)
-search_grid <- expand.grid(C = c(0.01, 0.1, 1, 10, 100, 1000))
-
-set.seed(346)
-svm <- train(as_factor(RESPONSE) ~.,
-             data = GermanCredit.tr.subs,
-             method = "svmLinear",
-             trControl=trctrl,
-             tuneGrid = search_grid)
-```
-
-<br>
-
-```{r}
-pred_svm <-  predict(svm, newdata = GermanCredit.te)
-cm_svm <- confusionMatrix(data = as.factor(pred_svm), reference = as.factor(GermanCredit.te$RESPONSE))
-draw_confusion_matrix(cm_svm)
-```
-The cinfusion matrix presents an accuracy of 0.745.
-
-
 ## Random Forest
 
 ```{r, echo = TRUE, results = 'hide'}
@@ -356,7 +330,6 @@ Again, this models shares an accuracy of 0.73.
 To evaluate our models, there are many metrics that can be used. We decided to choose first the accuracy and then have a look at the sensitivity and the specificity. In other words, we want to have a model with a good accuracy and the best sensitivity and specificity.
 
 ```{r, results = 'hide'}
-accuracy_svm = cm_svm$overall['Accuracy']
 accuracy_tree = cm_svm$overall['Accuracy']
 accuracy_nn = cm_neural_network$overall['Accuracy']
 accuracy_knn = cmknn$overall['Accuracy']
@@ -365,7 +338,6 @@ accuracy_glm = cm_glm_aic$overall['Accuracy']
 accuracy_rf = cm_rf$overall['Accuracy']
 accuracy_lda = cm_lda$overall['Accuracy']
 
-sensitivity_svm = cm_svm$byClass['Sensitivity']
 sensitivity_tree = cm_tree$byClass['Sensitivity']
 sensitivity_nn = cm_neural_network$byClass['Sensitivity']
 sensitivity_knn = cmknn$byClass['Sensitivity']
@@ -374,7 +346,6 @@ sensitivity_glm = cm_glm_aic$byClass['Sensitivity']
 sensitivity_rf = cm_rf$byClass['Sensitivity']
 sensitivity_lda = cm_lda$byClass['Sensitivity']
 
-specificity_svm = cm_svm$byClass['Specificity']
 specificity_tree = cm_tree$byClass['Specificity']
 specificity_nn = cm_neural_network$byClass['Specificity']
 specificity_knn = cmknn$byClass['Specificity']
@@ -388,9 +359,9 @@ specificity_lda = cm_lda$byClass['Specificity']
 
 ```{r, echo = FALSE}
 # Create a table to show the variables
-metrics = c(accuracy_svm, sensitivity_svm, specificity_svm, accuracy_tree, sensitivity_tree, specificity_tree, accuracy_nn, sensitivity_nn, specificity_nn, accuracy_knn, sensitivity_knn, specificity_knn, accuracy_nb, sensitivity_nb, specificity_nb, accuracy_glm, sensitivity_glm, specificity_glm, accuracy_rf, sensitivity_rf, specificity_rf, accuracy_lda, sensitivity_lda, specificity_lda)
+metrics = c(accuracy_tree, sensitivity_tree, specificity_tree, accuracy_nn, sensitivity_nn, specificity_nn, accuracy_knn, sensitivity_knn, specificity_knn, accuracy_nb, sensitivity_nb, specificity_nb, accuracy_glm, sensitivity_glm, specificity_glm, accuracy_rf, sensitivity_rf, specificity_rf, accuracy_lda, sensitivity_lda, specificity_lda)
 cnames = c("Accuracy", "Sensitivity", "Specificity")
-rnames = c("Support Vector Machines", "Tree", "Neural Network", "K-nearest neighbors", "Naive Bayes", "Logistic Regression", "Random Forest", "Linear Discriminant Analysis")
+rnames = c("Tree", "Neural Network", "K-nearest neighbors", "Naive Bayes", "Logistic Regression", "Random Forest", "Linear Discriminant Analysis")
 model_output <- matrix(metrics, ncol = 3, byrow=TRUE, dimnames=list(rnames,cnames))
 model_output <- model_output[order(model_output[,1],decreasing=TRUE),]
 
@@ -400,7 +371,7 @@ kable(model_output, digits = 2)  %>%
 
 <br>
 
-By looking at this summary table of the models, we can see that the Logistic Regression and the Random Forest are our top models. Even if the Random Forest is slightly worse than the following models in terms of specificity and sensitivity. Therefore, we chose the two models:
+By looking at this summary table of the models, we can see that the Tree, the Logistic Regression and the Random Forest are our top models. However, the tree has a lowest score in terms of specificity and sensitivity than the two others and by far. For this reason, we decided to choose the following models:
 
 - **Logistic Regression**
 - **Random Forest**

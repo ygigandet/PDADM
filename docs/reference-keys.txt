@@ -15,11 +15,11 @@ logistic-regression
 linear-discriminant-analysis
 trees
 neural-network
-support-vector-machines
 random-forest
 summary
 variable-importance
 logistic-regression-1
 random-forest-1
+evaluation-and-deployment
 evaluation
 deployment

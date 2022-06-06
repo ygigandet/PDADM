@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 4 Evaluation and deployment | Project in Data Analytics for Decision Making</title>
+  <meta name="description" content="Chapter 4 Evaluation and deployment | Project in Data Analytics for Decision Making" />
+  <meta name="generator" content="bookdown 0.26 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 4 Evaluation and deployment | Project in Data Analytics for Decision Making" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 4 Evaluation and deployment | Project in Data Analytics for Decision Making" />
+  
+  
+  
+
+<meta name="author" content="Manon Verjus and Yooby Gigandet" />
+
+
+<meta name="date" content="2022-06-06" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="modelling.html"/>
+
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">German Credit - Data analysis</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introduction</a></li>
+<li class="chapter" data-level="2" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html"><i class="fa fa-check"></i><b>2</b> Data understanding and preparation</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#dataset"><i class="fa fa-check"></i><b>2.1</b> Dataset</a></li>
+<li class="chapter" data-level="2.2" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#exploratory-data-analysis"><i class="fa fa-check"></i><b>2.2</b> Exploratory Data Analysis</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#inacurracies"><i class="fa fa-check"></i><b>2.2.1</b> Inacurracies</a></li>
+<li class="chapter" data-level="2.2.2" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#unbalanced-observations"><i class="fa fa-check"></i><b>2.2.2</b> Unbalanced observations</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#visualization"><i class="fa fa-check"></i><b>2.2.3</b> Visualization</a></li>
+<li class="chapter" data-level="2.2.4" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#profile-of-a-good-client"><i class="fa fa-check"></i><b>2.2.4</b> Profile of a good client</a></li>
+<li class="chapter" data-level="2.2.5" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#profile-of-a-bad-client"><i class="fa fa-check"></i><b>2.2.5</b> Profile of a bad client</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>3</b> Modelling</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="modelling.html"><a href="modelling.html#splitting-strategies-and-balancing"><i class="fa fa-check"></i><b>3.1</b> Splitting strategies and balancing</a></li>
+<li class="chapter" data-level="3.2" data-path="modelling.html"><a href="modelling.html#k-nearest-neighbors-k-nn"><i class="fa fa-check"></i><b>3.2</b> K-Nearest Neighbors (K-NN)</a></li>
+<li class="chapter" data-level="3.3" data-path="modelling.html"><a href="modelling.html#naive-bayes"><i class="fa fa-check"></i><b>3.3</b> Naive Bayes</a></li>
+<li class="chapter" data-level="3.4" data-path="modelling.html"><a href="modelling.html#logistic-regression"><i class="fa fa-check"></i><b>3.4</b> Logistic Regression</a></li>
+<li class="chapter" data-level="3.5" data-path="modelling.html"><a href="modelling.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>3.5</b> Linear Discriminant Analysis</a></li>
+<li class="chapter" data-level="3.6" data-path="modelling.html"><a href="modelling.html#trees"><i class="fa fa-check"></i><b>3.6</b> Trees</a></li>
+<li class="chapter" data-level="3.7" data-path="modelling.html"><a href="modelling.html#neural-network"><i class="fa fa-check"></i><b>3.7</b> Neural Network</a></li>
+<li class="chapter" data-level="3.8" data-path="modelling.html"><a href="modelling.html#random-forest"><i class="fa fa-check"></i><b>3.8</b> Random Forest</a></li>
+<li class="chapter" data-level="3.9" data-path="modelling.html"><a href="modelling.html#summary"><i class="fa fa-check"></i><b>3.9</b> Summary</a></li>
+<li class="chapter" data-level="3.10" data-path="modelling.html"><a href="modelling.html#variable-importance"><i class="fa fa-check"></i><b>3.10</b> Variable Importance</a>
+<ul>
+<li class="chapter" data-level="3.10.1" data-path="modelling.html"><a href="modelling.html#logistic-regression-1"><i class="fa fa-check"></i><b>3.10.1</b> Logistic Regression</a></li>
+<li class="chapter" data-level="3.10.2" data-path="modelling.html"><a href="modelling.html#random-forest-1"><i class="fa fa-check"></i><b>3.10.2</b> Random Forest</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="evaluation-and-deployment.html"><a href="evaluation-and-deployment.html"><i class="fa fa-check"></i><b>4</b> Evaluation and deployment</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="evaluation-and-deployment.html"><a href="evaluation-and-deployment.html#evaluation"><i class="fa fa-check"></i><b>4.1</b> Evaluation</a></li>
+<li class="chapter" data-level="4.2" data-path="evaluation-and-deployment.html"><a href="evaluation-and-deployment.html#deployment"><i class="fa fa-check"></i><b>4.2</b> Deployment</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Project in Data Analytics for Decision Making</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="evaluation-and-deployment" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">Chapter 4</span> Evaluation and deployment<a href="evaluation-and-deployment.html#evaluation-and-deployment" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="evaluation" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Evaluation<a href="evaluation-and-deployment.html#evaluation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this part, we wanted to evaluate the work done so far. The idea was to provide a good model that can predict whether a client represents a risk or not for the bank based on the data provided.</p>
+<p>As seen in the modelization part, we found two good models with a good accuracy, or what we estimated as a good accuracy:</p>
+<ul>
+<li>The logistic regression: an accuracy of 73% (Specificity: 74%, sensitivity: 72%)</li>
+<li>The random forest: an accuracy of 73% (Specificty: 75%, sensitivity: 69%)</li>
+</ul>
+<p>Another part of our analysis was to provide simpler models that would only take into account some of the varaibles found in the data set (the most important ones). With these new models, they are indeed simpler but they lose a bit in term of performance:</p>
+<ul>
+<li>The logistic regression: an accuracy of 66%</li>
+<li>The random forest: an accuracy of 68%</li>
+</ul>
+<p>As we can see from the numbers above, our models are not perfect, which is also a good sign as a perfect model would be overfitting. In other words, would work perfectly with the data provided but would be poorly performing when facing new data.</p>
+</div>
+<div id="deployment" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Deployment<a href="evaluation-and-deployment.html#deployment" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>If our client is interested to implement our solution, we might inform him to use it as an helping tool, giving a first input to the analysis of the bankers but absolutely not being an automatic process.</p>
+<p>Like the question asked above, the bankers should estimate which models would be better (the most performing one or the most easiest one). This is a huge difference as the first models might be more accurate but would required more data from each client to be able to predict correctly. On the other hand, the second model would give less accuracy but would need less data to give a result.</p>
+<p>It is hence at the hands of our client to choose which solution he prefers and assess it as an helping tool.</p>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="modelling.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/ygigandet/PDADM/edit/master/04-Evaluation.Rmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": "https://github.com/ygigandet/PDADM/blob/master/04-Evaluation.Rmd",
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

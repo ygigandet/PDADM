@@ -1,1 +1,26 @@
-# Evaluation
+# Evaluation and deployment
+
+## Evaluation
+
+In this part, we wanted to evaluate the work done so far. The idea was to provide a good model that can predict whether a client represents a risk or not for the bank based on the data provided.
+
+As seen in the modelization part, we found two good models with a good accuracy, or what we estimated as a good accuracy:
+
+- The logistic regression: an accuracy of 73% (Specificity: 74%, sensitivity: 72%)
+- The random forest: an accuracy of 73% (Specificty: 75%, sensitivity: 69%)
+
+Another part of our analysis was to provide simpler models that would only take into account some of the varaibles found in the data set (the most important ones). With these new models, they are indeed simpler but they lose a bit in term of performance:
+
+- The logistic regression: an accuracy of 66%
+- The random forest: an accuracy of 68%
+
+As we can see from the numbers above, our models are not perfect, which is also a good sign as a perfect model would be overfitting. In other words, would work perfectly with the data provided but would be poorly performing when facing new data. 
+
+## Deployment
+
+If our client is interested to implement our solution, we might inform him to use it as an helping tool, giving a first input to the analysis of the bankers but absolutely not being an automatic process.
+
+Like the question asked above, the bankers should estimate which models would be better (the most performing one or the most easiest one). This is a huge difference as the first models might be more accurate but would required more data from each client to be able to predict correctly. On the other hand, the second model would give less accuracy but would need less data to give a result.
+
+It is hence at the hands of our client to choose which solution he prefers and assess it as an helping tool.
+

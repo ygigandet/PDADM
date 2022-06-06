@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="data-understanding-and-preparation.html"/>
-<link rel="next" href="evaluation.html"/>
+<link rel="next" href="evaluation-and-deployment.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -160,17 +160,19 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.5" data-path="modelling.html"><a href="modelling.html#linear-discriminant-analysis"><i class="fa fa-check"></i><b>3.5</b> Linear Discriminant Analysis</a></li>
 <li class="chapter" data-level="3.6" data-path="modelling.html"><a href="modelling.html#trees"><i class="fa fa-check"></i><b>3.6</b> Trees</a></li>
 <li class="chapter" data-level="3.7" data-path="modelling.html"><a href="modelling.html#neural-network"><i class="fa fa-check"></i><b>3.7</b> Neural Network</a></li>
-<li class="chapter" data-level="3.8" data-path="modelling.html"><a href="modelling.html#support-vector-machines"><i class="fa fa-check"></i><b>3.8</b> Support Vector Machines</a></li>
-<li class="chapter" data-level="3.9" data-path="modelling.html"><a href="modelling.html#random-forest"><i class="fa fa-check"></i><b>3.9</b> Random Forest</a></li>
-<li class="chapter" data-level="3.10" data-path="modelling.html"><a href="modelling.html#summary"><i class="fa fa-check"></i><b>3.10</b> Summary</a></li>
-<li class="chapter" data-level="3.11" data-path="modelling.html"><a href="modelling.html#variable-importance"><i class="fa fa-check"></i><b>3.11</b> Variable Importance</a>
+<li class="chapter" data-level="3.8" data-path="modelling.html"><a href="modelling.html#random-forest"><i class="fa fa-check"></i><b>3.8</b> Random Forest</a></li>
+<li class="chapter" data-level="3.9" data-path="modelling.html"><a href="modelling.html#summary"><i class="fa fa-check"></i><b>3.9</b> Summary</a></li>
+<li class="chapter" data-level="3.10" data-path="modelling.html"><a href="modelling.html#variable-importance"><i class="fa fa-check"></i><b>3.10</b> Variable Importance</a>
 <ul>
-<li class="chapter" data-level="3.11.1" data-path="modelling.html"><a href="modelling.html#logistic-regression-1"><i class="fa fa-check"></i><b>3.11.1</b> Logistic Regression</a></li>
-<li class="chapter" data-level="3.11.2" data-path="modelling.html"><a href="modelling.html#random-forest-1"><i class="fa fa-check"></i><b>3.11.2</b> Random Forest</a></li>
+<li class="chapter" data-level="3.10.1" data-path="modelling.html"><a href="modelling.html#logistic-regression-1"><i class="fa fa-check"></i><b>3.10.1</b> Logistic Regression</a></li>
+<li class="chapter" data-level="3.10.2" data-path="modelling.html"><a href="modelling.html#random-forest-1"><i class="fa fa-check"></i><b>3.10.2</b> Random Forest</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="evaluation.html"><a href="evaluation.html"><i class="fa fa-check"></i><b>4</b> Evaluation</a></li>
-<li class="chapter" data-level="5" data-path="deployment.html"><a href="deployment.html"><i class="fa fa-check"></i><b>5</b> Deployment</a></li>
+<li class="chapter" data-level="4" data-path="evaluation-and-deployment.html"><a href="evaluation-and-deployment.html"><i class="fa fa-check"></i><b>4</b> Evaluation and deployment</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="evaluation-and-deployment.html"><a href="evaluation-and-deployment.html#evaluation"><i class="fa fa-check"></i><b>4.1</b> Evaluation</a></li>
+<li class="chapter" data-level="4.2" data-path="evaluation-and-deployment.html"><a href="evaluation-and-deployment.html#deployment"><i class="fa fa-check"></i><b>4.2</b> Deployment</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -403,43 +405,26 @@ We did several confusion matrix to measure the performance. The first one was wi
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-51-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>The confusion matrix with neural network presents a good accuracy of 0.705.</p>
 </div>
-<div id="support-vector-machines" class="section level2 hasAnchor" number="3.8">
-<h2><span class="header-section-number">3.8</span> Support Vector Machines<a href="modelling.html#support-vector-machines" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="modelling.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Support Vector Machines</span></span>
+<div id="random-forest" class="section level2 hasAnchor" number="3.8">
+<h2><span class="header-section-number">3.8</span> Random Forest<a href="modelling.html#random-forest" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="modelling.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Random Forest</span></span>
 <span id="cb9-2"><a href="modelling.html#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-3"><a href="modelling.html#cb9-3" aria-hidden="true" tabindex="-1"></a>trctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number=</span><span class="dv">5</span>)</span>
-<span id="cb9-4"><a href="modelling.html#cb9-4" aria-hidden="true" tabindex="-1"></a>search_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">C =</span> <span class="fu">c</span>(<span class="fl">0.01</span>, <span class="fl">0.1</span>, <span class="dv">1</span>, <span class="dv">10</span>, <span class="dv">100</span>, <span class="dv">1000</span>))</span>
+<span id="cb9-3"><a href="modelling.html#cb9-3" aria-hidden="true" tabindex="-1"></a>trctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number=</span><span class="dv">5</span>) </span>
+<span id="cb9-4"><a href="modelling.html#cb9-4" aria-hidden="true" tabindex="-1"></a>search_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">.mtry =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>)) </span>
 <span id="cb9-5"><a href="modelling.html#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-6"><a href="modelling.html#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">346</span>)</span>
-<span id="cb9-7"><a href="modelling.html#cb9-7" aria-hidden="true" tabindex="-1"></a>svm <span class="ot">&lt;-</span> <span class="fu">train</span>(<span class="fu">as_factor</span>(RESPONSE) <span class="sc">~</span>.,</span>
-<span id="cb9-8"><a href="modelling.html#cb9-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> GermanCredit.tr.subs,</span>
-<span id="cb9-9"><a href="modelling.html#cb9-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">method =</span> <span class="st">&quot;svmLinear&quot;</span>,</span>
-<span id="cb9-10"><a href="modelling.html#cb9-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">trControl=</span>trctrl,</span>
-<span id="cb9-11"><a href="modelling.html#cb9-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">tuneGrid =</span> search_grid)</span></code></pre></div>
+<span id="cb9-7"><a href="modelling.html#cb9-7" aria-hidden="true" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="fu">train</span>(<span class="fu">as_factor</span>(RESPONSE) <span class="sc">~</span>., </span>
+<span id="cb9-8"><a href="modelling.html#cb9-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> GermanCredit.tr.subs,</span>
+<span id="cb9-9"><a href="modelling.html#cb9-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">method =</span> <span class="st">&quot;rf&quot;</span>,</span>
+<span id="cb9-10"><a href="modelling.html#cb9-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">trControl =</span> trctrl,</span>
+<span id="cb9-11"><a href="modelling.html#cb9-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">tuneGrid =</span> search_grid</span>
+<span id="cb9-12"><a href="modelling.html#cb9-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><br></p>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-53-1.png" width="70%" style="display: block; margin: auto;" />
-The cinfusion matrix presents an accuracy of 0.745.</p>
-</div>
-<div id="random-forest" class="section level2 hasAnchor" number="3.9">
-<h2><span class="header-section-number">3.9</span> Random Forest<a href="modelling.html#random-forest" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="modelling.html#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Random Forest</span></span>
-<span id="cb10-2"><a href="modelling.html#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="modelling.html#cb10-3" aria-hidden="true" tabindex="-1"></a>trctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number=</span><span class="dv">5</span>) </span>
-<span id="cb10-4"><a href="modelling.html#cb10-4" aria-hidden="true" tabindex="-1"></a>search_grid <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">.mtry =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>)) </span>
-<span id="cb10-5"><a href="modelling.html#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="modelling.html#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">346</span>)</span>
-<span id="cb10-7"><a href="modelling.html#cb10-7" aria-hidden="true" tabindex="-1"></a>rf <span class="ot">&lt;-</span> <span class="fu">train</span>(<span class="fu">as_factor</span>(RESPONSE) <span class="sc">~</span>., </span>
-<span id="cb10-8"><a href="modelling.html#cb10-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> GermanCredit.tr.subs,</span>
-<span id="cb10-9"><a href="modelling.html#cb10-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">method =</span> <span class="st">&quot;rf&quot;</span>,</span>
-<span id="cb10-10"><a href="modelling.html#cb10-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">trControl =</span> trctrl,</span>
-<span id="cb10-11"><a href="modelling.html#cb10-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">tuneGrid =</span> search_grid</span>
-<span id="cb10-12"><a href="modelling.html#cb10-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
-<p><br></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-55-1.png" width="70%" style="display: block; margin: auto;" />
 Again, this models shares an accuracy of 0.73.</p>
 </div>
-<div id="summary" class="section level2 hasAnchor" number="3.10">
-<h2><span class="header-section-number">3.10</span> Summary<a href="modelling.html#summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="summary" class="section level2 hasAnchor" number="3.9">
+<h2><span class="header-section-number">3.9</span> Summary<a href="modelling.html#summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>To evaluate our models, there are many metrics that can be used. We decided to choose first the accuracy and then have a look at the sensitivity and the specificity. In other words, we want to have a model with a good accuracy and the best sensitivity and specificity.</p>
 <p><br></p>
 <table class="table table-striped table-condensed" style="margin-left: auto; margin-right: auto;">
@@ -459,20 +444,6 @@ Specificity
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Support Vector Machines
-</td>
-<td style="text-align:right;">
-0.74
-</td>
-<td style="text-align:right;">
-0.75
-</td>
-<td style="text-align:right;">
-0.74
-</td>
-</tr>
 <tr>
 <td style="text-align:left;">
 Tree
@@ -574,22 +545,22 @@ K-nearest neighbors
 </tbody>
 </table>
 <p><br></p>
-<p>By looking at this summary table of the models, we can see that the Logistic Regression and the Random Forest are our top models. Even if the Random Forest is slightly worse than the following models in terms of specificity and sensitivity. Therefore, we chose the two models:</p>
+<p>By looking at this summary table of the models, we can see that the Tree, the Logistic Regression and the Random Forest are our top models. However, the tree has a lowest score in terms of specificity and sensitivity than the two others and by far. For this reason, we decided to choose the following models:</p>
 <ul>
 <li><strong>Logistic Regression</strong></li>
 <li><strong>Random Forest</strong></li>
 </ul>
 </div>
-<div id="variable-importance" class="section level2 hasAnchor" number="3.11">
-<h2><span class="header-section-number">3.11</span> Variable Importance<a href="modelling.html#variable-importance" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="variable-importance" class="section level2 hasAnchor" number="3.10">
+<h2><span class="header-section-number">3.10</span> Variable Importance<a href="modelling.html#variable-importance" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>The following plot shows a selection of the most important variables of our data frame.
 The two main disadvantages of these methods are: The increasing over fitting risk when the number of observations is insufficient. The significant computation time when the number of variables is large.</p>
 <p>The result below displays that we seem to have 6 relevant variables: checking account, the duration of the credit asked, the history of previous credits, the savings, the amount of money owned by the applicant and the real estate owned.</p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-58-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-56-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p>After this first global analysis, we wanted to evaluate if there is room for improvement for the models selected in Machine Learning, in other words, if we can remove some variables to make the analysis easier without loosing the performance.</p>
-<div id="logistic-regression-1" class="section level3 hasAnchor" number="3.11.1">
-<h3><span class="header-section-number">3.11.1</span> Logistic Regression<a href="modelling.html#logistic-regression-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-61-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div id="logistic-regression-1" class="section level3 hasAnchor" number="3.10.1">
+<h3><span class="header-section-number">3.10.1</span> Logistic Regression<a href="modelling.html#logistic-regression-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-59-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p><br></p>
 <table class="table table-striped table-condensed" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -641,9 +612,9 @@ Refit Logistic Regression
 <p><br></p>
 <p>As we can see in the table above, we lose performance in terms of the metrics. This means that the variable importance is not that important for the logistic regression. A good point is that we need to remind ourselves that the logistic regression already does a variable importance with the AIC criterion.</p>
 </div>
-<div id="random-forest-1" class="section level3 hasAnchor" number="3.11.2">
-<h3><span class="header-section-number">3.11.2</span> Random Forest<a href="modelling.html#random-forest-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-67-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<div id="random-forest-1" class="section level3 hasAnchor" number="3.10.2">
+<h3><span class="header-section-number">3.10.2</span> Random Forest<a href="modelling.html#random-forest-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-65-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p><br></p>
 <table class="table table-striped table-condensed" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -704,7 +675,7 @@ Refit Random Forest
         </div>
       </div>
 <a href="data-understanding-and-preparation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="evaluation.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="evaluation-and-deployment.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
