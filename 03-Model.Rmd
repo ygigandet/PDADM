@@ -146,7 +146,7 @@ plot(knn_cv)
 We did several confusion matrix to measure the performance. The first one was with knn method. We found an accuracy of 0.615 which corresponds to well predicted clients (good and bad). The best accuracy value is 1 so 0.615 is considered as a not bad value. 
 
 
-```{r, results = 'hide}
+```{r, results = 'hide'}
 pred_knn <- predict(knn_cv, newdata = GermanCredit.te)
 cmknn <- confusionMatrix(data = as.factor(pred_knn), reference = as.factor(GermanCredit.te$RESPONSE))
 draw_confusion_matrix(cmknn)
@@ -156,7 +156,7 @@ draw_confusion_matrix(cmknn)
 
 Then, we used a probabilistic approach with Bayes classifiers. With this method, the confusion matrix provides a better accuracy of 0.72. 
 
-```{r echo=, warning=FALSE}
+```{r echo=TRUE, warning=FALSE}
 # Naive Bayes
 
 trctrl <- trainControl(method = "cv", number=10)
@@ -390,7 +390,6 @@ calculate_importance <- function(your_model_explainer, n_permutations = 10) {
 
 ```{r, echo = FALSE}
 importance_glm  <- calculate_importance(explainer_glm)
-importance_rf <- calculate_importance(explainer_rf)
 
 plot(importance_glm) +
   ggtitle("Mean variable-importance ratio over 10 permutations", "")
@@ -425,9 +424,9 @@ specificity_glm_aic_vi = cm_glm_aic_vi$byClass['Specificity']
 
 ```{r}
 # Create a table to compare variable importance versus before
-metrics = c(accuracy_rf, sensitivity_rf, specificity_rf, accuracy_rf_vi, sensitivity_rf_vi, specificity_rf_vi)
+metrics = c(accuracy_glm, sensitivity_glm, specificity_glm, accuracy_glm_aic_vi, sensitivity_glm_aic_vi, specificity_glm_aic_vi)
 cnames = c("Accuracy", "Sensitivity", "Specificity")
-rnames = c("Original Random Forest", "Refit Random Forest")
+rnames = c("Original Logistic Regression", "Refit Logistic Regression")
 model_output <- matrix(metrics, ncol = 3, byrow=TRUE, dimnames=list(rnames,cnames))
 model_output <- model_output[order(model_output[,1],decreasing=TRUE),]
 
@@ -479,19 +478,21 @@ sensitivity_rf_vi = cm_rf_vi$byClass['Sensitivity']
 specificity_rf_vi = cm_rf_vi$byClass['Specificity']
 ```
 
-<br> 
-
 ```{r}
 # Create a table to compare variable importance versus before
-metrics = c(accuracy_glm, sensitivity_glm, specificity_glm, accuracy_glm_aic_vi, sensitivity_glm_aic_vi, specificity_glm_aic_vi)
+metrics = c(accuracy_rf, sensitivity_rf, specificity_rf, accuracy_rf_vi, sensitivity_rf_vi, specificity_rf_vi)
 cnames = c("Accuracy", "Sensitivity", "Specificity")
-rnames = c("Original Logistic Regression", "Refit Logistic Regression")
+rnames = c("Original Random Forest", "Refit Random Forest")
 model_output <- matrix(metrics, ncol = 3, byrow=TRUE, dimnames=list(rnames,cnames))
 model_output <- model_output[order(model_output[,1],decreasing=TRUE),]
 
 kable(model_output, digits = 2)  %>% 
   kable_styling(bootstrap_options = c("striped","condensed"), fixed_thead = T)
 ```
+
+<br> 
+
+
 
 Again, we lose a bit of performance in terms of the metrics. However, the model is simpler and might be easier to understand.
 

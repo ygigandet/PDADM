@@ -23,7 +23,7 @@
 <meta name="author" content="Manon Verjus and Yooby Gigandet" />
 
 
-<meta name="date" content="2022-06-03" />
+<meta name="date" content="2022-06-06" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -146,6 +146,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <ul>
 <li class="chapter" data-level="2.2.1" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#inacurracies"><i class="fa fa-check"></i><b>2.2.1</b> Inacurracies</a></li>
 <li class="chapter" data-level="2.2.2" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#unbalanced-observations"><i class="fa fa-check"></i><b>2.2.2</b> Unbalanced observations</a></li>
+<li class="chapter" data-level="2.2.3" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#visualization"><i class="fa fa-check"></i><b>2.2.3</b> Visualization</a></li>
+<li class="chapter" data-level="2.2.4" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#profile-of-a-good-client"><i class="fa fa-check"></i><b>2.2.4</b> Profile of a good client</a></li>
+<li class="chapter" data-level="2.2.5" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#profile-of-a-bad-client"><i class="fa fa-check"></i><b>2.2.5</b> Profile of a bad client</a></li>
+<li class="chapter" data-level="2.2.6" data-path="data-understanding-and-preparation.html"><a href="data-understanding-and-preparation.html#variable-selection"><i class="fa fa-check"></i><b>2.2.6</b> Variable selection</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="modelling.html"><a href="modelling.html"><i class="fa fa-check"></i><b>3</b> Modelling</a>
@@ -159,9 +163,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.7" data-path="modelling.html"><a href="modelling.html#support-vector-machines"><i class="fa fa-check"></i><b>3.7</b> Support Vector Machines</a></li>
 <li class="chapter" data-level="3.8" data-path="modelling.html"><a href="modelling.html#random-forest"><i class="fa fa-check"></i><b>3.8</b> Random Forest</a></li>
 <li class="chapter" data-level="3.9" data-path="modelling.html"><a href="modelling.html#summary"><i class="fa fa-check"></i><b>3.9</b> Summary</a></li>
+<li class="chapter" data-level="3.10" data-path="modelling.html"><a href="modelling.html#variable-importance"><i class="fa fa-check"></i><b>3.10</b> Variable Importance</a>
+<ul>
+<li class="chapter" data-level="3.10.1" data-path="modelling.html"><a href="modelling.html#logistic-regression-1"><i class="fa fa-check"></i><b>3.10.1</b> Logistic Regression</a></li>
+<li class="chapter" data-level="3.10.2" data-path="modelling.html"><a href="modelling.html#random-forest-1"><i class="fa fa-check"></i><b>3.10.2</b> Random Forest</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="evaluation.html"><a href="evaluation.html"><i class="fa fa-check"></i><b>4</b> Evaluation</a></li>
-<li class="chapter" data-level="5" data-path="deployment.html"><a href="deployment.html"><i class="fa fa-check"></i><b>5</b> Deployment</a></li>
+<li class="chapter" data-level="3.11" data-path="modelling.html"><a href="modelling.html#evaluation"><i class="fa fa-check"></i><b>3.11</b> Evaluation</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="deployment.html"><a href="deployment.html"><i class="fa fa-check"></i><b>4</b> Deployment</a></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -185,7 +194,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Chapter 2</span> Data understanding and preparation<a href="data-understanding-and-preparation.html#data-understanding-and-preparation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="dataset" class="section level2 hasAnchor" number="2.1">
 <h2><span class="header-section-number">2.1</span> Dataset<a href="data-understanding-and-preparation.html#dataset" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>To create a model that will predict whether a client application represents a risk or not, we work on a dataset from our client containing data on 1000 past credit applications, described by the following variables:</p>
+<p>To create a model that will predict whether a client application represents a risk or not, we work on a data set from our client containing data on 1000 past credit applications, described by the following variables:</p>
 <ul>
 <li><p><strong>CHK_ACCT</strong>: The checking account status of the applicant in Deutsche Mark (DM).</p></li>
 <li><p><strong>DURATION</strong>: The duration of the credit in months.</p></li>
@@ -222,7 +231,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="exploratory-data-analysis" class="section level2 hasAnchor" number="2.2">
 <h2><span class="header-section-number">2.2</span> Exploratory Data Analysis<a href="data-understanding-and-preparation.html#exploratory-data-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In this part, we thoroughly explore the dataset to get a better understanding.</p>
+<p>In this part, we thoroughly explore the data set to get a better understanding. The goal of the exploratory data analysis is to observe and interpret our data thanks to visualization methods, as plots.</p>
 <div id="inacurracies" class="section level3 hasAnchor" number="2.2.1">
 <h3><span class="header-section-number">2.2.1</span> Inacurracies<a href="data-understanding-and-preparation.html#inacurracies" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>By doing an exploratory data analysis, we find some inaccuracies and in agreement with our client, we change them as follow:</p>
@@ -231,20 +240,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>One observation of the variable “EDUCATION”: 1 instead of -1.</li>
 <li>One observation of the variable “GUARANTOR”: 1 instead of 2.</li>
 </ul>
-<p>Then, we separated the database in 2 parts: the first part consider only the good clients, and the second part consider only the bad clients.</p>
+<p>Then, we decided to split the database in 2 parts: the first part consider only the good clients, and the second part consider only the bad clients. This will help us to study the specificities of both profiles.</p>
 </div>
 <div id="unbalanced-observations" class="section level3 hasAnchor" number="2.2.2">
 <h3><span class="header-section-number">2.2.2</span> Unbalanced observations<a href="data-understanding-and-preparation.html#unbalanced-observations" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p>One interesting point is that the dataset is heavily unbalanced: 700 credit applications rated as good versus 300 credit applications rated as bad. We will need to balance the dataset for our modelling.</p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>To have a better visualization of our variables. We did some boxplot which show the distribution of the data.</p>
-<p>This first boxplot A shows that bad clients mostly asked for longer duration credit than good clients. This could be a raison why they received a refusal. The second boxplot B shows that the age of clients doesn not seem to be a key criteria but the amount of the credit (boxplot C) seems to be more important as most of the good clients asked for a smaller amount.</p>
+<p>To start, we notice an important point to consider: the data set is heavily unbalanced. As you can see on the following plot, it contains 700 credit applications rated as good versus 300 credit applications rated as bad. We will need to balance the data set for our modelling.</p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="visualization" class="section level3 hasAnchor" number="2.2.3">
+<h3><span class="header-section-number">2.2.3</span> Visualization<a href="data-understanding-and-preparation.html#visualization" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>To have a better visualization of our variables. We did some box plot which show the distribution of the data.</p>
+<p>This first box plot A shows that bad clients mostly asked for longer duration credit than good clients. This could be a reason why they received a refusal. The second box plot B shows that the age of clients does not seem to be a key criteria but the amount of the credit (box plot C) seems to be more important as most of the good clients asked for a smaller amount.</p>
 <p>Then, we explored the distribution of the financial variables.</p>
-<p>The first graph A present the situation with past credits. The behavior for good and bad clients is almost the same which does not allow us to make a clear difference. On the graph B we can see that most of the clients have small savings of even no savings at all. Most of the clients have already 1 or 2 credits at this bank. Almost none of them ask for a third or fourth credit.
+<p>The first graph A presents the situation with past credits. The behavior for good and bad clients is almost the same which does not allow us to make a clear difference. On the graph B we can see that most of the clients have small savings or even no savings at all. Most of the clients have already 1 or 2 credits at this bank. Almost none of them ask for a third or fourth credit.
 On the histogram D we see that the amount of money on the account not so important. Indeed, most of the good client do not even have a checking account.</p>
-<p>The graphs below displays fournitures and products owned by the clients.</p>
-<p>Most of the time the credits are not very favorable to finance products. However, new cars are more appreciated by banks than used cars and radio/tv are more financed than furnitures.</p>
-<p>As we can see on the graph before, most of the time, if the client ask a credit to pay education, the bank will refuse, even if the client is good. It is slightly the same for retraining. Most of the good client have a job for more than a year and are skilled employees.</p>
+<p>The graphs below displays furniture and products owned by the clients.</p>
+<p>Most of the time the credits are not very favorable to finance products. However, new cars are more appreciated by banks than used cars and radio/TV are more financed than furniture.</p>
+<p>As we can see on the graph before, most of the time, if the client ask a credit to pay education, the bank will refuse (see plot C), even if the client is good. It is slightly the same for retraining (see plot D). Most of the good client have a job for more than a year and are skilled employees, as displayed in plots A and B.</p>
 <pre><code>#&gt; $`1`
 #&gt; 
 #&gt; $`2`
@@ -252,17 +264,32 @@ On the histogram D we see that the amount of money on the account not so importa
 #&gt; attr(,&quot;class&quot;)
 #&gt; [1] &quot;list&quot;      &quot;ggarrange&quot;</code></pre>
 <p>The graph A presents the qualification of client depending of the duration stays in their home. This criteria does not seem to be really indicative even if the most good clients live in their place since more than 4 years. The installment rate does not seem to impact the qualification of the client neither as most of the good and bad clients are rated by 4 (see graph B). Owning a real estate is not the key to be perceived as a good client neither. As the graph C prove, a lot of good clients do not have any real estate. But at the opposite having no property is a bad situation in the case of asking for a credit.</p>
-<p>The graphs show that most of the good clients own their residence and not rent but a guarantor is definitely not a must.</p>
-<p>About the demographic data of an applicant, clients are generally not male and single and not foreign workers.</p>
-<p>The population of clients basically do not have co-applicants and they do not have other installment plan neither for majority of them. The name’s telephone does not seem to be important as a lot of clients have and have not the telephone on their name. However, most of the clients are not liable to provide maintenance.</p>
-<p>We can see below the mean of good clients and the mean of bad clients. It is important to keep in account that the sample of good clients is much higher than the number of bad clients.</p>
+<p>The graphs show that customer that own their residence are mainly considered as good ones (see plot E). However, renters are not really appreciated by the bank (see plot G). And a surprising point is that a guarantor is definitely not a must to receive a credit, as we can see on the plot F.</p>
+<p>Now, let’s see some demographic data.</p>
+<p>About the demographic data of an applicant, we can see on the plots A, C and D that bad clients are generally male married and divorced, male and divorced or foreign workers. However, single man are more favor to be receive their credit.</p>
+<p>As we can see on the 4 plots before, the population of good clients basically do not have co-applicants and they do not have other installment plan neither for majority of them. The name’s telephone does not seem to be important as a lot of clients have and have not the telephone on their name. However, most of the clients are not liable to provide maintenance.</p>
+<p>We can see below the mean of good clients and the mean of bad clients. It is important to keep in account that the sample of good clients is much higher than the number of bad clients so our result presents some bias.</p>
 <p>The matrix below present the correlations between variables. To read in a easiest way, we separated the variables in categories. As before, the categories were created based on their area.
-<img src="bookdownproj_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-27-2.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-27-3.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-27-4.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-27-5.png" width="70%" style="display: block; margin: auto;" /></p>
+<img src="bookdownproj_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-25-2.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-25-3.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-25-4.png" width="70%" style="display: block; margin: auto;" /><img src="bookdownproj_files/figure-html/unnamed-chunk-25-5.png" width="70%" style="display: block; margin: auto;" />
+We do not observe any high correlation between variables in none of our correlation matrix. This could be due to the fact that we chose badly the variables in the matrix. However, we present some strong result.</p>
+</div>
+<div id="profile-of-a-good-client" class="section level3 hasAnchor" number="2.2.4">
+<h3><span class="header-section-number">2.2.4</span> Profile of a good client<a href="data-understanding-and-preparation.html#profile-of-a-good-client" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p>The following part of the project is focus on defining a typical profile of a good client. The goal is to define an average good client based on the average of all the variables defined.</p>
+<p>First, we cleaned the data set created at the beginning which contain only good clients to have the average of each variable. Then, we created a plot with these average data.</p>
 <p>The lollipop plot below present the mean profile to be qualified as a good client. From these results, most of them ask for a new car, rent their flat but have real estate. The good client in average has a quite good amount of money and has a guarantor. These results are quite different than what we presented before.
-<img src="bookdownproj_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>The following plot shows a selection of the most important variables of our dataframe.
-The two main disadvantages of these methods are: The increasing overfitting risk when the number of observations is insufficient. The significant computation time when the number of variables is large.</p>
+<img src="bookdownproj_files/figure-html/unnamed-chunk-27-1.png" width="70%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="profile-of-a-bad-client" class="section level3 hasAnchor" number="2.2.5">
+<h3><span class="header-section-number">2.2.5</span> Profile of a bad client<a href="data-understanding-and-preparation.html#profile-of-a-bad-client" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Then, we used exactly the same approach to build the typical profile of a bad client and identify the average variables that qualify a bad client in this bank.</p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;" />
+As we can see on the orange lollipop plot, the result is different. Most of the bad clients rent their flat. This criteria sounds really important to qualify a client. Almost all of them do not have any other credit in the bank and they have other installment plan credits.</p>
+</div>
+<div id="variable-selection" class="section level3 hasAnchor" number="2.2.6">
+<h3><span class="header-section-number">2.2.6</span> Variable selection<a href="data-understanding-and-preparation.html#variable-selection" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The following plot shows a selection of the most important variables of our data frame.
+The two main disadvantages of these methods are: The increasing over fitting risk when the number of observations is insufficient. The significant computation time when the number of variables is large.</p>
 <p>The result below displays that we seem to have 6 relevant variables: checking the account, the duration of the credit asked, the history of previous credits, the savings, the amount of money owned by the applicant and the real estate owned.</p>
 <pre><code>#&gt; Warning in train.default(x, y, weights = w, ...): You are trying to
 #&gt; do regression and your outcome only has two possible values Are you

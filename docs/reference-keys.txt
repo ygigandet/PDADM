@@ -4,6 +4,10 @@ dataset
 exploratory-data-analysis
 inacurracies
 unbalanced-observations
+visualization
+profile-of-a-good-client
+profile-of-a-bad-client
+variable-selection
 modelling
 splitting-strategies-and-balancing
 k-nearest-neighbors-k-nn
@@ -14,5 +18,8 @@ neural-network
 support-vector-machines
 random-forest
 summary
+variable-importance
+logistic-regression-1
+random-forest-1
 evaluation
 deployment
