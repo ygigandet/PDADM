@@ -428,8 +428,9 @@ calculate_importance <- function(your_model_explainer, n_permutations = 10) {
 ```{r, echo = FALSE}
 importance_glm  <- calculate_importance(explainer_glm)
 
-plot(importance_glm) +
+a <- plot(importance_glm) +
   ggtitle("Mean variable-importance ratio over 10 permutations", "")
+a
 ```
 
 ```{r, echo = FALSE}
@@ -487,8 +488,9 @@ explainer_rf <- DALEX::explain(model = rf,
 ```{r}
 importance_rf <- calculate_importance(explainer_rf)
 
-plot(importance_rf) +
+b <- plot(importance_rf) +
   ggtitle("Mean variable-importance ratio over 10 permutations", "")
+b
 ```
 
 ```{r, echo = FALSE}
