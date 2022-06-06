@@ -7,12 +7,12 @@ unbalanced-observations
 visualization
 profile-of-a-good-client
 profile-of-a-bad-client
-variable-selection
 modelling
 splitting-strategies-and-balancing
 k-nearest-neighbors-k-nn
 naive-bayes
 logistic-regression
+linear-discriminant-analysis
 trees
 neural-network
 support-vector-machines
