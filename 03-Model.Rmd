@@ -359,7 +359,139 @@ kable(model_output, digits = 2)  %>%
 
 <br>
 
-By looking at this summary table of the models, we can see that Support Vector Machines, Tree and Logistic Regression are our top models. However, in terms of sensitivity and specificity, two models outperform the other. As a reminder, in our case, we want to be sure to have an balanced sensitivity and specificity. Therefore, we take only the two models for the following part: 
+By looking at this summary table of the models, we can see that the Logistic Regression and the Random Forest are our top models. Even if the Random Forest is slightly worse than the following models in terms of specificity and sensitivity. Therefore, we chose the two models:
 
-- Support Vector Machines
 - Logistic Regression
+- Random Forest
+
+## Variable Importance
+
+In this part, we want to evaluate if there is room for improvement for these models, in other words, if we can remove some variables to make the analysis easier without loosing the performance.
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, results = 'hide'}
+
+explainer_glm <- DALEX::explain(model = glm_aic,
+                                 data = GermanCredit.tr.subs, 
+                                 y = GermanCredit.tr.subs$RESPONSE,
+                                 label = "Logistic Regression")
+```
+
+```{r, echo = FALSE}
+calculate_importance <- function(your_model_explainer, n_permutations = 10) {
+  imp <- model_parts(explainer = your_model_explainer,
+                     B = n_permutations,
+                     type = "ratio",
+                     N = NULL)
+  return(imp)
+}
+```
+
+### Logistic Regression
+
+```{r, echo = FALSE}
+importance_glm  <- calculate_importance(explainer_glm)
+importance_rf <- calculate_importance(explainer_rf)
+
+plot(importance_glm) +
+  ggtitle("Mean variable-importance ratio over 10 permutations", "")
+```
+
+```{r, echo = FALSE}
+# Logistic Regression
+
+trctrl <- trainControl(method = "cv", number=10)
+
+set.seed(346)
+glm_aic_vi <- train(as_factor(RESPONSE) ~ CHK_ACCT + HISTORY + INSTALL_RATE + DURATION + AMOUNT,
+                 data = GermanCredit.tr.subs,
+                 method = "glmStepAIC",
+                 family="binomial",
+                 trControl=trctrl,
+                 trace=0)
+```
+
+<br>
+
+```{r, results = 'hide'}
+pred_glm_aic_vi <-  predict(glm_aic_vi, newdata = GermanCredit.te)
+cm_glm_aic_vi <- confusionMatrix(data = as.factor(pred_glm_aic_vi), reference = as.factor(GermanCredit.te$RESPONSE))
+```
+
+```{r}
+accuracy_glm_aic_vi = cm_glm_aic_vi$overall['Accuracy']
+sensitivity_glm_aic_vi = cm_glm_aic_vi$byClass['Sensitivity']
+specificity_glm_aic_vi = cm_glm_aic_vi$byClass['Specificity']
+```
+
+```{r}
+# Create a table to compare variable importance versus before
+metrics = c(accuracy_rf, sensitivity_rf, specificity_rf, accuracy_rf_vi, sensitivity_rf_vi, specificity_rf_vi)
+cnames = c("Accuracy", "Sensitivity", "Specificity")
+rnames = c("Original Random Forest", "Refit Random Forest")
+model_output <- matrix(metrics, ncol = 3, byrow=TRUE, dimnames=list(rnames,cnames))
+model_output <- model_output[order(model_output[,1],decreasing=TRUE),]
+
+kable(model_output, digits = 2)  %>% 
+  kable_styling(bootstrap_options = c("striped","condensed"), fixed_thead = T)
+```
+
+As we can see in the table above, we loose performance in terms of the metrics. This means that the variable importance is not that important for the logistic Regression. A good point is that we need to remind ourselves that the logistic regression already do a variable importance with the AIC criterion.
+
+### Random Forest
+
+```{r, echo = FALSE, results = 'hide'}
+explainer_rf <- DALEX::explain(model = rf,
+                                data = GermanCredit.tr.subs,
+                                y = GermanCredit.tr.subs$RESPONSE,
+                                label = "Random Forest")
+```
+
+```{r}
+importance_rf <- calculate_importance(explainer_rf)
+
+plot(importance_rf) +
+  ggtitle("Mean variable-importance ratio over 10 permutations", "")
+```
+
+```{r, echo = FALSE}
+# Random Forest Refit
+
+trctrl <- trainControl(method = "cv", number=5) 
+opti_grid <- expand.grid(.mtry = rf$bestTune$mtry) 
+
+set.seed(346)
+rf_vi <- train(as_factor(RESPONSE) ~ CHK_ACCT + INSTALL_RATE + DURATION + SAV_ACCT + HISTORY,
+            data = GermanCredit.tr.subs,
+            method = "rf",
+            trControl = trctrl,
+            tuneGrid = opti_grid
+)
+```
+
+```{r, results = 'hide'}
+pred_rf_vi <-  predict(rf_vi, newdata = GermanCredit.te)
+cm_rf_vi <- confusionMatrix(data = as.factor(pred_rf_vi), reference = as.factor(GermanCredit.te$RESPONSE))
+```
+
+```{r, echo = FALSE}
+accuracy_rf_vi = cm_rf_vi$overall['Accuracy']
+sensitivity_rf_vi = cm_rf_vi$byClass['Sensitivity']
+specificity_rf_vi = cm_rf_vi$byClass['Specificity']
+```
+
+<br> 
+
+```{r}
+# Create a table to compare variable importance versus before
+metrics = c(accuracy_glm, sensitivity_glm, specificity_glm, accuracy_glm_aic_vi, sensitivity_glm_aic_vi, specificity_glm_aic_vi)
+cnames = c("Accuracy", "Sensitivity", "Specificity")
+rnames = c("Original Logistic Regression", "Refit Logistic Regression")
+model_output <- matrix(metrics, ncol = 3, byrow=TRUE, dimnames=list(rnames,cnames))
+model_output <- model_output[order(model_output[,1],decreasing=TRUE),]
+
+kable(model_output, digits = 2)  %>% 
+  kable_styling(bootstrap_options = c("striped","condensed"), fixed_thead = T)
+```
+
+Again, we lose a bit of performance in terms of the metrics. However, the model is simpler and might be easier to understand.
+
