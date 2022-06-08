@@ -19,4 +19,4 @@ To do so, we used the CRISP-DM method (CRoss Industry Standard Process for Data 
 
 - **Evaluation**: By testing several model, we can sum the output and decide the most relevant model to use. The evaluation part focuses on the application of the chosen model(s). 
 
-- **Deployment**: To finish this study, we will assess some proposals and hypothesis on the customer profiles to avoid or to favor to minimize the risk in the bank.
+- **Deployment**: To finish this study, we will assess some proposals for our client to deploy our solution if he wants to.
