@@ -707,4 +707,4 @@ graph_no_profil
 
 ```
 
-As we can see on the orange lollipop plot, the result is different. Most of the bad clients rented their flat. This criteria sounds really important to qualify a client. Almost all of them do not have any other credit in the bank and they have other installment plan credits. 
+As we can see on the orange lollipop plot, the result is different. Most of the bad clients rented their flat. This criteria sounds really important to qualify a client. Almost all of them do not have any other credit in the bank and they have other installment plan credits. For further analysis, it will be more relevant to use the median instead of the mean to have more robust results. 
