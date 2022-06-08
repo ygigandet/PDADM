@@ -112,6 +112,7 @@ By doing so, we get the following sub sampled training set:
 table(GermanCredit.tr.subs$RESPONSE) %>% kable(align = "c", col.names = c("Outcome", "Frequence"))
 ```
 
+It is worth noting that only the training set is balanced and not the test set. It makes sense as we want our model to be able to extrapolate the features of the training set to rightly predict any test set, even unbalanced. 
 
 ## K-Nearest Neighbors (K-NN)
 
@@ -330,7 +331,7 @@ Again, this models shared an accuracy of 0.73.
 To evaluate our models, there are many metrics that can be used. We decided to choose first the accuracy and then have a look at the sensitivity and the specificity. In other words, we wanted to have a model with a good accuracy and the best sensitivity and specificity.
 
 ```{r, results = 'hide'}
-accuracy_tree = cm_svm$overall['Accuracy']
+accuracy_tree = cm_tree$overall['Accuracy']
 accuracy_nn = cm_neural_network$overall['Accuracy']
 accuracy_knn = cmknn$overall['Accuracy']
 accuracy_nb = cm_naive_bayes$overall['Accuracy']
