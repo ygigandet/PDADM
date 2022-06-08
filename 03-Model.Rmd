@@ -141,9 +141,6 @@ K_optimal <- knn_cv$finalModel$k
 
 We needed to select the K number of points closest that give the optimal accuracy. In this case, it is `r K_optimal`
 
-```{r, results = 'hide'}
-plot(knn_cv)
-```
 We did several confusion matrix to measure the performance. The first one was with the K-NNk method. We found an accuracy of 0.615 which corresponds to well predicted clients (good and bad). The best accuracy value is 1 so 0.615 is considered as an average value. 
 
 <br>
@@ -219,6 +216,8 @@ It provided an accuracy of 0.73.
 
 ## Linear Discriminant Analysis
 
+Another model used is the Linear Discriminant Analysis.
+
 ```{r, echo = TRUE, results = 'hide'}
 # Linear Discriminant Analysis
 trctrl <- trainControl(method = "cv", number=10)
@@ -256,7 +255,7 @@ tree_model <- train(as_factor(RESPONSE) ~.,
                  tuneGrid = search_grid)
 ```
 
-<br>
+Below is a representation of the tree model:
 
 ```{r}
 fancyRpartPlot(tree_model$finalModel, caption = NULL)
@@ -372,7 +371,7 @@ kable(model_output, digits = 2)  %>%
 
 <br>
 
-By looking at this summary table of the models, we can see that the Tree, the Logistic Regression and the Random Forest are our top models. However, the tree has a lowest score in terms of specificity and sensitivity than the two others and by far. For this reason, we decided to choose the following models:
+By looking at this summary table of the models, we can see that the Logistic Regression and the Random Forest are our top models. So, we decided to choose the following models:
 
 - **Logistic Regression**
 - **Random Forest**
@@ -404,7 +403,7 @@ plot(importance)
 # comment: we should find a way to print only positive results or to print only 10 firsts variables. 
 ```
 
-After this first global analysis, we wanted to evaluate if there is room for improvement for the models selected in Machine Learning, in other words, if we can remove some variables to make the analysis easier without loosing the performance.
+After this first global analysis, we wanted to evaluate if there is room for improvement for the models selected in Machine Learning, in other words, if we can remove some variables to make the analysis easier without loosing the performance (therefore, making the models robust)
 
 ```{r, echo = FALSE, message = FALSE, warning = FALSE, results = 'hide'}
 
