@@ -23,7 +23,7 @@
 <meta name="author" content="Manon Verjus and Yooby Gigandet" />
 
 
-<meta name="date" content="2022-06-06" />
+<meta name="date" content="2022-06-08" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -31,7 +31,7 @@
   
   
 <link rel="prev" href="data-understanding-and-preparation.html"/>
-<link rel="next" href="evaluation-and-deployment.html"/>
+<link rel="next" href="conclusion.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -168,10 +168,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3.10.2" data-path="modelling.html"><a href="modelling.html#random-forest-1"><i class="fa fa-check"></i><b>3.10.2</b> Random Forest</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="evaluation-and-deployment.html"><a href="evaluation-and-deployment.html"><i class="fa fa-check"></i><b>4</b> Evaluation and deployment</a>
+<li class="chapter" data-level="4" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>4</b> Conclusion</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="evaluation-and-deployment.html"><a href="evaluation-and-deployment.html#evaluation"><i class="fa fa-check"></i><b>4.1</b> Evaluation</a></li>
-<li class="chapter" data-level="4.2" data-path="evaluation-and-deployment.html"><a href="evaluation-and-deployment.html#deployment"><i class="fa fa-check"></i><b>4.2</b> Deployment</a></li>
+<li class="chapter" data-level="4.1" data-path="conclusion.html"><a href="conclusion.html#evaluation"><i class="fa fa-check"></i><b>4.1</b> Evaluation</a></li>
+<li class="chapter" data-level="4.2" data-path="conclusion.html"><a href="conclusion.html#deployment"><i class="fa fa-check"></i><b>4.2</b> Deployment</a></li>
 </ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
@@ -194,10 +194,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="modelling" class="section level1 hasAnchor" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Modelling<a href="modelling.html#modelling" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>After cleaning and visualizing the data set, we move on to the creation of models.</p>
+<p>After cleaning and visualizing the data set, we moved on to the creation of models.</p>
 <div id="splitting-strategies-and-balancing" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Splitting strategies and balancing<a href="modelling.html#splitting-strategies-and-balancing" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>In machine learning, a method to measure the accuracy of the models is to split the data into a training and a test set. The first subset is a portion of our data set that is fed into the machine learning model to discover and learn patterns. The other subset is to test our model. We split our data set as follows:</p>
+<p>In machine learning, a method to measure the accuracy of the models is to split the data into a training and a test set. The first subset is a portion of our data set that is fed into the machine learning model to discover and learn patterns. The other subset is to test our model. We splited our data set as follows:</p>
 <ul>
 <li><strong>Training set:</strong> 80% of the data</li>
 <li><strong>Test set:</strong> the remaining 20% of the data</li>
@@ -211,7 +211,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb1-7"><a href="modelling.html#cb1-7" aria-hidden="true" tabindex="-1"></a>GermanCredit.tr <span class="ot">&lt;-</span> GermanCredit[index.tr,] <span class="co"># Training set</span></span>
 <span id="cb1-8"><a href="modelling.html#cb1-8" aria-hidden="true" tabindex="-1"></a>GermanCredit.te <span class="ot">&lt;-</span> GermanCredit[<span class="sc">-</span>index.tr,] <span class="co"># Testing set</span></span></code></pre></div>
 <p><br></p>
-<p>As said in the exploratory data analysis, we notice that our data is heavily unbalanced.</p>
+<p>As said in the exploratory data analysis, we noticed that our data is heavily unbalanced.</p>
 <table>
 <thead>
 <tr>
@@ -243,7 +243,7 @@ Frequence
 </tbody>
 </table>
 <p><br></p>
-<p>Therefore, any model that favors the majority will reach an higher accuracy. However, in our case, we need to make sure to rightly classify any credit applications to avoid losses. To do so, we use a method called sub-sampling that balance the observations. It will allow us to have two equivalent samples.</p>
+<p>Therefore, any model that favors the majority will reach an higher accuracy. However, in our case, we needed to make sure to rightly classify any credit applications to avoid losses. To do so, we used a method called sub-sampling that balance the observations. It will allow us to have two equivalent samples.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="modelling.html#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Balancing</span></span>
 <span id="cb2-2"><a href="modelling.html#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="modelling.html#cb2-3" aria-hidden="true" tabindex="-1"></a>n_no <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="fu">table</span>(GermanCredit.tr<span class="sc">$</span>RESPONSE))</span>
@@ -289,6 +289,7 @@ Frequence
 </tr>
 </tbody>
 </table>
+<p>It is worth noting that only the training set is balanced and not the test set. It makes sense as we want our model to be able to extrapolate the features of the training set to rightly predict any test set, even unbalanced.</p>
 </div>
 <div id="k-nearest-neighbors-k-nn" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> K-Nearest Neighbors (K-NN)<a href="modelling.html#k-nearest-neighbors-k-nn" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -306,15 +307,14 @@ Frequence
 <span id="cb3-11"><a href="modelling.html#cb3-11" aria-hidden="true" tabindex="-1"></a>                <span class="at">metric =</span> <span class="st">&quot;Accuracy&quot;</span>,</span>
 <span id="cb3-12"><a href="modelling.html#cb3-12" aria-hidden="true" tabindex="-1"></a>                <span class="at">tuneGrid =</span> search_grid)</span></code></pre></div>
 <p><br></p>
-<p>We need to select the K number of points closest that give the optimal accuracy. In this case, it is 77</p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-39-1.png" width="70%" style="display: block; margin: auto;" />
-We did several confusion matrix to measure the performance. The first one was with the K-NNk method. We found an accuracy of 0.615 which corresponds to well predicted clients (good and bad). The best accuracy value is 1 so 0.615 is considered as an average value.</p>
+<p>We needed to select the K number of points closest that give the optimal accuracy. In this case, it is 77</p>
+<p>We did several confusion matrix to measure the performance. The first one was with the K-NNk method. We found an accuracy of 0.615 which corresponds to well predicted clients (good and bad). The best accuracy value is 1 so 0.615 is considered as an average value.</p>
 <p><br></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-40-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-39-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="naive-bayes" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> Naive Bayes<a href="modelling.html#naive-bayes" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Then, we used a probabilistic approach with Bayes classifiers. With this method, the confusion matrix provides a better accuracy of 0.72.</p>
+<p>Then, we used a probabilistic approach with Bayes classifiers. With this method, the confusion matrix provided a better accuracy of 0.72.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="modelling.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Naive Bayes</span></span>
 <span id="cb4-2"><a href="modelling.html#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="modelling.html#cb4-3" aria-hidden="true" tabindex="-1"></a>trctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number=</span><span class="dv">10</span>)</span>
@@ -332,12 +332,12 @@ We did several confusion matrix to measure the performance. The first one was wi
 <span id="cb4-15"><a href="modelling.html#cb4-15" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trControl=</span>trctrl,</span>
 <span id="cb4-16"><a href="modelling.html#cb4-16" aria-hidden="true" tabindex="-1"></a>                 <span class="at">tuneGrid =</span> search_grid)</span></code></pre></div>
 <p><br></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-42-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-41-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="logistic-regression" class="section level2 hasAnchor" number="3.4">
 <h2><span class="header-section-number">3.4</span> Logistic Regression<a href="modelling.html#logistic-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A logistic regression is a regression adapted to binary classification.</p>
-<p>We use a cross-validation method to train our model and choose the Akaïke Information Criterion (AIC) to select the variables. The AIC is used to select the model based on the number of parameters. We choose the model with the smallest AIC.</p>
+<p>We used a cross-validation method to train our model and choose the Akaïke Information Criterion (AIC) to select the variables. The AIC is used to select the model based on the number of parameters. We chose the model with the smallest AIC.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="modelling.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Logistic Regression</span></span>
 <span id="cb5-2"><a href="modelling.html#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="modelling.html#cb5-3" aria-hidden="true" tabindex="-1"></a>trctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number=</span><span class="dv">10</span>)</span>
@@ -351,11 +351,12 @@ We did several confusion matrix to measure the performance. The first one was wi
 <span id="cb5-11"><a href="modelling.html#cb5-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trace=</span><span class="dv">0</span>)</span></code></pre></div>
 <p>The following plot corresponds to the resulting confusion matrix of the logistic regression:</p>
 <p><br></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-44-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>It provides an accuracy of 0.73.</p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-43-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>It provided an accuracy of 0.73.</p>
 </div>
 <div id="linear-discriminant-analysis" class="section level2 hasAnchor" number="3.5">
 <h2><span class="header-section-number">3.5</span> Linear Discriminant Analysis<a href="modelling.html#linear-discriminant-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Another model used is the Linear Discriminant Analysis.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="modelling.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Linear Discriminant Analysis</span></span>
 <span id="cb6-2"><a href="modelling.html#cb6-2" aria-hidden="true" tabindex="-1"></a>trctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number=</span><span class="dv">10</span>)</span>
 <span id="cb6-3"><a href="modelling.html#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -365,11 +366,11 @@ We did several confusion matrix to measure the performance. The first one was wi
 <span id="cb6-7"><a href="modelling.html#cb6-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">&quot;lda&quot;</span>,</span>
 <span id="cb6-8"><a href="modelling.html#cb6-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trControl =</span> trctrl)</span></code></pre></div>
 <p><br></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-46-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-45-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="trees" class="section level2 hasAnchor" number="3.6">
 <h2><span class="header-section-number">3.6</span> Trees<a href="modelling.html#trees" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>The trees represent a hierarchical set of binary rules in a shape of a tree.</p>
+<p>The trees represented a hierarchical set of binary rules in a shape of a tree.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="modelling.html#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Trees</span></span>
 <span id="cb7-2"><a href="modelling.html#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="modelling.html#cb7-3" aria-hidden="true" tabindex="-1"></a>trctrl <span class="ot">&lt;-</span> <span class="fu">trainControl</span>(<span class="at">method =</span> <span class="st">&quot;cv&quot;</span>, <span class="at">number=</span><span class="dv">10</span>)</span>
@@ -381,10 +382,10 @@ We did several confusion matrix to measure the performance. The first one was wi
 <span id="cb7-9"><a href="modelling.html#cb7-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">method =</span> <span class="st">&quot;rpart&quot;</span>,</span>
 <span id="cb7-10"><a href="modelling.html#cb7-10" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trControl=</span>trctrl,</span>
 <span id="cb7-11"><a href="modelling.html#cb7-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">tuneGrid =</span> search_grid)</span></code></pre></div>
+<p>Below is a representation of the tree model:</p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-47-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p><br></p>
 <p><img src="bookdownproj_files/figure-html/unnamed-chunk-48-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p><br></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-49-1.png" width="70%" style="display: block; margin: auto;" /></p>
 </div>
 <div id="neural-network" class="section level2 hasAnchor" number="3.7">
 <h2><span class="header-section-number">3.7</span> Neural Network<a href="modelling.html#neural-network" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -402,8 +403,8 @@ We did several confusion matrix to measure the performance. The first one was wi
 <span id="cb8-11"><a href="modelling.html#cb8-11" aria-hidden="true" tabindex="-1"></a>                 <span class="at">trControl=</span>trctrl,</span>
 <span id="cb8-12"><a href="modelling.html#cb8-12" aria-hidden="true" tabindex="-1"></a>                 <span class="at">tuneGrid =</span> search_grid)</span></code></pre></div>
 <p><br></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-51-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>The confusion matrix with neural network presents a good accuracy of 0.705.</p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-50-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>The confusion matrix with neural network presented a good accuracy of 0.705.</p>
 </div>
 <div id="random-forest" class="section level2 hasAnchor" number="3.8">
 <h2><span class="header-section-number">3.8</span> Random Forest<a href="modelling.html#random-forest" class="anchor-section" aria-label="Anchor link to header"></a></h2>
@@ -420,12 +421,12 @@ We did several confusion matrix to measure the performance. The first one was wi
 <span id="cb9-11"><a href="modelling.html#cb9-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">tuneGrid =</span> search_grid</span>
 <span id="cb9-12"><a href="modelling.html#cb9-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 <p><br></p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-53-1.png" width="70%" style="display: block; margin: auto;" />
-Again, this models shares an accuracy of 0.73.</p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-52-1.png" width="70%" style="display: block; margin: auto;" />
+Again, this models shared an accuracy of 0.73.</p>
 </div>
 <div id="summary" class="section level2 hasAnchor" number="3.9">
 <h2><span class="header-section-number">3.9</span> Summary<a href="modelling.html#summary" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>To evaluate our models, there are many metrics that can be used. We decided to choose first the accuracy and then have a look at the sensitivity and the specificity. In other words, we want to have a model with a good accuracy and the best sensitivity and specificity.</p>
+<p>To evaluate our models, there are many metrics that can be used. We decided to choose first the accuracy and then have a look at the sensitivity and the specificity. In other words, we wanted to have a model with a good accuracy and the best sensitivity and specificity.</p>
 <p><br></p>
 <table class="table table-striped table-condensed" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -444,20 +445,6 @@ Specificity
 </tr>
 </thead>
 <tbody>
-<tr>
-<td style="text-align:left;">
-Tree
-</td>
-<td style="text-align:right;">
-0.74
-</td>
-<td style="text-align:right;">
-0.66
-</td>
-<td style="text-align:right;">
-0.65
-</td>
-</tr>
 <tr>
 <td style="text-align:left;">
 Logistic Regression
@@ -530,6 +517,20 @@ Neural Network
 </tr>
 <tr>
 <td style="text-align:left;">
+Tree
+</td>
+<td style="text-align:right;">
+0.65
+</td>
+<td style="text-align:right;">
+0.66
+</td>
+<td style="text-align:right;">
+0.65
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
 K-nearest neighbors
 </td>
 <td style="text-align:right;">
@@ -545,7 +546,7 @@ K-nearest neighbors
 </tbody>
 </table>
 <p><br></p>
-<p>By looking at this summary table of the models, we can see that the Tree, the Logistic Regression and the Random Forest are our top models. However, the tree has a lowest score in terms of specificity and sensitivity than the two others and by far. For this reason, we decided to choose the following models:</p>
+<p>By looking at this summary table of the models, we can see that the Logistic Regression and the Random Forest are our top models. So, we decided to choose the following models:</p>
 <ul>
 <li><strong>Logistic Regression</strong></li>
 <li><strong>Random Forest</strong></li>
@@ -556,11 +557,11 @@ K-nearest neighbors
 <p>The following plot shows a selection of the most important variables of our data frame.
 The two main disadvantages of these methods are: The increasing over fitting risk when the number of observations is insufficient. The significant computation time when the number of variables is large.</p>
 <p>The result below displays that we seem to have 6 relevant variables: checking account, the duration of the credit asked, the history of previous credits, the savings, the amount of money owned by the applicant and the real estate owned.</p>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-56-1.png" width="70%" style="display: block; margin: auto;" /></p>
-<p>After this first global analysis, we wanted to evaluate if there is room for improvement for the models selected in Machine Learning, in other words, if we can remove some variables to make the analysis easier without loosing the performance.</p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-55-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p>After this first global analysis, we wanted to evaluate if there is room for improvement for the models selected in Machine Learning, in other words, if we can remove some variables to make the analysis easier without loosing the performance (therefore, making the models robust)</p>
 <div id="logistic-regression-1" class="section level3 hasAnchor" number="3.10.1">
 <h3><span class="header-section-number">3.10.1</span> Logistic Regression<a href="modelling.html#logistic-regression-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-59-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-58-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p><br></p>
 <table class="table table-striped table-condensed" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -610,11 +611,11 @@ Refit Logistic Regression
 </tbody>
 </table>
 <p><br></p>
-<p>As we can see in the table above, we lose performance in terms of the metrics. This means that the variable importance is not that important for the logistic regression. A good point is that we need to remind ourselves that the logistic regression already does a variable importance with the AIC criterion.</p>
+<p>As we can see in the table above, we lost performance in terms of the metrics. This means that the variable importance is not that important for the logistic regression. A good point is that we need to remind ourselves that the logistic regression already does a variable importance with the AIC criterion.</p>
 </div>
 <div id="random-forest-1" class="section level3 hasAnchor" number="3.10.2">
 <h3><span class="header-section-number">3.10.2</span> Random Forest<a href="modelling.html#random-forest-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><img src="bookdownproj_files/figure-html/unnamed-chunk-65-1.png" width="70%" style="display: block; margin: auto;" /></p>
+<p><img src="bookdownproj_files/figure-html/unnamed-chunk-64-1.png" width="70%" style="display: block; margin: auto;" /></p>
 <p><br></p>
 <table class="table table-striped table-condensed" style="margin-left: auto; margin-right: auto;">
 <thead>
@@ -664,7 +665,7 @@ Refit Random Forest
 </tbody>
 </table>
 <p><br></p>
-<p>Again, we lose a bit of performance in terms of the metrics. However, the model is simpler and might be easier to understand.</p>
+<p>Again, we lost a bit of performance in terms of the metrics. However, the model is simpler and might be easier to understand.</p>
 
 </div>
 </div>
@@ -675,7 +676,7 @@ Refit Random Forest
         </div>
       </div>
 <a href="data-understanding-and-preparation.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="evaluation-and-deployment.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="conclusion.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
