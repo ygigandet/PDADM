@@ -55,11 +55,11 @@ draw_confusion_matrix <- function(cm) {
 }
 ```
 
-After cleaning and visualizing the data set, we move on to the creation of models.
+After cleaning and visualizing the data set, we moved on to the creation of models.
 
 ## Splitting strategies and balancing 
 
-In machine learning, a method to measure the accuracy of the models is to split the data into a training and a test set. The first subset is a portion of our data set that is fed into the machine learning model to discover and learn patterns. The other subset is to test our model. We split our data set as follows:
+In machine learning, a method to measure the accuracy of the models is to split the data into a training and a test set. The first subset is a portion of our data set that is fed into the machine learning model to discover and learn patterns. The other subset is to test our model. We splited our data set as follows:
 
 - **Training set:** 80% of the data
 - **Test set:** the remaining 20% of the data
@@ -77,7 +77,7 @@ GermanCredit.te <- GermanCredit[-index.tr,] # Testing set
 
 <br>
 
-As said in the exploratory data analysis, we notice that our data is heavily unbalanced.
+As said in the exploratory data analysis, we noticed that our data is heavily unbalanced.
 
 ```{r, echo = FALSE}
 table(GermanCredit.tr$RESPONSE) %>% kable(align = "c", col.names = c("Outcome", "Frequence"))
@@ -85,7 +85,7 @@ table(GermanCredit.tr$RESPONSE) %>% kable(align = "c", col.names = c("Outcome", 
 
 <br>
 
-Therefore, any model that favors the majority will reach an higher accuracy. However, in our case, we need to make sure to rightly classify any credit applications to avoid losses. To do so, we use a method called sub-sampling that balance the observations. It will allow us to have two equivalent samples. 
+Therefore, any model that favors the majority will reach an higher accuracy. However, in our case, we needed to make sure to rightly classify any credit applications to avoid losses. To do so, we used a method called sub-sampling that balance the observations. It will allow us to have two equivalent samples. 
 
 
 ```{r, echo = TRUE}
@@ -138,7 +138,7 @@ K_optimal <- knn_cv$finalModel$k
 
 <br>
 
-We need to select the K number of points closest that give the optimal accuracy. In this case, it is `r K_optimal`
+We needed to select the K number of points closest that give the optimal accuracy. In this case, it is `r K_optimal`
 
 ```{r, results = 'hide'}
 plot(knn_cv)
@@ -155,7 +155,7 @@ draw_confusion_matrix(cmknn)
 
 ## Naive Bayes
 
-Then, we used a probabilistic approach with Bayes classifiers. With this method, the confusion matrix provides a better accuracy of 0.72. 
+Then, we used a probabilistic approach with Bayes classifiers. With this method, the confusion matrix provided a better accuracy of 0.72. 
 
 ```{r echo=TRUE, warning=FALSE}
 # Naive Bayes
@@ -188,7 +188,7 @@ draw_confusion_matrix(cm_naive_bayes)
 
 A logistic regression is a regression adapted to binary classification.
 
-We use a cross-validation method to train our model and choose the Akaïke Information Criterion (AIC) to select the variables. The AIC is used to select the model based on the number of  parameters. We choose the model with the smallest AIC.
+We used a cross-validation method to train our model and choose the Akaïke Information Criterion (AIC) to select the variables. The AIC is used to select the model based on the number of  parameters. We chose the model with the smallest AIC.
 
 ```{r, echo = TRUE}
 # Logistic Regression
@@ -214,7 +214,7 @@ cm_glm_aic <- confusionMatrix(data = as.factor(pred_glm_aic), reference = as.fac
 draw_confusion_matrix(cm_glm_aic)
 ```
 
-It provides an accuracy of 0.73.
+It provided an accuracy of 0.73.
 
 ## Linear Discriminant Analysis
 
@@ -239,7 +239,7 @@ draw_confusion_matrix(cm_lda)
 
 ## Trees
 
-The trees represent a hierarchical set of binary rules in a shape of a tree.
+The trees represented a hierarchical set of binary rules in a shape of a tree.
 
 ```{r, echo=TRUE}
 # Trees
@@ -296,7 +296,7 @@ cm_neural_network <- confusionMatrix(data = as.factor(pred_neural_network), refe
 draw_confusion_matrix(cm_neural_network)
 ```
 
-The confusion matrix with neural network presents a good accuracy of 0.705.
+The confusion matrix with neural network presented a good accuracy of 0.705.
 
 ## Random Forest
 
@@ -322,12 +322,12 @@ pred_rf <-  predict(rf, newdata = GermanCredit.te)
 cm_rf <- confusionMatrix(data = as.factor(pred_rf), reference = as.factor(GermanCredit.te$RESPONSE))
 draw_confusion_matrix(cm_rf)
 ```
-Again, this models shares an accuracy of 0.73.
+Again, this models shared an accuracy of 0.73.
 
 
 ## Summary
 
-To evaluate our models, there are many metrics that can be used. We decided to choose first the accuracy and then have a look at the sensitivity and the specificity. In other words, we want to have a model with a good accuracy and the best sensitivity and specificity.
+To evaluate our models, there are many metrics that can be used. We decided to choose first the accuracy and then have a look at the sensitivity and the specificity. In other words, we wanted to have a model with a good accuracy and the best sensitivity and specificity.
 
 ```{r, results = 'hide'}
 accuracy_tree = cm_svm$overall['Accuracy']
@@ -474,7 +474,7 @@ kable(model_output, digits = 2)  %>%
 
 <br>
 
-As we can see in the table above, we lose performance in terms of the metrics. This means that the variable importance is not that important for the logistic regression. A good point is that we need to remind ourselves that the logistic regression already does a variable importance with the AIC criterion.
+As we can see in the table above, we lost performance in terms of the metrics. This means that the variable importance is not that important for the logistic regression. A good point is that we need to remind ourselves that the logistic regression already does a variable importance with the AIC criterion.
 
 ### Random Forest
 
@@ -535,5 +535,5 @@ kable(model_output, digits = 2)  %>%
 
 <br> 
 
-Again, we lose a bit of performance in terms of the metrics. However, the model is simpler and might be easier to understand.
+Again, we lost a bit of performance in terms of the metrics. However, the model is simpler and might be easier to understand.
 
