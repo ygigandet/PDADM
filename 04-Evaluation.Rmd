@@ -6,8 +6,8 @@ In this part, we wanted to evaluate the work done so far. The idea was to provid
 
 As seen in the modelization part, we found two good models with a good accuracy, or what we estimated as a good accuracy:
 
-- The logistic regression: an accuracy of 73% (Specificity: 74%, sensitivity: 72%)
-- The random forest: an accuracy of 73% (Specificty: 75%, sensitivity: 69%)
+- The logistic regression: an accuracy of 73% (specificity: 74%, sensitivity: 72%)
+- The random forest: an accuracy of 73% (specificty: 75%, sensitivity: 69%)
 
 Another part of our analysis was to provide simpler models that would only take into account some of the varaibles found in the data set (the most important ones). With these new models, they are indeed simpler but they lose a bit in term of performance:
 
