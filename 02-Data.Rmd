@@ -273,7 +273,7 @@ figure_fin
 <br>
 
 The first graph A represents the situation with past credits. The behavior for good and bad clients is almost the same which does not allow us to make a clear difference. On the graph B we can see that most of the clients have small savings or even no savings at all. Most of the clients have already 1 or 2 credits at this bank. Almost none of them ask for a third or fourth credit. 
-On the histogram D we see that the amount of money on the account not so important. Indeed, most of the good client do not even have a checking account. 
+On the histogram D we see that the amount of money on the account is not so important. Indeed, most of the good client do not even have a checking account. 
 
 ```{r}
 # NEW_CAR
@@ -644,7 +644,7 @@ Yes_profil <- data.frame(
 ```
 
 The lollipop plot below represents the mean profile to be qualified as a good client. From these results, most of them asked for a new car, rented their flat but had real estate. The good client in average had a quite good amount of money and had a guarantor. These results are quite different than what we presented before.
-s
+
 ```{r}
 graph_yes_profil <- ggplot(Yes_profil, aes(x=x, y=y)) +
   geom_segment( aes(x=x, xend=x, y=0, yend=y), color="skyblue") +
@@ -692,7 +692,7 @@ graph_no_profil <- ggplot(No_profil, aes(x=x, y=y)) +
   geom_segment( aes(x=x, xend=x, y=0, yend=y), color="orange") +
   geom_point( color="red", size=4, alpha=0.6) +
   labs(
-  title = "Mean of a bag profile",
+  title = "Mean of a bad profile",
   y = "Value", x = "Variables name"
 )+
   theme_light() +
